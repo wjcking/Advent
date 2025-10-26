@@ -1,6 +1,6 @@
 #include "Weapon.h"
 #include "ProjectTile.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "SimpleAudioEngine.h"
@@ -9,32 +9,32 @@ void Pistol::shootAt(const Vec2& pos)
 {
 	if (owner->getBodyStatus() == BodyStatus::hurting)
 	{
-		CCLOG("[Pistol:shootAt]hurting me, unable to shoot");
+		"[Pistol:shootAt]hurt, unable to shoot"
 		return;
 	}
 	if (projectFrame == "")
 	{
-		CCLOG("[Pistol:shootAt]no frame name, please set weapon");
+		"[Pistol:shootAt]no frame name, please set weapon"
 		return;
 	}
 	auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(projectFrame);
 	if (nullptr == frame)
 	{
-		CCLOG("[Pistol:shootAt]nullptr frame, please set weapon");
+		"[Pistol:shootAt]nullptr frame, please set weapon"
 		return;
 	}
 	//���slugLeft <0 ��������
-	bool canShoot = false;
+	bool ableShot = false;
 
 	if (slugsLeft < 0)
-		canShoot = isReadyForNextShot();
+		ableShot = readyNext();
 	else
-		canShoot = isReadyForNextShot() && (getRoundsRemaining() > 0);
+		ableShot = readyNext() && (getRoundRemaind() > 0);
 	//���ÿ���״̬
 	//����ˢ֡ʹ��
 	isFire = true;
 
-	if (canShoot)
+	if (ableShot)
 	{
 		ProjectTile* projectTile = nullptr;
 
@@ -68,17 +68,17 @@ void Pistol::shootAt(const Vec2& pos)
 		decrementNumRounds();		 
 	}
 	//û�ӵ�������
-	if (getRoundsRemaining() == 0)
+	if (getRoundRemaind() == 0)
 		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/outofammo.wav");
-	if (isReadyForNextShot())
+	if (readyNext())
 		updateNextAvailable();
 }
 
 
 void Weapon::registerWeapon(const LuaRef& ref)
 {
-	if (!ref.isTable())
-		return;
+	if (!ref.isTable()) return;
+
 	refWeapon = ref;
 
 	if (ref.has(Luaf_Frame))

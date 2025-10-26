@@ -21,7 +21,7 @@ private:
 	//an opponent the instant it becomes visible.
 	//float            reactionTime;
 
-	//each time the current weapon is fired a certain amount of random noise is
+	//each t fired a certain amount of random noise is
 	//added to the the angle of the shot. This prevents the bots from hitting
 	//their opponents 100% of the time. The lower this value the more accurate
 	//a bot's aim will be. Recommended values are between 0 and 0.2 (the value
@@ -62,7 +62,7 @@ public:
 
 	void RenderCurrentWeapon();
 
-	inline void clear() {
+	void clear() {
 		for (auto w : weaponMap)
 			delete w.second;
 	}

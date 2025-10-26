@@ -1,7 +1,7 @@
 #include "AppDelegate.h" 
 #include "Scene/MainScene.h"
 #include "Utils/Constant.h"
-#include "Utils/GameScriptor.h"
+#include "Utils/Telisk.h"
 #include "Ads/Ads.h"
 
 USING_NS_CC;

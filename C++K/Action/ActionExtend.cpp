@@ -2,7 +2,8 @@
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "ResourceHelper.h"
-EaseInOut* ActionExtend::parabolaTo(const float& duration, const Vec2& startPoint, const Vec2& endPoint, const float& height, const float& angle)
+
+EaseInOut* ActionExtend::CastArch(const float& duration, const Vec2& startPoint, const Vec2& endPoint, const float& height, const float& angle)
 {
 	// �ѽǶ�ת��Ϊ����
 	float radian = angle*3.14159 / 180.0;
@@ -37,7 +38,7 @@ void ActionExtend::corrupt(const Vec2& ptc, const unsigned short& shardIndex)
 		debris->setLocalZOrder(Z_ROLE + 1);
 		debris->runAction(RepeatForever::create(RotateBy::create(0.8f, 360)));
 		debris->runAction(Sequence::create(
-			parabolaTo(1.5f, debris->getPosition(), Vec2(debris->getPositionX() + ((i % 2) == 0 ? 50 : -50), 30), random(-24, -14), random(78, 84)),
+			CastArch(1.5f, debris->getPosition(), Vec2(debris->getPositionX() + ((i % 2) == 0 ? 50 : -50), 30), random(-24, -14), random(78, 84)),
 			CallFunc::create(CC_CALLBACK_0(Sprite::removeFromParent, debris)), nullptr));
 	}
 	Resh::playSound("sound/broke.wav");

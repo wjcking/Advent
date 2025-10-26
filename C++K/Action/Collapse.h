@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "../Utils/Fand.h"
 #include "../Utils/Constant.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 
 /*
 �ƶ���Ƭ,�ƶ����� ��������
@@ -29,7 +29,10 @@ public:
 	*�ƶ�ƫ������
 	*�ƶ�ʱ��
 	*/
-	Collapse(const unsigned short &mapTag = ID_Map, const Vec2& rangeStart= Vec2::ZERO, const Vec2& = Vec2::ZERO, const Vec2& step= Vec2(2.f,2.f), const MovingDirection& md = MovingDirection::stayStill, const Vec2& range=ScreenSize);
+	Collapse(const unsigned short &mapTag = ID_Map, const Vec2& rangeStart= Vec2::ZERO, 
+					const Vec2& = Vec2::ZERO, const Vec2& step= Vec2(2.f,2.f),
+					const MovingDirection& md = MovingDirection::stayStill,
+					const Vec2& range=ScreenSize);
 	Collapse();
 	void collapse();
 	inline bool& isFinsihed() { return isDone; }

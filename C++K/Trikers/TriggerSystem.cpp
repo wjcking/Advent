@@ -1,7 +1,7 @@
 #include "../Role/Role.h"
 #include "Trigger.h"
 #include "TriggerSystem.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 unsigned short TriggerSystem::triggerNext = 1;
 unsigned short TriggerSystem::sensorNext = 1;
 void TriggerSystem::updateTriggers()

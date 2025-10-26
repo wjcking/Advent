@@ -5,13 +5,6 @@
  
 using namespace cocos2d;
 
-enum OppositePopup
-{
-	popNothing,
-	popMoney,
-	popDrug,
-};
-
 struct Fenk
 {
 	//���ֻ����һ�Σ����ж��Ƿ��ƹ�

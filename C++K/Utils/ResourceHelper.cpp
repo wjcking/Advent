@@ -1,7 +1,7 @@
 ﻿#include "ResourceHelper.h"
 #include "SimpleAudioEngine.h"
 #include "Constant.h"
-#include "GameScriptor.h"
+#include "Telisk.h"
 using namespace CocosDenshion;
 
    const std::string  Resh::Kingsure = "http://www.easyfound.com.cn/";

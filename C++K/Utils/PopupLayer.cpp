@@ -3,7 +3,7 @@
 #include "../Map/CheckPoint.h"
 #include "ResourceHelper.h"
 #include "../Role/RObject.h"
-#include "../Role/RoleManager.h"
+#include "../Role/RoleSystem.h"
 #include "Utils.h"
 short PopupLayer::nextTag = 1;
 
@@ -238,7 +238,7 @@ bool PopupLayer::loadScript(const LuaIntf::LuaRef& ref)
 				{
 					role->setName(name);
 					role->setPosition(pos);
-					RoleManager::setProperty(ref, role);
+					RoleSystem::setProperty(ref, role);
 					background->addChild(role);
 				}
 			}

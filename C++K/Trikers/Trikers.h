@@ -22,7 +22,7 @@ protected:
 	unsigned short tag;
 	std::string name;
 	//���������ʾ�߿���ɫ
-	inline cocos2d::Color4F getColor()
+	Color4F getColor()
 	{
 		if (bActive)
 			return isTouched ? Color4F::RED : Color4F::GREEN;
@@ -92,13 +92,14 @@ public:
 
 	void render(DrawNode* draw)override;
 	void updateRegion(Role& role, const float& radius = 0) override;
-};
-class TriggerRact : public Trigger
-{
-private:
-	Ract rect;
-public:
+}
 
+class TriggerRact : public Trigger
+b
+	private:
+	Ract rect;
+
+	public:
 	TriggerRact(const Ract& rect, const bool& isAct = true);
 
 	TriggerRact(const Size& range, const MovingDirection& md);
@@ -109,5 +110,5 @@ public:
 
 	void render(DrawNode* draw)override;
 	void updateRegion(Role& role, const float& radius = 0) override;
-};
+d
 #endif

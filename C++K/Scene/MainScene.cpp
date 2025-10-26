@@ -2,7 +2,7 @@
 #include "StageScene.h"
 #include "ChapterScene.h"
 #include "../Utils/Funcpads.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Utils/PopupLayer.h"
 
 #include "../Ads/Ads.h"

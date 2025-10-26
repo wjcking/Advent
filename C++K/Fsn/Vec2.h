@@ -10,9 +10,8 @@ inline float clampf(float value, float min_inclusive, float max_inclusive)
 
 class Mat4;
 
-class CC_DLL Vec2
+class cc_dll Vec2
 {
-public:
 
     float x = 0.f;
     float y = 0.f;
@@ -38,14 +37,14 @@ public:
     /**
      * Indicates whether this vector contains all zeros.
      *
-     * @return true if this vector contains all zeros, false otherwise.
+     * return true if this vector contains all zeros, false otherwise.
      */
     inline bool isZero() const;
 
     /**
      * Indicates whether this vector contains all ones.
      *
-     * @return true if this vector contains all ones, false otherwise.
+     * return true if this vector contains all ones, false otherwise.
      */
     inline bool isOne() const;
 

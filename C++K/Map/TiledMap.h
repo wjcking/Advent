@@ -6,7 +6,7 @@
 #include "MapProperty.h"
 #include "../Triggers/TriggerSystem.h"
 
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 using namespace std;
 using namespace cocos2d;
 

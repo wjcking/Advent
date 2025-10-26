@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 using namespace cocos2d;
 
-//¾²Ì¬Àà
+//ï¿½ï¿½Ì¬ï¿½ï¿½
 class Checkpoint
 {
 private:
@@ -13,32 +13,32 @@ public:
 	static int life;
 	static int trialTimes;
 	static short mapID;
-	//ÔÚÄÇ¸ö½×¶Î stage 1 2 3
+	//ï¿½ï¿½ï¿½Ç¸ï¿½ï¿½×¶ï¿½ stage 1 2 3
 	static short id;
-	//Èç¹û=0£¬ÔòÊÇÒªÈ¥³ýµÄ ·ñÔòÌæ»» =-1ÔòÊ²Ã´¶¼²»×ö
+	//ï¿½ï¿½ï¿½=0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½æ»» =-1ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	static  int gid;
 	static Vec2 rangeStart;
 	static Vec2 rangeEnd;
-	//¡¾×¢Òâ¡¿Ä¿Ç°ÊÇµØÍ¼tileµÄÎ»ÖÃ
+	//ï¿½ï¿½×¢ï¿½â¡¿Ä¿Ç°ï¿½Çµï¿½Í¼tileï¿½ï¿½Î»ï¿½ï¿½
 	static Vec2 position;
-	//ÉèÖÃ½ÇÉ«Î»ÖÃ²¢ÇÒid++
+	//ï¿½ï¿½ï¿½Ã½ï¿½É«Î»ï¿½Ã²ï¿½ï¿½ï¿½id++
 	static void setPosition(const Vec2& pos);
 	static void setPtc(const Vec2& pos);
 	static Vec2& getPosition() { return position; }
-	//¶ÔÏó¸öÊý
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	static void setObject(const short&, const short&);
 	static void addObject(const short&);
 	static void updateTrial();
 	
-	inline static void addLife() 
+	static void addLife() 
 	{
 		if (life < 9)
 			++life; 
 	};
 	static short getObject(const short&);
-	//tile =-1ÔòÊ²Ã´¶¼²»×ö Èç¹û=0£¬ÔòÊÇÒªÈ¥³ýµÄ ·ñÔòÌæ»»
+	//tile =-1ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½=0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½æ»»
 	static void setTile();
-	//ÖØÖÃ£¬id=0£¬¾Í´ÓÐÂ¿ªÊ¼
+	//ï¿½ï¿½ï¿½Ã£ï¿½id=0ï¿½ï¿½ï¿½Í´ï¿½ï¿½Â¿ï¿½Ê¼
 	static void reset(const bool& isClearTrial = true);
 	static bool isChecked() { return id > 0; }
 };

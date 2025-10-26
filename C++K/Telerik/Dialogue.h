@@ -1,7 +1,7 @@
 #pragma once
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Utils/Constant.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 using namespace std;
 #define TYPE_DIALOG Typewriter::getInstance()
 class Typewriter
@@ -9,7 +9,7 @@ class Typewriter
 private:
 	DelayPhase delayType;
 	unsigned int  pos = 0;
-	std::string content;
+	string content;
 public:
 
 	//�������л���ʱ�����ִ��ֻ��ٶȲ�һ�µ�bug��������һ�������ٶ�
@@ -27,7 +27,7 @@ public:
 		content = val;
 	}
 	inline void reset() { pos = 0; }
-	inline bool isDone(const bool& isClear = true)
+	bool isDone(const bool& isClear = true)
 	{
 		if (pos < content.length())
 		{
@@ -39,7 +39,7 @@ public:
 
 		return true;
 	}
-	std::string getTyped()
+	string& getTyped()
 	{
 		if (pos >= content.length() || content.length() == 0)
 		{
@@ -64,56 +64,65 @@ struct HintText
 	short index = 0;
 	int tag = 0;
 	float delay = 3.f;
-	bool hasChoices = false;
+	//bool hasChoices = false;
 	float scaleWidth = 20.f;
-	std::string text;
+	string text;
 	FontInfo font;
 	void initScaleWith(const float& = 0);
 	inline std::string getName() const { return cocos2d::StringUtils::format("dialog%d", index); }
 };
  
-struct DialogueText : HintText
+struct TeliskText : HintText
 {
 	std::string	choices[4];
-	cocos2d::Menu* getChoices();
+	cocos2d::Menu* getChoices(); /*|CCPA|*/
 	void choiceCallback(cocos2d::Ref* pSender);
-	inline bool isAnswered() { return LUAH->getGlobal(Luat_Dialogue)[index].value().has(Luaf_Key); }
+	inline bool isAnswered() { return LUAH->getGlobal(Luat_Telisk)[index].value().has(Luaf_Key); }
 };
 
-#define DIALOGUE Dialogue::getInstance()
-class Dialogue
+#define DIALOGUE Telisk::getInstance()
+class Telisk
 {
+	Telisk();
+ 	static Telisk* getInstance()
+ 	{
+ 		static Telisk instance;
+ 		return &instance;
+ 	}
+
 	private:
 	//RObject
 	//unordered_map<int, HintText> robjectMap;
 	unordered_map<int, vector<HintText>>  hintMap;
 	unordered_map<int, unsigned int> hintIter;
 	unordered_map<int, DelayPhase>   delayHint;
-	vector<DialogueText> dialogueList;
-	DialogueText defaultDialogue;
+
+	dictionary<int, DelayPhase>  dictionaryHint;
+
+	vector<TeliskText> dialogueList;
+	TeliskText defaultTelisk;
 	unsigned int dialogIndex = 0;
 	unsigned int dialogEnd = 0;
 	unsigned int previousIndex = 0;
 
 	public:
-	Dialogue();
-	static Dialogue* getInstance()
-	{
-		static Dialogue instance;
-		return &instance;
-	}
+
 	void loadScript();
 	//������ӫĻ����ʹ��
 	void loadCurtainText();
-	//gcc++ ���ñ���������  error: invalid initialization of reference of type 'DialogueText&' from expression of type 'const value_type {aka const DialogueText}'
-	DialogueText& getCurrentDialog();
+	//gcc++ ���ñ���������  error: invalid initialization of reference of type 'TeliskText&'
+	//from expression of type 'const value_type {aka const TeliskText}'
+	TeliskText& getCurrentDialog();
 	HintText fetchHint(const int&);
+
+	inline bool isDone() { return dialogIndex == dialogEnd; }	
 	//���÷ֶζԻ���Ĭ�ϴ�ͷ��β
 	inline void setSegment(const unsigned int& start, const unsigned int& end)
 	{
 		dialogIndex = start > end ? end : start;
 		dialogEnd = end < start ? start : end;
 	}
+
 	void fetchNext()
 	{
 		previousIndex = dialogIndex;
@@ -122,16 +131,12 @@ class Dialogue
 		else
 			dialogIndex = dialogEnd;
 	}
-	//inline DialogueText& getPreviousDialog() { return dialogueList[previousIndex]; }
+
+	//inline TeliskText& getPreviousDialog() { return dialogueList[previousIndex]; }
 	inline void resetHint(const int& tag)
 	{
 		hintIter[tag] = 0;
 		delayHint[tag].reset();
 	}
-
-	inline bool isDone() 
-	{ 
-		return dialogIndex == dialogEnd;
-	};
 
 };

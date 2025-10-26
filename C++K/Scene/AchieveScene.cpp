@@ -1,7 +1,7 @@
 #include "AchieveScene.h"
 #include "../Utils/ResourceHelper.h"
 #include "../Utils/Funcpads.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Utils/Constant.h"
 #include "ui/UIButton.h"
 #include "StageScene.h"
@@ -27,7 +27,7 @@ bool AchieveScene::init()
 	if (!Layer::init())
 		return false;
 	auto achieveTable = LUAH->getGlobal(Luat_Achievements);
-	CCASSERT(achieveTable.isTable(), StringUtils::format("ÇëÉèÖÃ%s", Luat_Achievements).c_str());
+	CCASSERT(achieveTable.isTable(), StringUtils::format("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%s", Luat_Achievements).c_str());
 
 	auto bgSky = Sprite::create("background/achieve.png");
 	addChild(bgSky, Z_BACKGROUND);
@@ -49,7 +49,7 @@ bool AchieveScene::init()
 	
 	pageview->setBackGroundColor(Color3B(0, 255, 0));
 
-	//´´½¨4¸öpage 
+	//ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½page 
 	float multi = 0.5f;
 	const float dividedParam = 2.0f;
 	float dividedY = dividedParam;
@@ -70,7 +70,7 @@ bool AchieveScene::init()
 			ref = achieveTable[achieveIndex].value();
 			auto btnAchieve = Button::create("control/achieve/bg.png", "control/achieve/bg.png");
 			achieveImageName = StringUtils::format("control/achieve/aimg%d.png", achieveIndex);
-			//Èç¹û¸ÃË÷ÒýÍ¼Æ¬²»´æÔÚÔòÊ¹ÓÃÄ¬ÈÏ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Ä¬ï¿½ï¿½
 			if (!FileUtils::getInstance()->isFileExist(achieveImageName))
 				achieveImageName = "control/achieve/aimg.png";
 		 
@@ -85,8 +85,8 @@ bool AchieveScene::init()
 			btnAchieve->addChild(text);
 			btnAchieve->setName(StringUtils::format("%s%d", User_Achieve, achieveIndex));
 			btnAchieve->setPosition(Vec2(btnAchieve->getContentSize().width * multi + 40 * multi, pageview->getContentSize().height / dividedY));
-			//Èç¹ûÃ»ÓÐ´ï³ÉÔò±ä»Ò
-			//×îºóAchieveIndex ++
+			//ï¿½ï¿½ï¿½Ã»ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//ï¿½ï¿½ï¿½AchieveIndex ++
 			if (!Resh::getAchieve(achieveIndex++))
 			{
 				btnAchieve->runAction(FadeTo::create(0.1f, 88));
@@ -96,20 +96,20 @@ bool AchieveScene::init()
 			if (j % 3 == 0)
 			{
 				dividedY = dividedParam * 2.5f;
-				//ÖØÖÃ
+				//ï¿½ï¿½ï¿½ï¿½
 				multi = 0.5f;
 
 			}
 			else
 				multi++;
 		}
-		//ÖØÖÃ
+		//ï¿½ï¿½ï¿½ï¿½
 		multi = 0.5f;
 		dividedY = dividedParam;
 		pageview->addPage(layout);
 	}
 
-	//pageviewÔÚ
+	//pageviewï¿½ï¿½
 	pageview->setPosition(Vec2(80, ScreenHeight / 4));
 	//pageview->addEventListener(CC_CALLBACK_2(this, &pagevieweventselector(AchieveScene::pageviewCallBack));
 	this->addChild(pageview, Z_JoyStick);

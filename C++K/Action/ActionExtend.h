@@ -2,7 +2,7 @@
 #define __ACTIONEXTEND_H__
 
 #include "cocos2d.h"
-#include "GameScriptor.h"
+#include "Telisk.h"
 USING_NS_CC;
 
 static const unsigned short   DRWhite = 0;
@@ -23,15 +23,16 @@ public:
 	{
 	}
 
-	/*´´½¨Ò»¸öÅ×ÎïÏß¶¯×÷
-	²ÎÊý£º
-	t Ê±¼ä
-	startPoint		¿ªÊ¼µã
-	endPoint		½áÊøµã
-	height			¸ß¶È£¨Ó°ÏìÅ×ÎïÏßµÄ¸ß¶È£©
-	angle			½Ç¶È£¨±´Èû¶ûÇúÏßÁ½¸ö¿ØÖÆµãÓëyÖáµÄ¼Ð½Ç£¬Ö±½ÓÓ°Ïì¾«ÁéµÄÅ×³ö½Ç¶È£©
+	/*ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	t Ê±ï¿½ï¿½
+	startPoint		ï¿½ï¿½Ê¼ï¿½ï¿½
+	endPoint		ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	height			ï¿½ß¶È£ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµÄ¸ß¶È£ï¿½
+	angle			ï¿½Ç¶È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½yï¿½ï¿½Ä¼Ð½Ç£ï¿½Ö±ï¿½ï¿½Ó°ï¿½ì¾«ï¿½ï¿½ï¿½ï¿½×³ï¿½ï¿½Ç¶È£ï¿½
 	*/
-	static EaseInOut* parabolaTo(const float& t, const Vec2& startPoint, const Vec2& endPoint, const float& height = 0, const float& angle = 60);
+	static EaseInOut* CastArch(const float& t, const Vec2& startPoint, const Vec2& endPoint, 
+														const float& height = 0, const float& angle = 60);
 	static void corrupt(const Vec2&, const unsigned short& = DRWhite);
 	static void toast(const LuaIntf::LuaRef& ref);
 	static void explode(const LuaIntf::LuaRef& ref);

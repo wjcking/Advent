@@ -14,11 +14,13 @@ public:
 	static int&  getTickInteger();
 	static float&  addDeltaCount();
 };
+
 //�ӳٶ���������
 struct DelayPhase
 {
 	float delaySecond;
 	float timestramp;
+
 	DelayPhase(const float& d = 1.f)
 	{
 		delaySecond = d;
@@ -27,7 +29,7 @@ struct DelayPhase
 
 	inline void reset() { timestramp = 0.f; }
 	//�Ƿ�ʱ��
-	inline bool isTimeUp()
+	bool isTimeUp()
 	{
 		if (timestramp == 0.f)
 			timestramp = Clock::getTickFloat() + delaySecond;
@@ -36,10 +38,11 @@ struct DelayPhase
 	}
 
 };
+
 class DelayCollection
 {
 private:
-	static std::unordered_map<short,DelayPhase> delay;
+	static unordered_map<short,DelayPhase> delay;
 public:
 	static void  clear();
 	static void  reset(const short&);

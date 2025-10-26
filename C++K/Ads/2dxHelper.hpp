@@ -1,15 +1,8 @@
-//
-//  TGSDKCocos2dxHelper.h
-//  tgsdk_cocos_js
-//
-//  Created by yomob on 2016/12/15.
-//
-//
-
+//MOB^ON 2016/12/15
 #ifndef TGSDKCocos2dxHelper_h
 #define TGSDKCocos2dxHelper_h
 
-// Custom Event
+//Custom Event
 #define TGSDK_EVENT_INIT_SUCCESS "TGSDK_onInitSuccess"
 #define TGSDK_EVENT_INIT_FAILED  "TGSDK_onInitFailed"
 

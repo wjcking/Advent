@@ -1,5 +1,5 @@
 #include "ProjectTile.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
@@ -8,13 +8,13 @@
 ProjectTile::ProjectTile() : Role()
 {
 	isGravityOn = false;
-	//×Ô¶¯Ô¤ÏÈÉèÖÃ²»Åö×²ÍßÆ¬
+	//ï¿½Ô¶ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½×²ï¿½ï¿½Æ¬
 	onCheckTile = false;
 	type = RoleType::projectTile;
 	//isSolid = projectType == ProjectType::footboard;
 	setLocalZOrder(Z_ROLE);
-	//ÁÙÊ± 
-	//ĞèÒªÔ¤ÏÈÉèÖÃisDispose£¬·ñÔòÒÅÁôÏÂÀ´µÄ»áÄ¬ÈÏÎªtrue
+	//ï¿½ï¿½Ê± 
+	//ï¿½ï¿½ÒªÔ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½isDisposeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½Ä¬ï¿½ï¿½Îªtrue
 	//LUAH->setDisposal(getTag(), false);
 }
 ProjectTile::~ProjectTile()
@@ -56,8 +56,8 @@ bool ProjectTile::isDead()
 }
 void ProjectTile::update()
 {
-	//¸¸Àà¸üĞÂÎ»ÖÃ
-	//²ÈÔÚfootboardÉÏÃæ£¬±ØĞë¸üĞÂ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	//ï¿½ï¿½ï¿½ï¿½footboardï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	Role::update();
 }
 void ProjectTile::setProject(const LuaRef&  ref)
@@ -67,11 +67,11 @@ void ProjectTile::setProject(const LuaRef&  ref)
 		offset = ref.get(Luaf_Offset).toValue<Vec2>();
 	if (ref.has(Luaf_AllowThrough))
 		canThough = ref.get(Luaf_AllowThrough, false);
-	//1.ÔËĞĞ¼ÓÔØµÄÊ±ºòÉèÖÃ 2.·¢ÉäÎïÉèÖÃ
-	RoleManager::setProperty(ref, this);
+	//1.ï¿½ï¿½ï¿½Ğ¼ï¿½ï¿½Øµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	RoleSystem::setProperty(ref, this);
 }
 /*
-* ·¢ÉäÎïÌå
+* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 */
 SlugObject::SlugObject() : ProjectTile()
 {
@@ -108,11 +108,11 @@ void SlugObject::update()
 		break;
 	}
 	ProjectTile::update();
-	//ÒÆ¶¯µ½
+	//ï¿½Æ¶ï¿½ï¿½ï¿½
 	//gotoDesirePosition();
 }
 /*
-* Ì¤°å
+* Ì¤ï¿½ï¿½
 */
 Footboard::Footboard() : ProjectTile(), delayDisappeared(3.f)
 {
@@ -135,11 +135,11 @@ bool Footboard::isDead()
 }
 void Footboard::update()
 {
-	//±ØĞë¼ÓÉÏ£¬Ö÷½Ç²ÅÄÜ²Èµ½ÉÏÃæ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½Ü²Èµï¿½ï¿½ï¿½ï¿½ï¿½
 	ProjectTile::update();
 }
 /*
-* ¾ø¶ÔÃüÖĞ
+* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 */
 Deadshot::Deadshot() : ProjectTile()
 {

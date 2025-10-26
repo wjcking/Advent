@@ -1,11 +1,12 @@
-#include "Dialogue.h"
+#include "Telisk.h"
 #include "../Utils/ResourceHelper.h"
 
 
-Dialogue::Dialogue()
+Telisk::Telisk()
 {
 }
-void Dialogue::loadScript()
+
+void Telisk::loadScript()
 {
 	int tag = 0;
 	dialogueList.clear();
@@ -26,12 +27,12 @@ void Dialogue::loadScript()
 	//}, false);
 
 	short index = 1;
-	LUAH->processTableFont(Luat_Dialogue, [&](LuaIntf::LuaRef ref, const FontInfo& font) {
+	LUAH->processTableFont(Luat_Telisk, [&](LuaIntf::LuaRef ref, const FontInfo& font) {
 		if (!ref.has(Luaf_Text))
 			return;
-		//CCASSERT(ref.has(Luaf_Text), "Luat_Dialogue�Ի������ı��ֶ�");
+		//CCASSERT(ref.has(Luaf_Text), "Luat_Telisk�Ի������ı��ֶ�");
 		tag =  ref.get( Luaf_Tag, 0);
-		DialogueText dt;
+		TeliskText dt;
 		dt.index = index++;
 		dt.tag = tag;
 		dt.font = font;
@@ -65,16 +66,17 @@ void Dialogue::loadScript()
 	}, false);
 }
 
-void Dialogue::loadCurtainText()
+void Telisk::loadCurtainText()
 {
 	dialogueList.clear();
 	dialogIndex = 0;
 	short index = 1;
 	LUAH->processTableFont(Luat_CurtainText, [&](LuaIntf::LuaRef ref, const FontInfo& font) {
+
 		if (!ref.has(Luaf_Text))
 			return;
 
-		DialogueText dt;
+		TeliskText dt;
 		dt.index = index++;
 		dt.font = font;
 		dt.text = ref[Luaf_Text].value<std::string>();
@@ -86,15 +88,15 @@ void Dialogue::loadCurtainText()
 	dialogEnd = dialogueList.size() == 0 ? 0 : (dialogueList.size() - 1);
 }
 
-DialogueText& Dialogue::getCurrentDialog()
+TeliskText& Telisk::getCurrentDialog()
 {
 	if (dialogIndex < 0 || dialogIndex >= dialogueList.size())
-		return defaultDialogue;
+		return defaultTelisk;
 	
 	return dialogueList[dialogIndex];
 }
 
-HintText Dialogue::fetchHint(const int & tag)
+HintText Telisk::fetchHint(const int & tag)
 {
 	auto end = hintMap.end();
 
@@ -154,7 +156,7 @@ void HintText::initScaleWith(const float& fontPixel)
 
 }
 
-Menu* DialogueText::getChoices()
+Menu* TeliskText::getChoices()
 {
 	//û��ѡ���򷵻�nullptr
 	if (!hasChoices)
@@ -169,7 +171,7 @@ Menu* DialogueText::getChoices()
 	{
 		if (c == "")	continue;
 
-		auto itemChoice = MenuItemLabel::create(Label::createWithSystemFont(c, Resh::getFontName(), font.size), CC_CALLBACK_1(DialogueText::choiceCallback, this));
+		auto itemChoice = MenuItemLabel::create(Label::createWithSystemFont(c, Resh::getFontName(), font.size), CC_CALLBACK_1(TeliskText::choiceCallback, this));
 
 		itemChoice->setColor(font.color);
 		itemChoice->setPosition(20, height);
@@ -184,11 +186,11 @@ Menu* DialogueText::getChoices()
 	return menu;
 }
 
-void DialogueText::choiceCallback(cocos2d::Ref * pSender)
+void TeliskText::choiceCallback(Ref* sender)
 {
-	auto selectedChoice = dynamic_cast<MenuItemLabel*>(pSender);
-	log("clicked choice:%s", selectedChoice->getName().c_str());
-	LUAH->setValue(Luat_Dialogue, index, Luaf_Key, selectedChoice->getName());
+	auto selectedChoice = dynamic_cast<MenuItemLabel*>(sender);
+
+	LUAH->setValue(Luat_Telisk, index, Luaf_Key, selectedChoice->getName());
 	selectedChoice->getParent()->removeFromParentAndCleanup(true);
 	selectedChoice->removeFromParentAndCleanup(true);
 }

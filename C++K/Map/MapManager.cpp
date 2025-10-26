@@ -1,7 +1,7 @@
 #include "MapManager.h"
 #include "TiledMap.h"
 #include "../Utils/Constant.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 /*��̬���ʼ��*/
 //   this class is a singleton
 unsigned  short MapManager::MapTag = ID_Map;

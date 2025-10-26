@@ -3,12 +3,26 @@
 #include "../Scene/AchieveScene.h"
 #include "../Scene/StageScene.h"
 #include "../Scene/MainScene.h"
-#include "GameScriptor.h"
+#include "Telisk.h"
 #include "ResourceHelper.h"
 #include "Utils.h"
-USING_NS_CC;
 
+USING_NS_CC;
 short FuncMenu::nextTag = 1;
+
+bool FuncMenu::init()
+{
+	if (Menu::init())
+		return true;
+
+	return false;
+}
+
+void FuncMenu::callbackFunc(cocos2d::Ref *target, SEL_CallFuncN callfun)
+{
+	callbackListener = target;
+	callback = callfun;
+}
 
 void FuncMenu::loadScript(const char* padTable)
 {
@@ -116,18 +130,4 @@ void FuncMenu::menuCallback(Ref * sender)
 		//params.set(Luaf_Value, static_cast<const char*>(menuItem->getUserData())); 
 		LUAH->callmenu("funcpads", "funcpads", params);
 	}
-}
-
-bool FuncMenu::init()
-{
-	if (Menu::init())
-		return true;
-
-	return false;
-}
-
-void FuncMenu::callbackFunc(cocos2d::Ref *target, SEL_CallFuncN callfun)
-{
-	callbackListener = target;
-	callback = callfun;
 }

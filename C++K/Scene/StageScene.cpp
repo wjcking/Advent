@@ -10,17 +10,17 @@
 #include "../Role/Player.h"
 #include "../Role/Npc.h"
 #include "../Role/ProjectTile.h"
-#include "../Role/RoleManager.h"
+#include "../Role/RoleSystem.h"
 #include "../Role/RoleFrame.h"
 #include "../Utils/ResourceHelper.h" 
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Utils/JoyStick.h"
 #include "../Utils/Funcpads.h"
 #include "../Triggers/Trigger.h"
 #include "../Triggers/TriggerSystem.h"
 #include "../Map/Collapse.h"
 #include "../Utils/Utils.h"
-#include "../Role/DialogueSystem.h"
+#include "../Role/TeliskSystem.h"
 #include "../Ads/Ads.h"
 std::string StageScene::doLuaFunction(const std::string & funcName, const int& tag)
 {
@@ -318,7 +318,7 @@ void StageScene::update(float dt)
 void StageScene::release(const bool& isClearAll)
 {
 
-	DialogueSystem::isDialogueOn = false;
+	TeliskSystem::isTeliskOn = false;
 	//�����ʱ��
 	DelayCollection::clear();
 	//�ͷŽ�ɫ

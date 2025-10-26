@@ -1,6 +1,6 @@
 #include "CheckPoint.h"
 #include "../Utils/Constant.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "TiledMap.h"
 #include "MapManager.h"
 #include "../Utils/ResourceHelper.h"
@@ -10,10 +10,12 @@ int Checkpoint::trialTimes = 0;
 short Checkpoint::id = 0;
 short Checkpoint::mapID = 1;
 int Checkpoint::gid = -1;
+
 Vec2 Checkpoint::position = Vec2::ZERO;
 Vec2 Checkpoint::rangeStart = Vec2::ZERO;
 Vec2 Checkpoint::rangeEnd = Vec2::ZERO;
-std::unordered_map<short, short> Checkpoint::objectMap = std::unordered_map<short, short>();
+
+unordered_map<short, short> Checkpoint::objectMap = unordered_map<short, short>();
 
 Checkpoint::Checkpoint()
 {
@@ -49,7 +51,7 @@ void Checkpoint::updateTrial()
 	if (life > 0)
 		--life;
 	trialTimes++;
-	//¼ÇÂ¼Ò»¹²ËÀÁË¶àÉÙ´Î
+	//ï¿½ï¿½Â¼Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½Ù´ï¿½
 	Resh::addNumber(User_Trial, 1);
 };
 short Checkpoint::getObject(const short & objectIndex)
@@ -62,7 +64,7 @@ short Checkpoint::getObject(const short & objectIndex)
 
 void Checkpoint::setTile()
 {
-	//Èç¹ûgid = -1 Ê²Ã´¶¼²»×ö
+	//ï¿½ï¿½ï¿½gid = -1 Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (gid < 0)
 		return;
 	if (gid == 0)

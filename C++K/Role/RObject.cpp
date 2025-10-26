@@ -3,7 +3,7 @@
 #include "../Utils/ResourceHelper.h"
 #include "../Utils/ActionExtend.h"
 #include "SimpleAudioEngine.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 #include "../Map/TiledMap.h"
 #include "../Map/MapManager.h"
 using namespace CocosDenshion;

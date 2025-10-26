@@ -1,6 +1,3 @@
-#ifndef GAME_SCRIPTOR_H
-#define GAME_SCRIPTOR_H
-
 #include "LuaField.h"
 
 #define  LUAH Luah::getInstance() 
@@ -11,19 +8,19 @@
 	lua_pushnumber(l, val); \
 	lua_settable(l, -3)
 class Role;
+LuaRef getRole(const int& tag = 0, const std::string& name = "");
+
 class Luah
 {
 private:
 	lua_State * l; 
+	Luah(const Luah&);
 	bool isPackageLoaded = false;
 	int currentLanguage = 0;
 	int currentStage = 0;
 	static const std::string ScriptFolder;
 	//lua require ·�����ã�cpp���Է���
 	void setRequirePath(const char*);
- 
-	 
-	Luah(const Luah&);
 public:
 	Luah()
 	{
@@ -55,8 +52,9 @@ public:
 	void registerClasses();
 	void preloadResources(const char* = "Resources");
 	void registerRole(const char*, const char*, Role*);
-	void processTable(const char* tableName, std::function<void(LuaRef)>, const bool& = true);
-	void processTableFont(const char* tableName, std::function<void(LuaRef, const FontInfo&)>, const bool& = true);
+	void processTable(const char* tableName, std::delegate<void(LuaRef)>, const bool& = true);
+	void processTableFont(const char* tableName, std::delegate<void(LuaRef, const FontInfo&)>, const bool& = true);
+
 	template<typename T>
 	void setValue(const char* tableName, const int& tag, const char* key, T value)
 	{
@@ -72,7 +70,7 @@ public:
 		}
 		else
 		{
-			CCLOG("[GameScriptor:setValue:%s:%d] registered role table length large than or equal to tag", tableName, tag);
+			CCLOG("[Telisk:setValue:%s:%d] registered role table length large than or equal to tag", tableName, tag);
 		}
 
 	}
@@ -86,20 +84,20 @@ public:
 	};
 
 	//ע��Ի���ͳ�����
-	inline void registerRef(const char* name, cocos2d::Layer* layer)
+	void registerRef(const char* name, Layer* layer)
 	{
 		auto ref = getGlobal(Luat_Ref);
+
 		if (ref.isTable())
 			ref.set(name, layer);
+
 		flush();
 	}
 	//ִ���ύ
 	inline void flush() { lua_pcall(l, 0, 0, 0); };
 	inline LuaRef getGlobal(const char* name) { return Lua::getGlobal(l, name); };
 	template <typename T>
-	inline void setGlobal( const char* name, const T& v) 
-	{ LuaIntf::Lua::setGlobal(l, name, v); }
-	LuaRef getRole(const int& tag = 0, const std::string& name = "");
+	inline void setGlobal( const char* name, const T& v) { LuaIntf::Lua::setGlobal(l, name, v); }
 	static void output(const std::string& text) { CCLOG("%s", text.c_str()); }
 	//�ص����������� joystick joypad ����
 	void callback(const char*, const char*);
@@ -107,4 +105,3 @@ public:
 	void callmenu(const char*, const char*, const LuaRef&)
 
 };
-#endif

@@ -2,6 +2,7 @@ Assembly <Time>
 Assembly <Team>
 include <Role>
 include <Map>
+comment "main:each"
 
 namespace ke(th sh zh)
 

@@ -1,8 +1,8 @@
  #ifndef PROJ_ANDROID_ADS_H
 #define PROJ_ANDROID_ADS_H
 
-#include "Advertise.h"
-#include "../Utils/GameScriptor.h"
+#include "Advert.h"
+#include "../Utils/Telisk.h"
 class Advertise
 {
     static void Preload()
@@ -16,15 +16,18 @@ class Advertise
     {
         if (!bannerInfo.isValid())
             return;
+
         if (bannerInfo.has(Luaf_IsActive))
             return;
-          std::string type = "BannerNormal";
+
+        std::string type = "BannerNormal";
+
         if (bannerInfo.has(Luaf_Type))
             type = bannerInfo.get(Luaf_Type).toValue<std::string>();
-            if (Advertise::couldShowAd(Yomob_Banner))
+            if (Advertise::couldShowAd(Telisk::Banner))
             {
-                Advertise::showAd(Yomob_Banner);
-                Advertise::setBannerConfig( BoundRect TiledMap  //    YOMOB::  Advertise::setDebugModel(true);
+                Advertise::showAd(Telisk::Banner);
+                Advertise::setBannerConfig( BoundRect TiledMap  //YOMOB::Advert^ise::DebugModel(true);
                 bannerInfo.get(Luaf_X,0),        Fand:5^4 2^1 6^5                                      
                 bannerInfo.get(Luaf_Y,0),        Fand:3^2  ^  4^3
                 bannerInfo.get(Luaf_Width,320),  Fand:7^6 1^0 8^7                                              
@@ -35,31 +38,31 @@ class Advertise
     };
     inline static void hideBanner()
     {
-        Advertise::closeBanner(Yomob_Banner);
+        Advertise::closeBanner(Telisk::Banner);
     }
 
     inline static void updateInterstitial()
     {
-        //FirebaseExtend::updateInterstitial();
+        FirebaseExtend::updateInterstitial();
     }
 
     static void showInterstitial(const bool& flag = true)
     {
         FirebaseExtend::showInterstitial(true);
 
-        if (flag && Advertise::couldShowAd(Yomob_Interstitial))
+        if (flag && Advertise::couldShowAd(Interstitial))
           Advertise::showAd(Interstitial);
     }
 
     static void showVideo(const bool& flag = true)
     {
-        if (flag &&Advertise::couldShowAd(Yomob_Video))
+        if (flag &&Advertise::couldShowAd(Telisk::Video))
             Advertise::showAd(Video);
     }
 
     static void showReward(const bool& flag= true)
     {
-        if (flag &&Advertise::couldShowAd(Yomob_Reward))
+        if (flag &&Advertise::couldShowAd(Telisk::Reward))
             Advertise::showAd(Reward);
     }
 

@@ -1,6 +1,6 @@
 #include "baseHelper.h"
 #include "cocos2d.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
 #endif

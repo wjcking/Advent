@@ -1,5 +1,5 @@
 #include "Role.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "../Map/CheckPoint.h"
@@ -10,20 +10,20 @@
 #include "../Utils/Constant.h"
 #include "../Triggers/Trigger.h"
 #include "../Triggers/TriggerSystem.h"
-Player* RoleManager::player = nullptr;
+Player* RoleSystem::player = nullptr;
 
 /*��̬���ʼ��*/
 
-RoleManager::RoleManager()
+RoleSystem::RoleSystem()
 {
 	entityMap.reserve(Reserve_Role);
 }
-RoleManager* RoleManager::getInstance()
+RoleSystem* RoleSystem::getInstance()
 {
-	static RoleManager instance;
+	static RoleSystem instance;
 	return &instance;
 }
-Player& RoleManager::getPlayerRefer()
+Player& RoleSystem::getPlayerRefer()
 {
 	if (nullptr == player)
 		player = dynamic_cast<Player*>(ROLE_MANAGER->getRoleByTag(ID_Player));
@@ -31,21 +31,21 @@ Player& RoleManager::getPlayerRefer()
 	return *player;
 }
 
-void RoleManager::process(function<void(Role&)> roleAction)
+void RoleSystem::process(function<void(Role&)> roleAction)
 {
 	for (auto role : entityMap)
 		roleAction(*role.second);
 }
 
 /*����id�ͷ����õ�����*/
-Role* RoleManager::getRoleByTag(const int& id, bool allowAssert)const
+Role* RoleSystem::getRoleByTag(const int& id, bool allowAssert)const
 {
 	//find the entity
 	auto ent = entityMap.find(id);
 
 	if (allowAssert)
 	{
-		assert((ent != entityMap.end()) && "<RoleManager::GetEntityFromID>: û�д�ID");
+		assert((ent != entityMap.end()) && "<RoleSystem::GetEntityFromID>: û�д�ID");
 		assert((ent->second != nullptr) && "role ��mapmanager ����Ϊ��");
 		return  ent->second;
 	}
@@ -53,18 +53,18 @@ Role* RoleManager::getRoleByTag(const int& id, bool allowAssert)const
 	return ent != entityMap.end() ? ent->second : nullptr;
 }
 
-void RoleManager::removeRole(Role* entity)
+void RoleSystem::removeRole(Role* entity)
 {
 	entityMap.erase(entityMap.find(entity->getTag()));
 }
 
-void RoleManager::registerRole(Role* newEntity)
+void RoleSystem::registerRole(Role* newEntity)
 {
 	newEntity->generateTag();
 	entityMap.insert(std::make_pair(newEntity->getTag(), newEntity));
 }
 
-void RoleManager::updateRole(const int & tag, const bool & isDisposed)
+void RoleSystem::updateRole(const int & tag, const bool & isDisposed)
 { 
 	auto role = ROLE_MANAGER->getRoleByTag(tag,false);
 
@@ -104,7 +104,7 @@ void RoleManager::updateRole(const int & tag, const bool & isDisposed)
 		ROLE_MANAGER->removeRole(tag);
 	}
 }
-void RoleManager::registerLuaRole(LuaIntf::LuaRef ref)
+void RoleSystem::registerLuaRole(LuaIntf::LuaRef ref)
 {
 	assert(ref.has(Luaf_Type) && "�����ý�ɫ����");
 	auto type = ref[Luaf_Type].value<RoleType>();
@@ -253,7 +253,7 @@ void RoleManager::registerLuaRole(LuaIntf::LuaRef ref)
 	LUAH->flush();
 }
 
-void RoleManager::setProperty(LuaIntf::LuaRef ref, Role* role)
+void RoleSystem::setProperty(LuaIntf::LuaRef ref, Role* role)
 {
 	if (ref.has(Luaf_FrameIndexes))
 		role->registerFrameIndexes(ref.get(Luaf_FrameIndexes));
@@ -363,7 +363,7 @@ void RoleManager::setProperty(LuaIntf::LuaRef ref, Role* role)
 
 }
 
-void RoleManager::release()
+void RoleSystem::release()
 {
 	//�л�����������
 	player = nullptr;
@@ -378,7 +378,7 @@ void RoleManager::release()
 	entityMap.clear();
 }
 
-void RoleManager::loadScript()
+void RoleSystem::loadScript()
 {
 	auto entity = LUAH->getGlobal(Luat_Role);
 
@@ -398,9 +398,9 @@ void RoleManager::loadScript()
 
 }
 //��̬����role
-void RoleManager::appendRole(LuaIntf::LuaRef ref)
+void RoleSystem::appendRole(LuaIntf::LuaRef ref)
 {
-	CCASSERT(ref.isTable(), "RoleManager:appendRole error");
+	CCASSERT(ref.isTable(), "RoleSystem:appendRole error");
 	auto roleList = LUAH->getGlobal(Luat_Role);
 	registerLuaRole(ref);
 	//���ܶ�ȡroletableֻ�����ӵ�ǰ��ref

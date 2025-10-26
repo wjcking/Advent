@@ -2,7 +2,7 @@
 #include "RObject.h"
 #include "Player.h"
 #include "Npc.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 #include "RoleFrame.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
@@ -10,7 +10,7 @@
 #include "SimpleAudioEngine.h"
 #include "../../../Common/StateMachine/StateMachine.h"
 #include "../Triggers/Trigger.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Utils/ResourceHelper.h"
 
 using namespace CocosDenshion;

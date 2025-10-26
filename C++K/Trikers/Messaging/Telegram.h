@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <math.h>
-//#include "Role\RoleManager.h"
+//#include "Role\RoleSystem.h"
 struct Telegram
 {
 	int senderID;

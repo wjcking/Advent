@@ -4,7 +4,7 @@
 #include "Fand.h"
 #include "Constant.h"
 #include "ui/UIButton.h"
-#include "GameScriptor.h"
+#include "Telisk.h"
 /*����ҡ�˷����ö��*/
 enum class JoystickStyle
 {

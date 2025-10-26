@@ -1,15 +1,15 @@
-#include "GameScriptor.h"
+#include "Telisk.h"
 #include "../Role/Role.h"
 #include "../Role/RoleFrame.h"
 #include "../Role/Player.h"
 #include "../Role/ProjectTile.h"
 #include "../Role/RObjectPhase.h" 
-#include "../Role/DialogueSystem.h"
+#include "../Role/TeliskSystem.h"
 #include "../../Common/StateMachine/State.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 #include "../Map/TiledMap.h"
 #include "../Map/CheckPoint.h"
-#include "../Role/RoleManager.h"
+#include "../Role/RoleSystem.h"
 #include "../Role/RObject.h"
 #include "../Role/Npc.h"
 #include "../Scene/StageScene.h"
@@ -23,9 +23,12 @@
 #include "Fand.h"
 #include "ResourceHelper.h"
 #include "JoyStick.h"
+
 using namespace cocos2d;
-const std::string Luah::ScriptFolder = "script/";
+
+static const string Luah::ScriptFolder = "script/";
 unsigned short Luah::CurrentStage = 1;
+
 void Luah::setRequirePath(const char* path)
 {
 	luaL_openlibs(l);
@@ -532,17 +535,17 @@ void Luah::registerClasses()
 		.addFunction("getRange", &TiledMap::getRange)
 		.endClass();
 	//�Ի�ϵͳ
-	LuaBinding(l).beginClass<DialogueSystem>("DialogueSystem")
-		.addStaticFunction("proceed", &DialogueSystem::proceed)
-		.addStaticFunction("update", &DialogueSystem::update)
-		.addStaticFunction("close", &DialogueSystem::close)
-		.addStaticFunction("setIndex", &DialogueSystem::setIndex)
-		.addStaticFunction("isDone", &DialogueSystem::isDone)
+	LuaBinding(l).beginClass<TeliskSystem>("TeliskSystem")
+		.addStaticFunction("proceed", &TeliskSystem::proceed)
+		.addStaticFunction("update", &TeliskSystem::update)
+		.addStaticFunction("close", &TeliskSystem::close)
+		.addStaticFunction("setIndex", &TeliskSystem::setIndex)
+		.addStaticFunction("isDone", &TeliskSystem::isDone)
 		.endClass();
 	//��ɫ������
-	LuaBinding(l).beginClass<RoleManager>("RoleManager")
-		.addStaticFunction("appendRole", &RoleManager::appendRole)
-		.addStaticFunction("updateRole", &RoleManager::updateRole)
+	LuaBinding(l).beginClass<RoleSystem>("RoleSystem")
+		.addStaticFunction("appendRole", &RoleSystem::appendRole)
+		.addStaticFunction("updateRole", &RoleSystem::updateRole)
 		.endClass();
 	//��̬����
 	LuaBinding(l).beginModule("Constant")
@@ -1016,11 +1019,11 @@ void Luah::callback(const char* className, const char* funcName)
 	}
 	catch (LuaIntf::LuaException  e)
 	{
-		//gcc ++ format ����������
+		
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 		log(StringUtils::format("[%s:%s]%s", className, funcName, e.what()).c_str());
 #else
-		//gcc ++ format ����������
+		
 		log("callback error");
 #endif
 	}
@@ -1041,7 +1044,7 @@ void Luah::callback(const char* className, const char* funcName, const LuaRef&  
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 		log(StringUtils::format("[%s:%s]%s", className, funcName, e.what()).c_str());
 #else
-		//gcc ++ format ����������
+		
 		log("callback error");
 #endif
 	}
@@ -1051,7 +1054,7 @@ void Luah::callmenu(const char* className, const char* funcName, const LuaRef& p
 {
 	try
 	{
-		auto luaFunc = getGlobal( Luac_CallbackMenu);
+		auto luaFunc = getGlobal(Luac_CallbackMenu);
 		if (luaFunc.isFunction())
 			luaFunc(className, funcName, params);
 
@@ -1062,7 +1065,7 @@ void Luah::callmenu(const char* className, const char* funcName, const LuaRef& p
 #if  CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 		log(StringUtils::format("[%s:%s]%s", className, funcName, e.what()).c_str());
 #else
-		//gcc ++ format ����������
+		
 		log("callmenu error");
 #endif
 	}

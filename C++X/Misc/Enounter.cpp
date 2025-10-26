@@ -13,7 +13,7 @@ int&  Clock::getTickInteger()
 	return  iTick;
 }
 //ֻ�������update����ִֻ��һ��
-float&  Clock::addDeltaCount()
+float& Clock::addDeltaCount()
 {
 	tik += 0.01f;// DtaIntvao;
 	iTick += 1;
@@ -27,15 +27,18 @@ float&  Clock::addDeltaCount()
 	return tik;
 }
 
-std::unordered_map<short, DelayPhase> DelayCollection::delay = std::unordered_map<short, DelayPhase>();
+unordered_map<short, DelayPhase> DelayCollection::delay = unordered_map<short, DelayPhase>();
+
 void DelayCollection::reset(const short& id)
 {
 	delay[id].reset();
 }
+
 void DelayCollection::clear()
 {
 	delay.clear();
 }
+
 bool DelayCollection::isTimeUp(const short& id, const float& ds)
 {
 	if (delay.size() == 0)

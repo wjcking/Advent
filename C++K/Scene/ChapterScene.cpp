@@ -1,6 +1,6 @@
 #include "ChapterScene.h"
 #include "../Utils/Funcpads.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Utils/Constant.h"
 #include "../Utils/ResourceHelper.h"
 #include "ui/UIButton.h"
@@ -28,7 +28,7 @@ bool ChapterScene::init()
 	if (!Layer::init())
 		return false;
 	auto chapterLength = LUAH->getGlobal(Luat_Chapters);
-	CCASSERT(chapterLength.isTable(), StringUtils::format("ÇëÉèÖÃ%s", Luat_Chapters).c_str());
+	CCASSERT(chapterLength.isTable(), StringUtils::format("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%s", Luat_Chapters).c_str());
 
 	auto bgSky = Sprite::create("background/levels.png");
 	addChild(bgSky, Z_BACKGROUND);
@@ -60,7 +60,7 @@ bool ChapterScene::init()
 	Button* btnStage = Button::create("control/chapter/locked.png", "control/chapter/locked.png");
 
 	std::string title = "";
-	//ÕÂ½Úscene
+	//ï¿½Â½ï¿½scene
 	unsigned short chapterIndex = 1;
 	const std::string DefaultStageImage = "control/chapter/locked.png";
 	std::string btnImage = "";
@@ -75,7 +75,7 @@ bool ChapterScene::init()
 		multi = 0.5f;
 		if (ref.has(Luaf_Count))
 			partCount = ref[Luaf_Count].value<short>();
-		//ÕÂ½ÚÍ¼Æ¬
+		//ï¿½Â½ï¿½Í¼Æ¬
 		for (int j = 1; j <= partCount; j++)
 		{
 			btnImage = StringUtils::format("control/chapter/stage%d.png", stageNumber);
@@ -94,7 +94,7 @@ bool ChapterScene::init()
 			if (stageNumber > lastStage)
 				break;
 		}
-		//·Ö¸ô·ûµÈ
+		//ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		auto li = Sprite::create("control/chapter/li.png");
 		auto separator = Sprite::create("control/chapter/separator.png");
 		auto label = Label::createWithSystemFont("", Resh::getFontName(), 18.f);
@@ -109,7 +109,7 @@ bool ChapterScene::init()
 		layout->addChild(separator);
 		layout->setPosition(Vec2(0, totalHeight - layoutHeight * chapterIndex++ - 10));
 		scrollView->addChild(layout);
-		//ÉèÖÃ±êÌâ
+		//ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
 		label->setString(title);
 
 
@@ -147,7 +147,7 @@ void ChapterScene::funcMenuCallback(Node * sender)
 
 void ChapterScene::onButtonClicked(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
 {
-	//´¥ÃþÍê±ÏºóÃ»ÓÐÔÚÔ­À´µÄ°´Å¥ÉÏÔòÍË³ö
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïºï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ä°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½
 	if (Widget::TouchEventType::ENDED != type)
 		return;
 

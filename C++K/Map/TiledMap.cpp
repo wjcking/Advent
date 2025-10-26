@@ -1,10 +1,10 @@
 #include "TiledMap.h"
 #include "MapManager.h"
-#include "../Role/RoleManager.h"
+#include "../Role/RoleSystem.h"
 #include "../Role/Role.h"
 #include "../Utils/Constant.h"
 #include "../Triggers/Trigger.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 #include "../Role/RObject.h"
 int TiledMap::nextTag = 1;
 TiledMap::TiledMap() :secondMap(nullptr), inSecondMap(false), lastRoleX(0.f), isStartOff(true)

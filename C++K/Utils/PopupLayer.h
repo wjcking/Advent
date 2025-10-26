@@ -2,9 +2,9 @@
 
 #include "cocos2d.h"
 #include "ui/UIScale9Sprite.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 #include "Fand.h"
-#include "GameScriptor.h"
+#include "Telisk.h"
 using namespace cocos2d;
 using namespace ui;
 class Overlay : public LayerColor

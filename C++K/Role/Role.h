@@ -7,7 +7,7 @@
 #include "Property.h"
 #include "RoleFrame.h"
 #include "../Utils/OBB.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 #include "../Map/MapProperty.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
@@ -15,7 +15,7 @@
 #include "WeaponSystem.h"
 #include "Weapon.h"
 #include "ui/UIScale9Sprite.h"
-#include "Dialogue.h"
+#include "Telisk.h"
 #include "RObjectPhase.h"
 using namespace cocos2d;
 
@@ -59,7 +59,7 @@ static const short AniCount = static_cast<short>(Anistyle::rotate) + 1;
 class Role : public Property
 {
 	//��Ҫ����˽�б���lua�ű���ȡ
-	friend class RoleManager;
+	friend class RoleSystem;
 private:
 	Role* collidedOpponent;
 	Ract objectIntersection;
@@ -130,7 +130,7 @@ protected:
 	BoundRact* boundRacts = nullptr; 
 	//�������
 	ReboundInfo reboundInfo;
-	//inline void openDialogBox(const DialogueText& value) { openDialogBox(value.t) }
+	//inline void openDialogBox(const TeliskText& value) { openDialogBox(value.t) }
 	//Ψһ����
 	bool checkTileSlopes(const unsigned short&, BoundRact[BandRact]);
 	void setDesirePosition(const BoundPosition&, const Ract&);

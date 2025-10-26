@@ -2,7 +2,7 @@
 #include "Role.h"
 #include "../Matric/Constant.h"
 #include "../Matric/OBB.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 #include "../../Common/StateMachine/StateMachine.h"
 
 class RObject;

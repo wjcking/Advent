@@ -1,10 +1,10 @@
 #include "Collapse.h"  
 #include "MapManager.h"
-#include "../Role/RoleManager.h"
+#include "../Role/RoleSystem.h"
 #include "TiledMap.h"
 #include "../Role/Player.h"
 #include "../Role/RObject.h"
-#include "../Utils/GameScriptor.h"
+#include "../Utils/Telisk.h"
 using namespace std;
 
 Collapse::Collapse()

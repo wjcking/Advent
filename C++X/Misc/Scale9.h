@@ -1,7 +1,8 @@
 #pragma once
 #include "cocos2d.h"
 #include "ui/UIScale9Sprite.h"
-#include "Dialogue.h"
+#include "Telisk.h"
+
 USING_NS_CC;
 using namespace ui;
 class Role;
@@ -9,8 +10,8 @@ class DialogBox: Scale9Sprite
 {
 private:
 	Label* label;
-	static std::vector<DialogueText> dialogueList;
+	static std::vector<TeliskText> dialogueList;
 public:
-	static void pushDialogue(const DialogueText&);
+	static void pushTelisk(const TeliskText&);
 	bool display(); 
 };

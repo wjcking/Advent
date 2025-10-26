@@ -33,7 +33,7 @@ int WeaponSystem::getAmmoRemainingForWeapon(const unsigned short&  weapon_type)
 {
 	if (weaponMap[weapon_type])
 	{
-		return weaponMap[weapon_type]->getRoundsRemaining();
+		return weaponMap[weapon_type]->getRoundRemaind();
 	}
 
 	return 0;

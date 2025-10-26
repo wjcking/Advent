@@ -1,15 +1,15 @@
 #pragma once
-#include "DialogueSystem.h"
-class DialogueSystem
+#include "TeliskSystem.h"
+class TeliskSystem
 {
 private:
 	//�����ж��Ƿ����һ��Ի�
 	static bool isWaitingForProcced;
 	static bool isSegmentDone();
 public:
-	DialogueSystem();
-	~DialogueSystem();
-	static bool isDialogueOn; 
+	TeliskSystem();
+	~TeliskSystem();
+	static bool isTeliskOn; 
 	static void update();
 	static void proceed();
 	static void close();

@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "../Utils/JoyStick.h" 
-#include "../Role/Dialogue.h"
+#include "../Role/Telisk.h"
 
 
 class Joystick;
@@ -29,7 +29,7 @@ private:
 	MenuItemImage* miPrompt;
 	//
 	Typewriter typeCurtain;
-	Dialogue dialogCurtain;
+	Telisk dialogCurtain;
 	CurtainInfo curtainInfo;
 
 	//��ʾ��ص�
@@ -78,14 +78,15 @@ public:
 	//���Ӱһ���رպ�ɫ����
 	void shutCurtain();
 	bool processCurtain();
+	inline Vec2& getBeginDelta() { return beginDelta; };
+	inline Vec2& getEndDelta() { return endDelta; }
+	inline bool& isTypeDone() { return isTypeCurtainDone; }
+	inline void output(const char* value) { lbOutput->setString(value); }
 	inline void setToolbar(const bool& flag = true)
 	{
 		menuButton->setVisible(flag);
 		miPrompt->setVisible(flag);
 	}
-	inline Vec2& getBeginDelta() { return beginDelta; };
-	inline Vec2& getEndDelta() { return endDelta; }
-	inline void output(const char* value) { lbOutput->setString(value); }
 	inline SlidedResult isSlided(const Vec2& range, const Ract& bound)
 	{
 		if (touchedBeginID != touchedEndID)
@@ -93,9 +94,6 @@ public:
 
 		return Fand::isSlided(beginDelta, endDelta, range, bound);
 	}
-	inline bool& isTypeDone() { return isTypeCurtainDone; }
-	
-
 };
 
 #endif

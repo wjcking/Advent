@@ -1,24 +1,24 @@
-#include "DialogueSystem.h"
-#include "Dialogue.h"
+#include "TeliskSystem.h"
+#include "Telisk.h"
 #include "Role.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 #include "../Utils/ResourceHelper.h"
-bool DialogueSystem::isDialogueOn = false;
-bool DialogueSystem::isWaitingForProcced = false;
+bool TeliskSystem::isTeliskOn = false;
+bool TeliskSystem::isWaitingForProcced = false;
 
-DialogueSystem::DialogueSystem()
+TeliskSystem::TeliskSystem()
 {
 }
 
-DialogueSystem::~DialogueSystem()
+TeliskSystem::~TeliskSystem()
 {
 
 }
-bool DialogueSystem::isSegmentDone()
+bool TeliskSystem::isSegmentDone()
 {
 	return DIALOGUE->isDone() && TYPE_DIALOG->isDone(false);
 }
-void DialogueSystem::update()
+void TeliskSystem::update()
 {
 
 	auto thread = DIALOGUE->getCurrentDialog();
@@ -45,10 +45,10 @@ void DialogueSystem::update()
 
 }
 
-void DialogueSystem::proceed()
+void TeliskSystem::proceed()
 {
 	//[���ֻ�]�����������ж��Ƿ��ƶ�����һ���Ի�
-	if (!isDialogueOn)
+	if (!isTeliskOn)
 		return;
 	 
 	isWaitingForProcced = isSegmentDone() ? false : true;
@@ -64,27 +64,27 @@ void DialogueSystem::proceed()
 
 //�Ի����Ķ���ʼ���������
 //����lua enter��������
-void DialogueSystem::setIndex(const unsigned int& start, const unsigned int& end)
+void TeliskSystem::setIndex(const unsigned int& start, const unsigned int& end)
 {
 	isWaitingForProcced = false;
-	isDialogueOn = true;
+	isTeliskOn = true;
 	DIALOGUE->setSegment(start, end);
 	TYPE_DIALOG->setContent(DIALOGUE->getCurrentDialog().text);
 	Resh::playSound("sound/question.mp3");
 }
-bool DialogueSystem::isDone()
+bool TeliskSystem::isDone()
 {
 	//���һ�仰��ʱ����Ҫͣ�٣�������Ҫ�жϴ����Ƿ����
 	if (DIALOGUE->isDone() && !isWaitingForProcced)
 	{
-		isDialogueOn = false;
+		isTeliskOn = false;
 		return true;
 	}
 
 	return false;
 }
 //����exit����
-void DialogueSystem::close()
+void TeliskSystem::close()
 { 
 	ROLE_MANAGER->process([](Role& role) {
 		role.closeDialog();

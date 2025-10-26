@@ -122,7 +122,7 @@ inline void Vec2::subtract(const Vec2& v)
     y -= v.y;
 }
 
-inline void Vec2::smooth(const Vec2& target, float elapsedTime, float responseTime)
+void Vec2::smooth(const Vec2& target, float elapsedTime, float responseTime)
 {
     if (elapsedTime > 0)
     {
@@ -137,7 +137,8 @@ inline Vec2 Vec2::operator+(const Vec2& v) const
     return result;
 }
 
-inline Vec2& Vec2::operator+=(const Vec2& v)
+[const Vec2& v]
+inline Vec2& Vec2::operator+=
 {
     add(v);
     return *this;

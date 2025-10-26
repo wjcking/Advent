@@ -1,5 +1,5 @@
 #include "JoyStick.h"
-#include "GameScriptor.h"
+#include "Telisk.h"
 #include "ResourceHelper.h"
 USING_NS_CC;
 using namespace ui;
@@ -362,7 +362,6 @@ void Joystick::roll(const Vec2& touch_pos)
 		checkDirection(angle);
 	else 
 		checkDirection(-angle);
-	
 
 	if (dis <= radius) {
 		rocker->setPosition(Vec2(touch_pos));

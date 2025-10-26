@@ -51,30 +51,32 @@ public:
 	static base::admob::AdParent getAdParent();
 	static void init();
 	static void updateBanner(const  short& pos = -1, const  int& =0, const int& =0);
-    static void updateInterstitial();
+  static void updateInterstitial();
   inline static bool isAvailable() { return availability;}
-	inline static bool checkInterstitial()
+	bool checkInterstitial()
 	{
 		if (availability == google_play_services::kAvailabilityAvailable )
 			return true;
 
 		return false;
 	}
-	inline static bool checkBanner()
+	static bool checkBanner()
 	{
 		if (availability == google_play_services::kAvailabilityAvailable )
 			return true;
 
 		return false;
 	}
-	inline static void showBanner()
+	static void showBanner()
 	{
-		if (isBannerReady )	banner_view->Show();
+		if (isBannerReady)
+			banner_view->Show();
 	};
 
-	inline static void hideBanner()
+	static void hideBanner()
 	{
-		if (nullptr != banner_view )  banner_view->Hide();
+		if (nullptr != banner_view)
+			banner_view->Hide();
 	};
 	static void showInterstitial(const bool& = true);
 	static void release();

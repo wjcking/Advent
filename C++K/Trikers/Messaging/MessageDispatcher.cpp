@@ -1,7 +1,7 @@
 #include "MessageDispatcher.h"
 #include "../Role/Role.h"
 #include "../Utils/Constant.h" 
-#include "../Role/RoleManager.h"
+#include "../Role/RoleSystem.h"
 #include "../Role/Locations.h"
 #include "MessageTypes.h"
 #include "../Role/EntityNames.h"

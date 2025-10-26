@@ -1,7 +1,7 @@
 #pragma once
 #include "../Utils/Fand.h"
 #include "../Utils/Constant.h"
-#include "../../Common/Misc/FrameCounter.h"
+#include "../../Tik/Encounter.h"
 #include "BlinkSystem.h"
 
 enum class KnockAction
@@ -27,7 +27,7 @@ struct KnockPhase : DelayPhase
 	bool isRemovable = false;
 	bool isColliding = false;
 	Vec2 replacedTile = Vec2(1, 3);
-	std::string sound = "";
+	string sound = "";
 	//�û��˶��ٴ�
 	unsigned short times = 0;
 	short limitedTimes = -1;	//-1=������
@@ -41,7 +41,7 @@ struct KnockPhase : DelayPhase
 		//�ӳٶ����������
 		delaySecond = ref.get(Luaf_Delay, 0);
 		if (ref.has(Luaf_Sound))
-			sound = ref.get(Luaf_Sound).toValue<std::string>();
+			sound = ref.get(Luaf_Sound).toValue<string>();
 		if (ref.has(Luaf_Toast))
 			toast = ref.get(Luaf_Toast);
 	}
@@ -144,10 +144,10 @@ struct LabelPhase : DelayPhase
 		}
 		return current;
 	}
-	inline std::string getString()
+	string getString()
 	{
-		std::string str;
-		std::stringstream stream;
+		string str;
+		stringstream stream;
 		stream << current;
 		str = stream.str();
 		return str;
@@ -162,7 +162,7 @@ struct FrameSwitch : FrameIndexes
 	inline unsigned short& getIndex() { return index; }
 	//unsigned short frameIndex;
 	CollisionDirection	direction = CollisionDirection::atTop;
-	std::string	sound = "";
+	string sound = "";
 	//��ײ��δ��ײ��Ĵ���
 	short touchedCount = 0;
 	bool isTouched = false;

@@ -7,6 +7,7 @@
 #include <string> 
 
 class TiledMap;
+
 #define MAP_MANAGER MapManager::getInstance()
 #define MAP_STAGE MapManager::getCurrentMap()
 #define MAP_WITHTAG(tag) MapManager::getInstance()->getMapByTagID(tag)
@@ -14,7 +15,7 @@ class TiledMap;
 class MapManager
 {
 	private:
-	std::unordered_map<int, TiledMap*> entityMap; 
+	unordered_map<int, TiledMap*> entityMap; 
 	MapManager(){	entityMap.reserve(5);	}
 	MapManager(const MapManager&);
 	MapManager& operator=(const MapManager&);

@@ -1,6 +1,6 @@
 #include "BlinkSystem.h"
 #include "RObject.h"
-#include "RoleManager.h"
+#include "RoleSystem.h"
 std::unordered_map<unsigned short, BlinkInfo> BlinkSystem::blinkGroup = std::unordered_map<unsigned short, BlinkInfo>();
 void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 {
@@ -12,7 +12,7 @@ void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 	for (auto iter = table.begin(); iter != table.end(); ++iter)
 	{
 		ref = iter.value();
-		//1.¼ì²â
+		//1.ï¿½ï¿½ï¿½
 		if (!ref.has(Luaf_Gid))
 			return;
 		if (!ref.has(Luaf_Tag))
@@ -29,7 +29,7 @@ void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 			return;
 		BlinkPhase bp;
 		bp = BlinkPhase(ref);
-		bp.groupID = bi.groupID;//ÕâÀïÒª¸³Öµ·ñÔò²»ÄÜÖØÖÃ
+		bp.groupID = bi.groupID;//ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		robject->setBlink(bp);
 	}

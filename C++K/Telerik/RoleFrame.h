@@ -1,5 +1,11 @@
 #pragma once
-#include "cocos2d.h"
+
+enum OppositePopup
+{
+	popNothing,
+	popMoney,
+	popDrug,
+};
 
 enum class FrameStyle :unsigned short
 {
@@ -19,6 +25,7 @@ enum class FrameStyle :unsigned short
 	win,
 	die,
 };
+
 static const unsigned short FrameLength = static_cast<unsigned short>(FrameStyle::die) + 1;
 struct FrameIndexes
 {
@@ -47,7 +54,9 @@ struct FrameIndexes
 		start = s;
 		end = e;
 	};
+
 	inline bool isEnded() { return index == end; }
+
 	void fetchNext()
 	{
 		if (index <= end)
@@ -56,7 +65,7 @@ struct FrameIndexes
 			index = start;
 	}
 
-	cocos2d::SpriteFrame* getFrame(const char* name) 
+	SpriteFrame* getFrame(const char* name) 
 	{
 		char key[100];
 		if (index > end)

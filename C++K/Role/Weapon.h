@@ -4,8 +4,8 @@
 #include "cocos2d.h"
 
 #include "../Utils/Constant.h"
-#include "../../Common/Misc/FrameCounter.h"
-#include "../Utils/GameScriptor.h"
+#include "../../Tik/Encounter.h"
+#include "../Utils/Telisk.h"
 using namespace cocos2d;
 
 class Role;
@@ -27,7 +27,7 @@ protected:
 	//ʲôʱ������¸�������
 	float nextAvailable;
 
-	inline bool isReadyForNextShot() { return Clock::getTickFloat() > nextAvailable ? true : false; }
+	inline bool readyNext() { return Clock::getTickFloat() > nextAvailable ? true : false; }
 	inline void updateNextAvailable() { nextAvailable = Clock::getTickFloat() +  rate; }
 	//���������ʱ������
 	std::string sound;
@@ -51,7 +51,7 @@ public:
 	virtual void attack() {};
 	virtual void  render() {};
 	//Ŀǰֻ��һ�����У��ӵ������
-	inline int getRoundsRemaining()const { return slugsLeft; }
+	inline int getRoundRemaind()const { return slugsLeft; }
 	void decrementNumRounds()
 	{
 		if (slugsLeft > 0)
