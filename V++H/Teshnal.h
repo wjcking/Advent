@@ -1,11 +1,11 @@
 #pragma once
-#include "cocos2d.h"
+#include "../Fsn/Vec2.h"
 #include "../Utils/Fand.h"
 #include "../Utils/Constant.h"
 #include "Fenk.h"
-using namespace cocos2d;
 
-class Property : public Sprite
+class Teshnal.Teshno;
+class Teshnal
 {
 protected:
 	int id;
@@ -15,7 +15,6 @@ protected:
 	Vec2 defaultJumpForce = Vec2(0.0, 6.05f);
 	Vec2 defaultJumpCutOff = Vec2(0.0, 6.05f);
 	Vec2 defaultGravity = Vec2(0.0, -0.11f);
-
 	//Vec2 defaultWallForce;
 	Vec2 jumpForceOnWall = Vec2(0.0f, 3.8f);
 	Vec2 jumpForce = defaultJumpForce;
@@ -32,49 +31,26 @@ protected:
 
 	//�ƶ�����
 	MovingDirection moveDirection = MovingDirection::stayStill;
+	bool isJumped = false;
+	bool isJumping = false;
+	bool isInAir;
+	bool onFalling;
 	//Ԥ�������״̬
 	bool originGravity = true;
 	bool isGravityOn = true;
-	bool isJumped = false;
-	bool isJumping = false;
-	bool onFalling;
 	bool onSlopeBottom = false;
 	bool onGround = false;
 	bool onObject = false;
 	bool onWall = false;
 public:
-	Property();
+	Teshnal();
+	private const MovingDirection getMovingX() const;
+	private const MovingDirection getMovingY() const;
 	inline const bool& getOnObject() { return this->onObject; }
 	inline const Vec2& getMoveStep() { return this->moveStep; }
 	inline const MovingDirection& getDirection() const { return this->moveDirection; }
 	inline bool isMoving() { return moveDirection != MovingDirection::stayStill; }
-	inline void setDirection(const MovingDirection& val)   { moveDirection = val; }
-	const MovingDirection getMovingX() const
-	{
-		if (moveDirection == MovingDirection::stayStill)
-			return MovingDirection::stayStill;
-
-		if (moveDirection == MovingDirection::toLeft || moveDirection == MovingDirection::toBottomLeft || moveDirection == MovingDirection::toTopLeft)
-			return MovingDirection::toLeft;
-
-		return MovingDirection::toRight;
-	}
-	const MovingDirection getMovingY() const
-	{
-		if (moveDirection == MovingDirection::stayStill)
-			return MovingDirection::stayStill;
-
-		if (moveDirection == MovingDirection::toTop || moveDirection == MovingDirection::toTopLeft || moveDirection == MovingDirection::toTopRight)
-			return MovingDirection::toTop;
-
-		return MovingDirection::toBottom;
-	}
-	//��ʼ����͵�ǰ����
-	inline void displace(const Vec2& realPos)
-	{
-		setPosition(realPos);
-		setDesire(realPos);
-	};
+	inline void setDirection(const MovingDirection& val) { moveDirection = val; }
 	inline Vec2 getDistance() { return Vec2(abs(getPositionX() - originPosition.x), abs(getPositionY() - originPosition.y)); }
 	inline void setOrigin(const Vec2& val) { this->originPosition = val; };
 	inline Vec2& getOrigin() { return this->originPosition; };
@@ -107,7 +83,12 @@ public:
 	inline void setDesiredY(const float& y) { this->desiredPosition.y = y; }
 	inline void addDesiredX(const float& x) { this->desiredPosition.x += x; }
 	inline void addDesiredY(const float& y) { this->desiredPosition.y += y; }
-
+//��ʼ����͵�ǰ����
+	inline void displace(const Vec2& realPos)
+	{
+		setPosition(realPos);
+		setDesire(realPos);
+	};
 	//���ٶ�
 	inline void setVelocity(const float& x, const float& y)
 	{
@@ -142,17 +123,6 @@ public:
 	inline void setJumpForce(const Vec2& value) { jumpForce = value; }
 	inline void setJumpCut(const Vec2& value) { jumpCutoff = value; }
 	inline void setJumpForceOnWall(const Vec2& value) { jumpForceOnWall = value; }
-	bool inAir(const bool = false);
-	void setSlopeSteps(const unsigned short& degree = -1)
-	{
-		switch (degree)
-		{
-		case 22:
-			return;
-		case 45:
-			return;
-		default:
-			return;
-		}
-	}
+	inline bool% Tash() { isInAir = !onSlopeBottom && !onGround && !onObject; };
+	void setSlopeSteps(const unsigned short& -1);
 };

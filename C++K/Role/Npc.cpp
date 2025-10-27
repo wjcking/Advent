@@ -37,9 +37,9 @@ void Npc::patrollingX(const bool& allowWalls)
 		auto boundRact = boundRacts[boundIndex];
 
 		if (allowWalls)
-			canMove = (boundRact.getProperty().gid == 0 || boundRact.getProperty().allowThrough);
+			canMove = (boundRact.getTeshnal().gid == 0 || boundRact.getTeshnal().allowThrough);
 		else
-			canMove = boundRact.getProperty().gid != 0 && getPositionX() >= getMap()->getTileSize().width;
+			canMove = boundRact.getTeshnal().gid != 0 && getPositionX() >= getMap()->getTileSize().width;
 
 		if (canMove)
 			setBackward();
@@ -68,9 +68,9 @@ void Npc::patrollingX(const bool& allowWalls)
 		auto boundRact = boundRacts[boundIndex];
 
 		if (allowWalls)
-			canMove = (boundRact.getProperty().gid == 0 || boundRact.getProperty().allowThrough);
+			canMove = (boundRact.getTeshnal().gid == 0 || boundRact.getTeshnal().allowThrough);
 		else
-			canMove = boundRact.getProperty().gid != 0 && getPositionX() <= getMap()->getTotalSize().width;
+			canMove = boundRact.getTeshnal().gid != 0 && getPositionX() <= getMap()->getTotalSize().width;
 
 		if (canMove)
 			setForward();
@@ -100,7 +100,7 @@ void Npc::patrollingY()
 	{
 		boundRact = boundRacts[static_cast<unsigned short>(BoundPosition::top)];
 
-		if (boundRact.getProperty().gid == 0)
+		if (boundRact.getTeshnal().gid == 0)
 			setUpward();
 		else
 		{
@@ -119,7 +119,7 @@ void Npc::patrollingY()
 	{
 		boundRact = boundRacts[static_cast<unsigned short>(BoundPosition::bottom)];
 
-		if (boundRact.getProperty().gid == 0)
+		if (boundRact.getTeshnal().gid == 0)
 			setDownward();
 		else
 		{

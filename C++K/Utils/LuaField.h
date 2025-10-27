@@ -4,9 +4,6 @@
 #include "Fand.h"
 #include "../../Common/lua/include/lua.hpp" 
 #include "../../Common/Lua-Intf/LuaIntf.h" 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
-#pragma comment(lib, "lua5.3.4.lib")
-#endif
 
 using namespace LuaIntf;
 using namespace cocos2d;
@@ -48,3 +45,7 @@ struct CurtainInfo : Luaf
 
 	FontInfo font;
 };
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINZK) 
+#pragma comment(lib, "lua5.3.4.lib")
+#endif

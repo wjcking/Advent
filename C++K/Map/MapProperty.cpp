@@ -1,6 +1,6 @@
-#include "MapProperty.h"
+#include "MapTeshnal.h"
 
-TilePropertyInfo::TilePropertyInfo()//:isSlope(false), isHarmful(false), isOneWay(false), inset(Ract::ZERO)
+TileTeshnalInfo::TileTeshnalInfo()//:isSlope(false), isHarmful(false), isOneWay(false), inset(Ract::ZERO)
 {
 	isSlope = false;
 	isHarmful = false;

@@ -1,4 +1,5 @@
 #include "Role.h"  
+#include "Teshnal.h"
 #include "RObject.h"
 #include "Player.h"
 #include "Npc.h"
@@ -17,7 +18,7 @@ using namespace CocosDenshion;
 
 int Role::nextTag = 1;
 int Role::touchedRole = 0;
-Role::Role() :Property(), weaponSystem(*this), delayRecovery(0.30f), label(nullptr), delayFrame(0.15f), scaleDialog(nullptr)
+Role::Role() :Teshnal(), weaponSystem(*this), delayRecovery(0.30f), label(nullptr), delayFrame(0.15f), scaleDialog(nullptr)
 {
 	allowFollow = false;
 	allowDisposal = false;
@@ -31,10 +32,10 @@ Role::Role() :Property(), weaponSystem(*this), delayRecovery(0.30f), label(nullp
 	lastCollideCollection.reserve(Reserve_Role);
 	lastCollideLine.reserve(Reserve_65534);
 }
+
 Role::~Role()
 {
 	sensorSystem.clear();
-
 }
 
 //sensor,��̬���ӵ�roleû��
@@ -67,6 +68,26 @@ void Role::loadScript()
 		}
 		sensorSystem.addSensor(sensor);
 	}
+}
+const Teshnal::MovingDirection getMovingX() const
+{
+	if (moveDirection == MovingDirection::stayStill)
+		return MovingDirection::stayStill;
+
+	if (moveDirection == MovingDirection::toLeft || moveDirection == MovingDirection::toBottomLeft || moveDirection == MovingDirection::toTopLeft)
+		return MovingDirection::toLeft;
+
+	return MovingDirection::toRight;
+}
+const Teshnal::MovingDirection getMovingY() const
+{
+	if (moveDirection == MovingDirection::stayStill)
+		return MovingDirection::stayStill;
+
+	if (moveDirection == MovingDirection::toTop || moveDirection == MovingDirection::toTopLeft || moveDirection == MovingDirection::toTopRight)
+		return MovingDirection::toTop;
+
+	return MovingDirection::toBottom;
 }
 MovingDirection Role::scanSensor(Role* opponent)
 {
@@ -497,7 +518,7 @@ void Role::checkObjectFenk()
 	switch (lastCollideDirection)
 	{
 	case CollisionDirection::atLeft:
-		if (!collidedOpponent->sideLeft.allowCollision)
+		if (!collidedOpponent->FenkLeft.allowCollision)
 			break;
 
 		//�������С�ڷ�Χ���򷵻ص�ǰλ�ã��������Ƭ��ײ
@@ -511,7 +532,7 @@ void Role::checkObjectFenk()
 		}
 		break;
 	case CollisionDirection::atRight:
-		if (!collidedOpponent->sideRight.allowCollision)
+		if (!collidedOpponent->FenkRight.allowCollision)
 			break;
 		//������ƶ���Ƭ����ֱ�Ӳ���ȥ 	
 		//ͬʱ��object�����ߵ�ʱ��߶�Ӧ̧��
@@ -525,7 +546,7 @@ void Role::checkObjectFenk()
 		}
 		break;
 	case CollisionDirection::atTop:
-		if (!collidedOpponent->sideTop.allowCollision)
+		if (!collidedOpponent->FenkTop.allowCollision)
 			break;
 		resetVelocity();
 		addDesiredY(objectIntersection.size.height - collidedOpponent->moveStep.y);
@@ -537,7 +558,7 @@ void Role::checkObjectFenk()
 		isJumping = false;
 		break;
 	case CollisionDirection::atBottom:
-		if (!collidedOpponent->sideBottom.allowCollision)
+		if (!collidedOpponent->FenkBottom.allowCollision)
 			break;
 		addDesiredY(-objectIntersection.size.height);
 		resetVelocity();
@@ -834,7 +855,7 @@ void Role::checkTileCollision()
 		if (boundRacts[index].gid <= 0)
 			continue;
 
-		if (boundRacts[index].getProperty().allowThrough)
+		if (boundRacts[index].getTeshnal().allowThrough)
 		{
 			continue;
 		}
@@ -854,7 +875,7 @@ void Role::checkTileCollision()
 			gotoDesirePosition();
 			return;
 		}
-		if (boundRacts[index].getProperty().isSlope)
+		if (boundRacts[index].getTeshnal().isSlope)
 		{
 			gotoDesirePosition();
 			continue;
@@ -864,11 +885,11 @@ void Role::checkTileCollision()
 		if (index == BoundPosition::bottom || index == BoundPosition::bottomLeft || index == BoundPosition::bottomRight)
 		{
 			//tile��hero���·� �䵽��tile��
-			if (!boundRacts[index].getProperty().isOneWay)
+			if (!boundRacts[index].getTeshnal().isOneWay)
 			{
 				setDesirePosition((BoundPosition&)index, intersection);
 			}
-			else if (boundRacts[index].getProperty().isOneWay)
+			else if (boundRacts[index].getTeshnal().isOneWay)
 			{
 				float by = boundRacts[index].getMaxY() + 12;//����
 				if (onFalling &&  getPositionY() > by)
@@ -881,14 +902,14 @@ void Role::checkTileCollision()
 			{
 
 			}
-			if (!boundRacts[index].getProperty().isOneWay)
+			if (!boundRacts[index].getTeshnal().isOneWay)
 				setDesirePosition((BoundPosition&)index, intersection);
 		}
 		else if (index == BoundPosition::left)
 		{
 			//onWall = true;
 			//velocity = Vec2(velocity.x * 0.09f, velocity.y*0.75f); //2
-			if (!boundRacts[index].getProperty().isOneWay)
+			if (!boundRacts[index].getTeshnal().isOneWay)
 				setDesirePosition((BoundPosition&)index, intersection);
 
 		}
@@ -896,12 +917,12 @@ void Role::checkTileCollision()
 		{
 			//onWall = true;
 			//velocity = Vec2(velocity.x * 0.09f, velocity.y*0.75f); //2
-			if (!boundRacts[index].getProperty().isOneWay)
+			if (!boundRacts[index].getTeshnal().isOneWay)
 				setDesirePosition((BoundPosition&)index, intersection);
 		}
 		else
 		{
-			if (!boundRacts[index].getProperty().isOneWay)
+			if (!boundRacts[index].getTeshnal().isOneWay)
 				setDesirePosition((BoundPosition&)index, intersection);
 		}
 
@@ -966,9 +987,9 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 		return false;
 
 	auto slopeRact = boundRacts[positionIndex];
-	auto tileProperty = getMap()->getProperty(slopeRact.gid);
+	auto tileTeshnal = getMap()->getTeshnal(slopeRact.gid);
 
-	if (tileProperty.slopeTowards == SlopeTowards::faceLeft && tileProperty.slopeDegree == SlopeDegree::degree45)
+	if (tileTeshnal.slopeTowards == SlopeTowards::faceLeft && tileTeshnal.slopeDegree == SlopeDegree::degree45)
 	{
 		if (getPositionX() >= slopeRact.getMidX())
 			if ((boundRacts[BoundPosition::bottomRight].gid != slopeRact.gid && boundRacts[BoundPosition::bottomRight].gid > 0) || (boundRacts[BoundPosition::bottom].gid != slopeRact.gid && boundRacts[BoundPosition::bottom].gid > 0))
@@ -976,10 +997,10 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 
 		float xDiff = desiredPosition.x - slopeRact.origin.x;
 		float maxSlopeY = getContentSize().height > slopeRact.size.height ? slopeRact.getMinY() + getContentSize().height : slopeRact.getMaxY();
-		float slopeY = maxSlopeY + xDiff - tileProperty.roleOffsetY;
+		float slopeY = maxSlopeY + xDiff - tileTeshnal.roleOffsetY;
 
 		if (desiredPosition.y > slopeY)
-			gravity.y = tileProperty.slopeGravity;
+			gravity.y = tileTeshnal.slopeGravity;
 		else
 		{
 			resetGravity();
@@ -989,7 +1010,7 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 		}
 		return true;
 	}
-	else if (tileProperty.slopeTowards == SlopeTowards::faceRight && tileProperty.slopeDegree == SlopeDegree::degree45)
+	else if (tileTeshnal.slopeTowards == SlopeTowards::faceRight && tileTeshnal.slopeDegree == SlopeDegree::degree45)
 	{
 		if (getPositionX() <= slopeRact.getMidX())
 			if ((boundRacts[BoundPosition::bottomLeft].gid != slopeRact.gid && boundRacts[BoundPosition::bottomLeft].gid > 0) || (boundRacts[BoundPosition::bottom].gid != slopeRact.gid && boundRacts[BoundPosition::bottom].gid > 0))
@@ -997,10 +1018,10 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 
 		float xDiff = (desiredPosition.x - slopeRact.origin.x) - getMap()->getTileSize().width;
 		float maxSlopeY = getContentSize().height > slopeRact.size.height ? slopeRact.getMinY() + getContentSize().height : slopeRact.getMaxY();
-		float slopeY = maxSlopeY - xDiff - tileProperty.roleOffsetY;
-		//float slopeY = slopeRact.origin.y + this->getContentSize().height - xDiff - tileProperty.roleOffsetY;
+		float slopeY = maxSlopeY - xDiff - tileTeshnal.roleOffsetY;
+		//float slopeY = slopeRact.origin.y + this->getContentSize().height - xDiff - tileTeshnal.roleOffsetY;
 		if (desiredPosition.y > slopeY)
-			gravity.y = tileProperty.slopeGravity;
+			gravity.y = tileTeshnal.slopeGravity;
 		else
 		{
 			resetGravity();
@@ -1010,7 +1031,7 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 		}
 		return true;
 	}
-	else if (tileProperty.slopeTowards == SlopeTowards::faceLeft && tileProperty.slopeDegree == SlopeDegree::degree22_5)
+	else if (tileTeshnal.slopeTowards == SlopeTowards::faceLeft && tileTeshnal.slopeDegree == SlopeDegree::degree22_5)
 	{
 		if (getPositionX() >= slopeRact.getMidX())
 			if ((boundRacts[BoundPosition::bottomRight].gid != slopeRact.gid && boundRacts[BoundPosition::bottomRight].gid > 0) || (boundRacts[BoundPosition::bottom].gid != slopeRact.gid && boundRacts[BoundPosition::bottom].gid > 0))
@@ -1020,15 +1041,15 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 
 		float x = desiredPosition.x * m;
 		float interception = getMap()->getTileSize().height / 2;
-		float initSlopeY = slopeRact.getProperty().initSlopeY ? interception : 0.f;//22�Ƚǵĵڶ���tile
+		float initSlopeY = slopeRact.getTeshnal().initSlopeY ? interception : 0.f;//22�Ƚǵĵڶ���tile
 		float degree = interception / getMap()->getTileSize().height;
 		float maxSlopeY = getContentSize().height > slopeRact.size.height ? slopeRact.getMinY() + getContentSize().height : slopeRact.getMaxY();
 		//�ӷ� y1 = y + (x1 - x) * (v / u)
 		float formulation = maxSlopeY + initSlopeY + interception + (getPositionX() - slopeRact.origin.x)* degree;
-		float slopeY = formulation - interception - tileProperty.roleOffsetY;
+		float slopeY = formulation - interception - tileTeshnal.roleOffsetY;
 
 		if (desiredPosition.y >= slopeY)
-			gravity.y = tileProperty.slopeGravity;
+			gravity.y = tileTeshnal.slopeGravity;
 		else
 		{
 			resetGravity();
@@ -1038,7 +1059,7 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 		}
 		return true;
 	}
-	else if (tileProperty.slopeTowards == SlopeTowards::faceRight && tileProperty.slopeDegree == SlopeDegree::degree22_5)
+	else if (tileTeshnal.slopeTowards == SlopeTowards::faceRight && tileTeshnal.slopeDegree == SlopeDegree::degree22_5)
 	{
 		if (getPositionX() <= slopeRact.getMidX())
 			if ((boundRacts[BoundPosition::bottomLeft].gid != slopeRact.gid && boundRacts[BoundPosition::bottomLeft].gid > 0) || (boundRacts[BoundPosition::bottom].gid != slopeRact.gid && boundRacts[BoundPosition::bottom].gid > 0))
@@ -1048,14 +1069,14 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 		float x = desiredPosition.x *m;
 		float interception = getMap()->getTileSize().height / 2;
 		float degree = interception / getMap()->getTileSize().height;
-		float initSlopeY = slopeRact.getProperty().initSlopeY ? interception : 0.f; //22�Ƚǵĵڶ���tile
+		float initSlopeY = slopeRact.getTeshnal().initSlopeY ? interception : 0.f; //22�Ƚǵĵڶ���tile
 		//y1 = y + (x1 - x) * (v / u)
 		//����
 		float maxSlopeY = getContentSize().height > slopeRact.size.height ? slopeRact.getMinY() + getContentSize().height : slopeRact.getMaxY();
-		float formulation = maxSlopeY + initSlopeY + interception - (getPositionX() - slopeRact.origin.x) * degree - tileProperty.roleOffsetY - (getContentSize().height - slopeRact.size.height);
+		float formulation = maxSlopeY + initSlopeY + interception - (getPositionX() - slopeRact.origin.x) * degree - tileTeshnal.roleOffsetY - (getContentSize().height - slopeRact.size.height);
 		if (desiredPosition.y >= formulation)
 		{
-			gravity.y = tileProperty.slopeGravity;
+			gravity.y = tileTeshnal.slopeGravity;
 		}
 		else
 		{
@@ -1464,14 +1485,14 @@ RactAround Role::getRactAround(const bool& flagVertex)
 }
 void Role::gotPushed(Role& collider)
 {
-	if (collider.getCollidedDirection() == CollisionDirection::atLeft && sideLeft.allowPush)
-		addDesiredX(sideLeft.pushSteps.x);
-	if (collider.getCollidedDirection() == CollisionDirection::atRight && sideRight.allowPush)
-		addDesiredX(-sideRight.pushSteps.x);
-	if (collider.getCollidedDirection() == CollisionDirection::atBottom && sideBottom.allowPush)
-		addDesiredY(sideBottom.pushSteps.y);
+	if (collider.getCollidedDirection() == CollisionDirection::atLeft && FenkLeft.allowPush)
+		addDesiredX(FenkLeft.pushSteps.x);
+	if (collider.getCollidedDirection() == CollisionDirection::atRight && FenkRight.allowPush)
+		addDesiredX(-FenkRight.pushSteps.x);
+	if (collider.getCollidedDirection() == CollisionDirection::atBottom && FenkBottom.allowPush)
+		addDesiredY(FenkBottom.pushSteps.y);
 	//�����Ƶ�ʱ���ٶȿ죬����2������������������
-	if (collider.getCollidedDirection() == CollisionDirection::atTop && sideTop.allowPush)
-		addDesiredY(-sideTop.pushSteps.y / 2);
+	if (collider.getCollidedDirection() == CollisionDirection::atTop && FenkTop.allowPush)
+		addDesiredY(-FenkTop.pushSteps.y / 2);
 	gotoDesirePosition();
 }

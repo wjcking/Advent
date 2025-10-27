@@ -4,11 +4,11 @@
 #include "cocos2d.h"
 #include "../Utils/Fand.h"
 #include <string>
-#include "Property.h"
+#include "Teshnal.h"
 #include "RoleFrame.h"
 #include "../Utils/OBB.h"
 #include "../../Tik/Encounter.h"
-#include "../Map/MapProperty.h"
+#include "../Map/MapTeshnal.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "../Triggers/TriggerSystem.h"
@@ -56,7 +56,7 @@ enum class Anistyle
 static const Vec2 InsetTile = Vec2(12.f, 0.0f);
 static const Vec2 InsetObject = Vec2(3.5f, 0.f);
 static const short AniCount = static_cast<short>(Anistyle::rotate) + 1;
-class Role : public Property
+class Role : public Teshnal
 {
 	//��Ҫ����˽�б���lua�ű���ȡ
 	friend class RoleSystem;
@@ -139,10 +139,10 @@ protected:
 
 public:
 	static int nextTag;
-	Fenk sideLeft;
-	Fenk sideRight;
-	Fenk sideTop;
-	Fenk sideBottom;
+	Fenk FenkLeft;
+	Fenk FenkRight;
+	Fenk FenkTop;
+	Fenk FenkBottom;
 	Role();
 	virtual ~Role();
 	virtual void update();
@@ -175,7 +175,7 @@ public:
 	{
 		//����ˢ��
 		auto boundRact = getMap()->getCenterTile(getPosition());
-		if (boundRact.getProperty().isHarmful)
+		if (boundRact.getTeshnal().isHarmful)
 		 	gotoHell("sound/sting.wav");
 	}
 	void checkObjectFenk();
@@ -310,77 +310,77 @@ public:
 	{
 		if (cd == CollisionDirection::intersected)
 		{
-			sideLeft.allowCollision = true;
-			sideRight.allowCollision = true;
-			sideTop.allowCollision = true;
-			sideBottom.allowCollision = true;
+			FenkLeft.allowCollision = true;
+			FenkRight.allowCollision = true;
+			FenkTop.allowCollision = true;
+			FenkBottom.allowCollision = true;
 			return;
 		}
-		sideLeft.allowCollision = CollisionDirection::atLeft == cd;
-		sideRight.allowCollision = CollisionDirection::atRight == cd;
-		sideTop.allowCollision = CollisionDirection::atTop == cd;
-		sideBottom.allowCollision = CollisionDirection::atBottom == cd;
+		FenkLeft.allowCollision = CollisionDirection::atLeft == cd;
+		FenkRight.allowCollision = CollisionDirection::atRight == cd;
+		FenkTop.allowCollision = CollisionDirection::atTop == cd;
+		FenkBottom.allowCollision = CollisionDirection::atBottom == cd;
 	}
 	void disallowCollision(CollisionDirection cd = CollisionDirection::intersected)
 	{
 		if (cd == CollisionDirection::intersected)
 		{
-			sideLeft.allowCollision = false;
-			sideRight.allowCollision = false;
-			sideTop.allowCollision = false;
-			sideBottom.allowCollision = false;
+			FenkLeft.allowCollision = false;
+			FenkRight.allowCollision = false;
+			FenkTop.allowCollision = false;
+			FenkBottom.allowCollision = false;
 			return;
 		}
-		sideLeft.allowCollision = CollisionDirection::atLeft == cd ? false : true;
-		sideRight.allowCollision = CollisionDirection::atRight == cd ? false : true;
-		sideTop.allowCollision = CollisionDirection::atTop == cd ? false : true;
-		sideBottom.allowCollision = CollisionDirection::atBottom == cd ? false : true;
+		FenkLeft.allowCollision = CollisionDirection::atLeft == cd ? false : true;
+		FenkRight.allowCollision = CollisionDirection::atRight == cd ? false : true;
+		FenkTop.allowCollision = CollisionDirection::atTop == cd ? false : true;
+		FenkBottom.allowCollision = CollisionDirection::atBottom == cd ? false : true;
 	}	
 	void gotPushed(Role&);
 	inline bool hasPushes()
 	{
-		return sideLeft.allowPush || sideRight.allowPush || sideTop.allowPush || sideBottom.allowPush;
+		return FenkLeft.allowPush || FenkRight.allowPush || FenkTop.allowPush || FenkBottom.allowPush;
 	}
 	void allowPush(CollisionDirection cd = CollisionDirection::intersected)
 	{
 		if (cd == CollisionDirection::intersected)
 		{
-			sideLeft.allowPush = true;
-			sideRight.allowPush = true;
-			sideTop.allowPush = true;
-			sideBottom.allowPush = true;
+			FenkLeft.allowPush = true;
+			FenkRight.allowPush = true;
+			FenkTop.allowPush = true;
+			FenkBottom.allowPush = true;
 			return;
 		}
-		sideLeft.allowPush = CollisionDirection::atLeft == cd;
-		sideRight.allowPush = CollisionDirection::atRight == cd;
-		sideTop.allowPush = CollisionDirection::atTop == cd;
-		sideBottom.allowPush = CollisionDirection::atBottom == cd;
+		FenkLeft.allowPush = CollisionDirection::atLeft == cd;
+		FenkRight.allowPush = CollisionDirection::atRight == cd;
+		FenkTop.allowPush = CollisionDirection::atTop == cd;
+		FenkBottom.allowPush = CollisionDirection::atBottom == cd;
 	}
 	inline void disallowPush(CollisionDirection cd = CollisionDirection::intersected)
 	{
 		if (cd == CollisionDirection::intersected)
 		{
-			sideLeft.allowPush = false;
-			sideRight.allowPush = false;
-			sideTop.allowPush = false;
-			sideBottom.allowPush = false;
+			FenkLeft.allowPush = false;
+			FenkRight.allowPush = false;
+			FenkTop.allowPush = false;
+			FenkBottom.allowPush = false;
 			return;
 		}
-		sideLeft.allowPush = CollisionDirection::atLeft == cd ? false : true;
-		sideRight.allowPush = CollisionDirection::atRight == cd ? false : true;
-		sideTop.allowPush = CollisionDirection::atTop == cd ? false : true;
-		sideBottom.allowPush = CollisionDirection::atBottom == cd ? false : true;
+		FenkLeft.allowPush = CollisionDirection::atLeft == cd ? false : true;
+		FenkRight.allowPush = CollisionDirection::atRight == cd ? false : true;
+		FenkTop.allowPush = CollisionDirection::atTop == cd ? false : true;
+		FenkBottom.allowPush = CollisionDirection::atBottom == cd ? false : true;
 	}
 	inline bool isHarmful()
 	{
-		return sideLeft.isHarmful && sideRight.isHarmful && sideTop.isHarmful && sideBottom.isHarmful;
+		return FenkLeft.isHarmful && FenkRight.isHarmful && FenkTop.isHarmful && FenkBottom.isHarmful;
 	}
 	inline void setHarmful(const bool& value = true)
 	{
-		sideLeft.isHarmful = value;
-		sideRight.isHarmful = value;
-		sideTop.isHarmful = value;
-		sideBottom.isHarmful = value;
+		FenkLeft.isHarmful = value;
+		FenkRight.isHarmful = value;
+		FenkTop.isHarmful = value;
+		FenkBottom.isHarmful = value;
 	}
 };
 #endif

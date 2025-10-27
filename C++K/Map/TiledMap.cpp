@@ -126,7 +126,7 @@ bool TiledMap::exchangeMap(Role* role)
 	return false;
 }
 
-TilePropertyInfo&  TiledMap::getProperty(const int& gid)
+TileTeshnalInfo&  TiledMap::getTeshnal(const int& gid)
 {
 	auto propertyValue = tileProperties.find(gid);
 
@@ -166,10 +166,10 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	int gid = gid = getGidAt(tilePos);
 	Ract tileRact = this->getRactByTileCoordinate(tilePos, gid);  //��Χ��
 
-	auto tileProperty = getProperty(gid);
+	auto tileTeshnal = getTeshnal(gid);
 
 	boundRacts[BoundPosition::bottom] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::bottom].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::bottom].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -186,9 +186,9 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	gid = getGidAt(tilePos);
 	tileRact = this->getRactByTileCoordinate(tilePos, gid);
 
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 	boundRacts[BoundPosition::top] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::top].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::top].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -200,10 +200,10 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	tilePos = Vec2(tilePosition.x - 1, tilePosition.y);
 	gid = getGidAt(tilePos);
 	tileRact = this->getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 
 	boundRacts[BoundPosition::left] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::left].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::left].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -219,10 +219,10 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	//gid = tilePos.x == getMapSize().width ? 0 : layer->getTileGIDAt(tilePos); //����ͼ���ұߣ�gidȴ��ǰһ��x��tile ����
 	gid = getGidAt(tilePos);
 	tileRact = getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 
 	boundRacts[BoundPosition::right] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::right].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::right].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -236,9 +236,9 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	//gid = layer->getTileGIDAt(tilePos);
 	gid = getGidAt(tilePos);
 	tileRact = getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 	boundRacts[BoundPosition::topLeft] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::topLeft].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::topLeft].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -252,9 +252,9 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	//	gid = layer->getTileGIDAt(tilePos);
 	gid = getGidAt(tilePos);
 	tileRact = getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 	boundRacts[BoundPosition::topRight] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::topRight].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::topRight].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -267,10 +267,10 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	//	gid = layer->getTileGIDAt(tilePos);
 	gid = getGidAt(tilePos);
 	tileRact = getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 
 	boundRacts[BoundPosition::bottomLeft] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::bottomLeft].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::bottomLeft].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -284,9 +284,9 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	//gid = tilePos.x == getMapSize().width ? 0 : layer->getTileGIDAt(tilePos); //����ͼ���ұߣ�gidȴ��ǰһ��x��tile ����
 	gid = getGidAt(tilePos);
 	tileRact = getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 	boundRacts[BoundPosition::bottomRight] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::bottomRight].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::bottomRight].setTileTeshnal(tileTeshnal);
 
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
@@ -299,10 +299,10 @@ BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
 	//gid = layer->getTileGIDAt(tilePos);
 	gid = getGidAt(tilePos);
 	tileRact = getRactByTileCoordinate(tilePos, gid);
-	tileProperty = getProperty(gid);
+	tileTeshnal = getTeshnal(gid);
 
 	boundRacts[BoundPosition::centerSelf] = BoundRact(gid, tilePos, tileRact);
-	boundRacts[BoundPosition::centerSelf].setTileProperty(tileProperty);
+	boundRacts[BoundPosition::centerSelf].setTileTeshnal(tileTeshnal);
 	if (tilePos.x > borderMin.x && tilePos.y > borderMin.y && tilePos.x < borderMax.x && tilePos.y < borderMax.y)
 	{
 		movingTile = layer->getTileAt(tilePos);
@@ -326,10 +326,10 @@ BoundRact TiledMap::getCenterTile(const Vec2& rolePosition)
 
 	auto gid = getGidAt(tilePosition);
 	auto tileRact = getRactByTileCoordinate(tilePosition, gid);
-	auto tileProperty = getProperty(gid);
+	auto tileTeshnal = getTeshnal(gid);
 
 	auto boundRact = BoundRact(gid, tilePosition, tileRact);
-	boundRact.setTileProperty(tileProperty);
+	boundRact.setTileTeshnal(tileTeshnal);
 
 	return boundRact;
 

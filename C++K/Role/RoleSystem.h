@@ -45,7 +45,7 @@ class RoleSystem
 	void loadScript();
 	static void registerLuaRole(LuaIntf::LuaRef);
 	//1.���м��ص�ʱ������ 2.����������
-	static void setProperty(LuaIntf::LuaRef ref, Role* role);
+	static void setTeshnal(LuaIntf::LuaRef ref, Role* role);
 	//����
 	static void appendRole(LuaIntf::LuaRef);
 };

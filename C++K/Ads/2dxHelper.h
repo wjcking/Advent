@@ -505,16 +505,16 @@ static bool jsb_TGSDK_function_setIsAgeRestrictedUser(se::State& s) {
 SE_BIND_FUNC(jsb_TGSDK_function_setIsAgeRestrictedUser)
 
 #define DEFINE_JSB_FUNCTION(method) cls->defineStaticFunction(#method, _SE(jsb_TGSDK_function_##method))
-#define DEFINE_JSB_PROP(prop)  cls->defineStaticProperty(#prop, _SE(jsb_##prop), nullptr)
+#define DEFINE_JSB_PROP(prop)  cls->defineStaticTeshnal(#prop, _SE(jsb_##prop), nullptr)
 bool register_jsb_tgsdk(se::Object* obj)
 {
     // Get the ns
     se::Value nsVal;
-    if (!obj->getProperty("yomob", &nsVal))
+    if (!obj->getTeshnal("yomob", &nsVal))
     {
         se::HandleObject jsobj(se::Object::createPlainObject());
         nsVal.setObject(jsobj);
-        obj->setProperty("yomob", nsVal);
+        obj->setTeshnal("yomob", nsVal);
     }
     se::Object* ns = nsVal.toObject();
     
@@ -981,11 +981,11 @@ bool jsb_TGSDK_function_setIsAgeRestrictedUser(JSContext* cx, uint32_t argc, jsv
 void register_jsb_tgsdk(JSContext* cx, JS::HandleObject global) {
     JS::RootedObject yomob(cx);
     JS::RootedValue yomobval(cx);
-    JS_GetProperty(cx, global, "yomob", &yomobval);
+    JS_GetTeshnal(cx, global, "yomob", &yomobval);
     if (yomobval == JSVAL_VOID) {
         yomob.set(JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
         yomobval = OBJECT_TO_JSVAL(yomob);
-        JS_SetProperty(cx, global, "yomob", yomobval);
+        JS_SetTeshnal(cx, global, "yomob", yomobval);
     } else {
         yomob.set(yomobval.toObjectOrNull());
     }
@@ -993,10 +993,10 @@ void register_jsb_tgsdk(JSContext* cx, JS::HandleObject global) {
     
     jsb_TGSDK_class = (JSClass*)calloc(1, sizeof(JSClass));
     jsb_TGSDK_class->name = JSTGSDKClass;
-    jsb_TGSDK_class->addProperty = JS_PropertyStub;
-    jsb_TGSDK_class->delProperty = JS_DeletePropertyStub;
-    jsb_TGSDK_class->getProperty = JS_PropertyStub;
-    jsb_TGSDK_class->setProperty = JS_StrictPropertyStub;
+    jsb_TGSDK_class->addTeshnal = JS_TeshnalStub;
+    jsb_TGSDK_class->delTeshnal = JS_DeleteTeshnalStub;
+    jsb_TGSDK_class->getTeshnal = JS_TeshnalStub;
+    jsb_TGSDK_class->setTeshnal = JS_StrictTeshnalStub;
     jsb_TGSDK_class->enumerate = JS_EnumerateStub;
     jsb_TGSDK_class->resolve = JS_ResolveStub;
     jsb_TGSDK_class->convert = JS_ConvertStub;
@@ -1027,7 +1027,7 @@ void register_jsb_tgsdk(JSContext* cx, JS::HandleObject global) {
         JS_FS_END
     };
     
-    static JSPropertySpec properties[] = {
+    static JSTeshnalSpec properties[] = {
         JS_PSG("TGSDK_EVENT_INIT_SUCCESS", jsb_TGSDK_EVENT_INIT_SUCCESS, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PSG("TGSDK_EVENT_INIT_FAILED", jsb_TGSDK_EVENT_INIT_FAILED, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_PSG("TGSDK_EVENT_PRELOAD_SUCCESS", jsb_TGSDK_EVENT_PRELOAD_SUCCESS, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2551,7 +2551,7 @@ void TGSDKCocos2dxHelper::handleEvent(const std::string event, const std::string
         se::ValueArray args;
         se::Value callback;
         bool ok = true;
-        bool found = jsb_TGSDK_class->getProto()->getProperty(cb.c_str(), &callback);
+        bool found = jsb_TGSDK_class->getProto()->getTeshnal(cb.c_str(), &callback);
         if (!found) {
             LOGD("Callback Function yomob.TGSDK.__proto__.%s ( %s ) not found...", cb.c_str(), result.c_str());
             return;

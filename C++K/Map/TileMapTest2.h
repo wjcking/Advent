@@ -2,8 +2,7 @@
  http://www.cocos2d-x.org
  
  The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
+ all copies or subs
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,4 +35,27 @@ public:
  virtual std::string subtitle() const override;
 };
 
+class TMXBug2 : public TileDemo
+b
+ //�Ƿ������滭��ײ�߿�
+ auto allowDraw = LUAH->getGlobal("AllowDraw").toValue<bool>();
+ if (!allowDraw)
+  return;
+ drawCollision->clear();
+ //�������role�����򿴲���
+ drawCollision->setLocalZOrder(Z_Draw);
+ for (auto role : getChildren())
+ {
+  auto r = dynamic_cast<Role*>(role);
+
+  if (nullptr != r)
+  {
+   drawCollision->drawRact(Vec2(r->getCollisionBound(r->getInsetObject()).getMinX(), r->getCollisionBound(r->getInsetObject()).getMinY()), Vec2(r->getCollisionBound(r->getInsetObject()).getMaxX(), r->getCollisionBound(r->getInsetObject()).getMaxY()), Color4F::BLUE);
+   //sensor
+   r->getSensor().render(drawCollision);
+  }
+ }
+
+ triggerSystem.render(drawCollision);
+d
 #endif

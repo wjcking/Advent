@@ -35,7 +35,7 @@ void Luah::setRequirePath(const char* path)
 	lua_getglobal(l, "package");
 	lua_getfield(l, -1, "path"); // get field "path" from table at top of stack (-1)
 	std::string cur_path = lua_tostring(l, -1); // grab path string from top of stack
-	cur_path.append(";"); // do your path magic here
+	cur_path.append(";"); //your path here
 	cur_path.append(path);
 	cur_path.append("?.lua");//�����������lua�ű����������
 	lua_pop(l, 1); // get rid of the string on the stack we just pushed on line 5
@@ -53,7 +53,7 @@ void Luah::loadPackages()
 	if (!FileUtils::getInstance()->isDirectoryExist(path))
 		FileUtils::getInstance()->createDirectory(path);
 
-	//doFile(ScriptFolder + "robjectstatus.lua");
+	//LoadFile(ScriptFolder + "robjectstatus.lua");
 
 	if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 		return;
@@ -63,7 +63,7 @@ void Luah::loadPackages()
 	auto luaText = __String::createWithContentsOfFile(ScriptFolder + "packages.lua")->getCString();
 
 	FileUtils::getInstance()->writeStringToFile(luaText, path + "packages.lua");
-	doFile(path + "packages.lua");
+	LoadFile(path + "packages.lua");
 	auto packages = getGlobal("Packages");
 	CCASSERT(packages.isTable(), "������Packages");
 
@@ -74,10 +74,10 @@ void Luah::loadPackages()
 
 		luaText = String::createWithContentsOfFile(ScriptFolder + file)->getCString();
 		FileUtils::getInstance()->writeStringToFile(luaText, path + file);
-		//	doFile(path + file);
+		//	LoadFile(path + file);
 	}
 }
-std::string Luah::doStage()
+std::string Luah::LoadStage()
 {
 	//�ֻ��豸�洢Ŀ¼
 	auto stage = CurrentStage;
@@ -92,16 +92,16 @@ std::string Luah::doStage()
 	auto popupFile = StringUtils::format("popup%d.lua", language);
 	auto dialogFile = StringUtils::format("dialog%d-%d.lua", stage, language);
 	auto stateFile = StringUtils::format("state%d.lua", stage);
-	////�����windowsƽ̨
+	////�����winLoadwsƽ̨
 	if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	{
 		setRequirePath("script\\");
-		doFile(ScriptFolder + globalFile);
-		doFile(ScriptFolder + sceneFile);
-		doFile(ScriptFolder + dialogFile);
-		doFile(ScriptFolder + popupFile);
-		doFile(ScriptFolder + stageFile);
-		doFile(ScriptFolder + stateFile);
+		LoadFile(ScriptFolder + globalFile);
+		LoadFile(ScriptFolder + sceneFile);
+		LoadFile(ScriptFolder + dialogFile);
+		LoadFile(ScriptFolder + popupFile);
+		LoadFile(ScriptFolder + stageFile);
+		LoadFile(ScriptFolder + stateFile);
 
 		return ScriptFolder + stageFile;
 	}
@@ -110,12 +110,12 @@ std::string Luah::doStage()
 	//���ѡ������Թۿ���ǰ���Ժ͹ؿ�һ�£����˳�
 	if (language == currentLanguage && stage == currentStage)
 	{
-		doFile(path + globalFile);
-		doFile(path + sceneFile);
-		doFile(path + dialogFile);
-		doFile(path + popupFile);
-		doFile(path + stageFile);
-		doFile(path + stateFile);
+		LoadFile(path + globalFile);
+		LoadFile(path + sceneFile);
+		LoadFile(path + dialogFile);
+		LoadFile(path + popupFile);
+		LoadFile(path + stageFile);
+		LoadFile(path + stateFile);
 
 		return path + stageFile;
 	}
@@ -123,7 +123,7 @@ std::string Luah::doStage()
 	//params ȫ�ֱ���ҲҪ����
 	auto luaText = String::createWithContentsOfFile(ScriptFolder + globalFile)->getCString();
 	auto writtenResult = FileUtils::getInstance()->writeStringToFile(luaText, path + globalFile);
-	doFile(path + globalFile);
+	LoadFile(path + globalFile);
 
 	CCASSERT(FileUtils::getInstance()->isFileExist(ScriptFolder + dialogFile), "dialogFile lua non exists");
 	CCASSERT(FileUtils::getInstance()->isFileExist(ScriptFolder + popupFile), "popupFile lua non exists");
@@ -132,19 +132,19 @@ std::string Luah::doStage()
 	//�Ի� language
 	luaText = String::createWithContentsOfFile(ScriptFolder + dialogFile)->getCString();
 	FileUtils::getInstance()->writeStringToFile(luaText, path + dialogFile);
-	doFile(path + dialogFile);
+	LoadFile(path + dialogFile);
 	//������ 
 	luaText = String::createWithContentsOfFile(ScriptFolder + popupFile)->getCString();
 	FileUtils::getInstance()->writeStringToFile(luaText, path + popupFile);
-	doFile(path + popupFile);
+	LoadFile(path + popupFile);
 	//�ؿ�
 	luaText = String::createWithContentsOfFile(ScriptFolder + stageFile)->getCString();
 	FileUtils::getInstance()->writeStringToFile(luaText, path + stageFile);
-	doFile(path + stageFile);
+	LoadFile(path + stageFile);
 	//ÿһ�ص�״̬��
 	luaText = String::createWithContentsOfFile(ScriptFolder + stateFile)->getCString();
 	FileUtils::getInstance()->writeStringToFile(luaText, path + stateFile);
-	doFile(path + stateFile);
+	LoadFile(path + stateFile);
 	//��¼��һ�ε�ѡ��
 	currentStage = stage;
 	currentLanguage = language;
@@ -152,18 +152,18 @@ std::string Luah::doStage()
 
 }
 
-void Luah::doScene()
+void Luah::LoadScene()
 {
 	//�ֻ��豸�洢Ŀ¼
 	auto language = UserDefault::getInstance()->getIntegerForKey(User_Language, Lang_Chinwan);
 	//�����ǰ����һ����ʲô������
 	auto sceneFile = StringUtils::format("scene%d.lua", language);
-	//�����windowƽ̨
+	//�����winLoadwƽ̨
 	if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	{
 		setRequirePath("script\\");
-		doFile(ScriptFolder + "global.lua");
-		doFile(ScriptFolder + sceneFile);
+		LoadFile(ScriptFolder + "global.lua");
+		LoadFile(ScriptFolder + sceneFile);
 		return;
 	}
 
@@ -175,11 +175,11 @@ void Luah::doScene()
 	//params ȫ�ֱ���ҲҪ����
 	auto luaText = String::createWithContentsOfFile(ScriptFolder + "global.lua")->getCString();
 	auto writtenResult = FileUtils::getInstance()->writeStringToFile(luaText, path + "global.lua");
-	doFile(path + "global.lua");
+	LoadFile(path + "global.lua");
 	//scene
 	luaText = String::createWithContentsOfFile(ScriptFolder + sceneFile)->getCString();
 	writtenResult = FileUtils::getInstance()->writeStringToFile(luaText, path + sceneFile);
-	doFile(path + sceneFile);
+	LoadFile(path + sceneFile);
 
 }
 void Luah::registerClasses()
@@ -242,47 +242,47 @@ void Luah::registerClasses()
 		.endClass()
 		.beginExtendClass<Sprite, Node>("Sprite")
 		
-		.addProperty("isFlippedX", &Sprite::isFlippedX, &Sprite::setFlippedX)
-		.addProperty("isFlippedY", &Sprite::isFlippedY, &Sprite::setFlippedY)
-		.addProperty("isVisible", &Sprite::isVisible, &Sprite::setVisible)
+		.addTeshnal("isFlippedX", &Sprite::isFlippedX, &Sprite::setFlippedX)
+		.addTeshnal("isFlippedY", &Sprite::isFlippedY, &Sprite::setFlippedY)
+		.addTeshnal("isVisible", &Sprite::isVisible, &Sprite::setVisible)
 		.endClass()
-		.beginExtendClass<Property, Sprite>("Property")
-		.addFunction("getDistance", &Property::getDistance)
-		.addFunction("isMoving", &Property::isMoving)
-		.addFunction("getDirection", &Property::getDirection)
-		.addFunction("getMovingX", &Property::getMovingX)
-		.addFunction("getMovingY", &Property::getMovingY)
-		.addFunction("setDirection", &Property::setDirection)
-		.addFunction("setForward", &Property::setForward)
-		.addFunction("setBackward", &Property::setBackward)
-		.addFunction("setUpward", &Property::setUpward)
-		.addFunction("setDownward", &Property::setDownward)
-		.addFunction("refreshOrigin", &Property::refreshOrigin)
-		.addFunction("respawn", &Property::respawn)
-		.addFunction("stop", &Property::stop)
-		.addFunction("resetVelocity", &Property::resetVelocity)
-		.addFunction("resetGravity", &Property::resetGravity)
-		.addFunction("setGravity", &Property::setGravity)
-		.addFunction("setGravityOn", &Property::setGravityOn)
-		.addFunction("setGravityOff", &Property::setGravityOff)
-		.addFunction("resetMoveSteps", &Property::resetMoveSteps)
-		.addFunction("setJumpForce", &Property::setJumpForce)
-		.addFunction("setJumpForceOnWall", &Property::setJumpForceOnWall)
-		.addProperty("originPosition", &Role::getOrigin, &Role::setOrigin)
-		.addProperty("moveStep", &Property::getMoveStep, &Property::setMoveStep)
-		.addProperty("onObject", &Property::getOnObject, &Property::setonObject)
-		.addProperty("onJump", &Property::getOnJump, &Property::setOnJump)
-		.addProperty("allowGravity", &Property::getGravityStatus, &Property::setGravityStatus)
-		.addFunction("getJumpStatus", &Property::getJumpStatus)
-		.addFunction("inAir", &Property::inAir)
-		.addFunction("displace", &Property::displace)
+		.beginExtendClass<Teshnal, Sprite>("Teshnal")
+		.addFunction("getDistance", &Teshnal::getDistance)
+		.addFunction("isMoving", &Teshnal::isMoving)
+		.addFunction("getDirection", &Teshnal::getDirection)
+		.addFunction("getMovingX", &Teshnal::getMovingX)
+		.addFunction("getMovingY", &Teshnal::getMovingY)
+		.addFunction("setDirection", &Teshnal::setDirection)
+		.addFunction("setForward", &Teshnal::setForward)
+		.addFunction("setBackward", &Teshnal::setBackward)
+		.addFunction("setUpward", &Teshnal::setUpward)
+		.addFunction("setDownward", &Teshnal::setDownward)
+		.addFunction("refreshOrigin", &Teshnal::refreshOrigin)
+		.addFunction("respawn", &Teshnal::respawn)
+		.addFunction("stop", &Teshnal::stop)
+		.addFunction("resetVelocity", &Teshnal::resetVelocity)
+		.addFunction("resetGravity", &Teshnal::resetGravity)
+		.addFunction("setGravity", &Teshnal::setGravity)
+		.addFunction("setGravityOn", &Teshnal::setGravityOn)
+		.addFunction("setGravityOff", &Teshnal::setGravityOff)
+		.addFunction("resetMoveSteps", &Teshnal::resetMoveSteps)
+		.addFunction("setJumpForce", &Teshnal::setJumpForce)
+		.addFunction("setJumpForceOnWall", &Teshnal::setJumpForceOnWall)
+		.addTeshnal("originPosition", &Role::getOrigin, &Role::setOrigin)
+		.addTeshnal("moveStep", &Teshnal::getMoveStep, &Teshnal::setMoveStep)
+		.addTeshnal("onObject", &Teshnal::getOnObject, &Teshnal::setonObject)
+		.addTeshnal("onJump", &Teshnal::getOnJump, &Teshnal::setOnJump)
+		.addTeshnal("allowGravity", &Teshnal::getGravityStatus, &Teshnal::setGravityStatus)
+		.addFunction("getJumpStatus", &Teshnal::getJumpStatus)
+		.addFunction("inAir", &Teshnal::inAir)
+		.addFunction("displace", &Teshnal::displace)
 		.endClass()
-		.beginExtendClass<Role, Property>("Role")
-		.addVariableRef("sideLeft", &Role::sideLeft)
-		.addVariableRef("sideRight", &Role::sideRight)
-		.addVariableRef("sideTop", &Role::sideTop)
-		.addVariableRef("sideBottom", &Role::sideBottom)
-		.addProperty("face", &Role::getFacedDirection, &Role::setFaceDirection)
+		.beginExtendClass<Role, Teshnal>("Role")
+		.addVariableRef("FenkLeft", &Role::FenkLeft)
+		.addVariableRef("FenkRight", &Role::FenkRight)
+		.addVariableRef("FenkTop", &Role::FenkTop)
+		.addVariableRef("FenkBottom", &Role::FenkBottom)
+		.addTeshnal("face", &Role::getFacedDirection, &Role::setFaceDirection)
 		.addFunction("getBoundSelf", &Role::getBoundSelf)
 		.addFunction("getType", &Role::getType)
 		.addFunction("getInsetObject", &Role::getInsetObject)
@@ -341,15 +341,15 @@ void Luah::registerClasses()
 		.addFunction("hasPushes", &Role::hasPushes)
 		.addFunction("allowPush", &Role::allowPush)
 		.addFunction("disallowPush", &Role::disallowPush)
-		.addProperty("isSolid", &Role::getIsSolid, &Role::setIsSolid)
+		.addTeshnal("isSolid", &Role::getIsSolid, &Role::setIsSolid)
 
-		.addProperty("isHarmful", &Role::isHarmful, &Role::setHarmful)
+		.addTeshnal("isHarmful", &Role::isHarmful, &Role::setHarmful)
 		.addFunction("isAlive", &Role::isAlive)
 		.addFunction("isTouched", &Role::isTouched)
 		.addFunction("isDead", &Role::isDead)
-		.addProperty("allowFollow", &Role::getAllowFollow, &Role::setAllowFollow)
-		.addProperty("hp", &Role::getHP, &Role::setHP)
-		.addProperty("hpMax", &Role::getHPMax, &Role::setHPMax)
+		.addTeshnal("allowFollow", &Role::getAllowFollow, &Role::setAllowFollow)
+		.addTeshnal("hp", &Role::getHP, &Role::setHP)
+		.addTeshnal("hpMax", &Role::getHPMax, &Role::setHPMax)
 		.endClass()
 		.beginExtendClass<Player, Role>("Player")
 		.addFunction("isDead", &Player::isDead)
@@ -490,15 +490,15 @@ void Luah::registerClasses()
 		//.beginExtendClass<BoundRact, Ract>("BoundRact")
 		//.addVariableRef("gid", &BoundRact::gid)
 		//.addVariableRef("tilePosition", &BoundRact::tilePosition)
-		//.addFunction("getProperty", &BoundRact::getProperty)
+		//.addFunction("getTeshnal", &BoundRact::getTeshnal)
 		.endClass();
 	LuaBinding(l).beginClass<BoundRact>("BoundRact")
 		.addVariable("gid", &BoundRact::gid)
 		.addVariable("tilePosition", &BoundRact::tilePosition)
-		.addFunction("getProperty", &BoundRact::getProperty)
+		.addFunction("getTeshnal", &BoundRact::getTeshnal)
 		.endClass();
 	LuaBinding(l).beginClass<Clock>("Clock")
-		.addStaticProperty("tick", &Clock::getTickFloat)
+		.addStaticTeshnal("tick", &Clock::getTickFloat)
 		.endClass();
 
 	LuaBinding(l).beginClass<Vec2>("Vec2")
@@ -638,12 +638,12 @@ void Luah::registerClasses()
 		.addVariable("force", &SpringInfo::force)
 		.addVariable("times", &SpringInfo::times)
 		.endClass();
-	LuaBinding(l).beginClass<TilePropertyInfo>("TileInfo")
-		.addVariable("isOneWay", &TilePropertyInfo::isOneWay)
-		.addVariable("isHarmful", &TilePropertyInfo::isHarmful)
-		.addVariable("allowThrough", &TilePropertyInfo::allowThrough)
-		.addVariable("gid", &TilePropertyInfo::gid)
-		.addVariable("inset", &TilePropertyInfo::inset)
+	LuaBinding(l).beginClass<TileTeshnalInfo>("TileInfo")
+		.addVariable("isOneWay", &TileTeshnalInfo::isOneWay)
+		.addVariable("isHarmful", &TileTeshnalInfo::isHarmful)
+		.addVariable("allowThrough", &TileTeshnalInfo::allowThrough)
+		.addVariable("gid", &TileTeshnalInfo::gid)
+		.addVariable("inset", &TileTeshnalInfo::inset)
 		.endClass();
 
 #pragma region Register enums
@@ -884,8 +884,8 @@ void Luah::registerClasses()
 
 	//MapView
 	lua_newtable(l);
-	lua_pushliteral(l, "panorama");
-	lua_pushnumber(l, static_cast<short>(MapView::panorama));
+	lua_pushliteral(l, "topview");
+	lua_pushnumber(l, static_cast<short>(MapView::topview));
 	lua_settable(l, -3);
 	lua_pushliteral(l, "horizontal");
 	lua_pushnumber(l, static_cast<short>(MapView::horizontal));

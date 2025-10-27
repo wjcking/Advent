@@ -3,7 +3,7 @@
 #define TMXSTAGE_H
 #include "../Utils/Fand.h"
 #include "cocos2d.h"
-#include "MapProperty.h"
+#include "MapTeshnal.h"
 #include "../Triggers/TriggerSystem.h"
 
 #include "../Utils/Telisk.h"
@@ -25,7 +25,7 @@ enum class CameraView
 };
 enum class MapView
 {
-	panorama,
+	topview,
 	horizontal
 };
 class TiledMap : public TMXTiledMap
@@ -36,7 +36,7 @@ private:
 	Vec2 lastRolePosition = Vec2::ZERO;
 	Vec2 per10msSteps = Vec2(0.f, 0.f);
 	Vec2 originPosition = Vec2::ZERO;
-	std::unordered_map<int, TilePropertyInfo> tileProperties;
+	std::unordered_map<int, TileTeshnalInfo> tileProperties;
 	//��������λ�����жϵ�ͼ�ƶ�����
 	MovingDirection& getRoleDirection(const Vec2&);
 	MovingDirection moveDirection = MovingDirection::stayStill;
@@ -69,7 +69,7 @@ public:
 	inline TiledMap* getRepeatedMap() { return secondMap; };
 	bool exchangeMap(Role*);
 	inline bool& isRepeatedMap(const int& tagID) { return inSecondMap[tagID]; };
-	TilePropertyInfo& getProperty(const int& gid);
+	TileTeshnalInfo& getTeshnal(const int& gid);
 	static TiledMap* create(const std::string& tmxFile);
 	void createRepeat(const std::string& tmxFile, const bool& = true);
 	inline const Vec2& getPer10Distance() const { return this->per10msDistance; }
@@ -149,7 +149,6 @@ public:
 
 	void processTileRange(const Vec2&, const Vec2&, std::function<void(const Vec2&, const short&)>);
 	RangeType  getRange(const Vec2 & a, const Vec2 & b);
-
 };
 
 #endif

@@ -238,7 +238,7 @@ bool PopupLayer::loadScript(const LuaIntf::LuaRef& ref)
 				{
 					role->setName(name);
 					role->setPosition(pos);
-					RoleSystem::setProperty(ref, role);
+					RoleSystem::setTeshnal(ref, role);
 					background->addChild(role);
 				}
 			}

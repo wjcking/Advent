@@ -2,7 +2,7 @@
 #include "Role.h"
 
 #include "../../../Common/StateMachine/StateMachine.h"
-#include "../Map/MapProperty.h"
+#include "../Map/MapTeshnal.h"
 
 class Npc : public Role
 {

@@ -3,7 +3,7 @@
 #include <unordered_map>
 using namespace cocos2d;
 
-const unsigned short  TilePropertyNumber = 1500;
+const unsigned short  TileTeshnalNumber = 1500;
 static const  char PSlopeDegree[25] = "SlopeDegree";
 static const  char PSlopeTowards[25] = "SlopeTowards";
 static const  char PSlopeGravity[25] = "SlopeGravity";
@@ -33,7 +33,7 @@ enum SlopeDegree :unsigned short
 	degree22_5 = 22
 };
 //ȫ������
-struct TilePropertyInfo
+struct TileTeshnalInfo
 {
 	int gid = 0;
 	bool isSlope;
@@ -49,28 +49,27 @@ struct TilePropertyInfo
 	//22�Ƚǵĵڶ�����Ƭ��Y�ӵ�һ����Ƭ�����Y��ʼ
 	bool initSlopeY; 
 	Ract inset;
-	TilePropertyInfo();
-
+	TileTeshnalInfo();
 };
 
 //�����洢��װ��rect�Լ�gid
 class BoundRact :public Ract
 {
 private:
-	TilePropertyInfo tileProperty;
+	TileTeshnalInfo tileTeshnal;
 public:
 	int gid;
 	Vec2 tilePosition;
 	std::string tileName;
-	inline void setTileProperty(const TilePropertyInfo& tp)
+	inline void setTileTeshnal(const TileTeshnalInfo& tp)
 	{
-		tileProperty = tp;
-		tileProperty.gid = gid;//ש������,����lua�ж�
+		tileTeshnal = tp;
+		tileTeshnal.gid = gid;//ש������,����lua�ж�
 	}
-	inline const TilePropertyInfo& getProperty() const
+	inline const TileTeshnalInfo& getTeshnal() const
 	{
-		//return TileProperties::getProperty(gid);
-		return tileProperty;
+		//return TileProperties::getTeshnal(gid);
+		return tileTeshnal;
 	}
 	BoundRact(int id, Vec2, Ract bound);
 	BoundRact(int id, Vec2&, Size&);

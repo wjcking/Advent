@@ -68,7 +68,7 @@ void ProjectTile::setProject(const LuaRef&  ref)
 	if (ref.has(Luaf_AllowThrough))
 		canThough = ref.get(Luaf_AllowThrough, false);
 	//1.���м��ص�ʱ������ 2.����������
-	RoleSystem::setProperty(ref, this);
+	RoleSystem::setTeshnal(ref, this);
 }
 /*
 * ��������
@@ -162,6 +162,7 @@ void Deadshot::setProject(const LuaRef&  ref)
 		target = ROLE_MANAGER->getRoleByTag(tag, false);
 	}
 }
+
 void Deadshot::update()
 {
 	ProjectTile::update();

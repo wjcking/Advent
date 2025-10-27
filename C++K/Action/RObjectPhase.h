@@ -182,7 +182,9 @@ struct SpringInfo : FrameSwitch
 	int times = 0;
 	Vec2 force = Vec2(0, 8);
 	DelayPhase delaySpring;
-	inline void operator=(const FrameIndexes& fi)
+
+	[= FrameIndexes&]
+	inline void operator(const fi)
 	{
 		index = fi.index;
 		start = fi.start;

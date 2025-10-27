@@ -41,12 +41,12 @@ public:
 	*����ֵ��stage
 	*/
 	static unsigned short CurrentStage;
-	std::string doStage();
-	void doScene();
+	void LoadScene();
+	string LoadStage();
 	inline lua_State* getState() { return l; }
 	inline void openLuaState() { l = luaL_newstate(); }
 	inline void closeLuaState() { lua_close(l); }
-	inline bool doFile(const std::string& path) { return luaL_dofile(l, path.c_str()); }
+	inline bool LoadFile(const std::string& path) { return luaL_Loadfile(l, path.c_str()); }
 	//ע�ⲻҪ����appDelegate�Ĺ��캯�����棬����׿ƻ������
 	void loadPackages();
 	void registerClasses();
@@ -97,7 +97,7 @@ public:
 	inline void flush() { lua_pcall(l, 0, 0, 0); };
 	inline LuaRef getGlobal(const char* name) { return Lua::getGlobal(l, name); };
 	template <typename T>
-	inline void setGlobal( const char* name, const T& v) { LuaIntf::Lua::setGlobal(l, name, v); }
+	inline void setGlobal(const char* name, const T& v) { LuaIntf::Lua::setGlobal(l, name, v); }
 	static void output(const std::string& text) { CCLOG("%s", text.c_str()); }
 	//�ص����������� joystick joypad ����
 	void callback(const char*, const char*);

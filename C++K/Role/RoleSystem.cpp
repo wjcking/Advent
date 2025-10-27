@@ -229,7 +229,7 @@ void RoleSystem::registerLuaRole(LuaIntf::LuaRef ref)
 		role->spawn(role->originMapPosition, ref.get(Luaf_Offset, Vec2::ZERO));
 
 	//1.���м��ص�ʱ������ 2.����������
-	setProperty(ref, role);
+	setTeshnal(ref, role);
 	//��ɫ��ԭʼ��ʼ��λ�ã�Ҳ�����ڴ�����
 	//������tile ��ȡ�ص�������Ӱ����ʼλ��
 	//setAnimation �� ����õ���ʼλ��û�����Զ���ʼ��
@@ -253,7 +253,7 @@ void RoleSystem::registerLuaRole(LuaIntf::LuaRef ref)
 	LUAH->flush();
 }
 
-void RoleSystem::setProperty(LuaIntf::LuaRef ref, Role* role)
+void RoleSystem::setTeshnal(LuaIntf::LuaRef ref, Role* role)
 {
 	if (ref.has(Luaf_FrameIndexes))
 		role->registerFrameIndexes(ref.get(Luaf_FrameIndexes));
