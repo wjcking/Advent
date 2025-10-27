@@ -5,7 +5,7 @@
 
 USING_NS_CC;
 using namespace ui;
-class Role;
+class Tasnal;
 class DialogBox: Scale9Sprite
 {
 private:

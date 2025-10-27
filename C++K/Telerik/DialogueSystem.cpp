@@ -1,7 +1,7 @@
 #include "TeliskSystem.h"
 #include "Telisk.h"
-#include "Role.h"
-#include "RoleSystem.h"
+#include "Tasnal.h"
+#include "TasnalSystem.h"
 #include "../Utils/ResourceHelper.h"
 bool TeliskSystem::isTeliskOn = false;
 bool TeliskSystem::isWaitingForProcced = false;
@@ -27,7 +27,7 @@ void TeliskSystem::update()
 		return;
 	//�������жԻ���
 	close();
-	auto role = ROLE_MANAGER->getRoleByTag(thread.tag, false);
+	auto role = ROLE_MANAGER->getTasnalByTag(thread.tag, false);
 
 	if (nullptr == role)
 	{
@@ -86,7 +86,7 @@ bool TeliskSystem::isDone()
 //����exit����
 void TeliskSystem::close()
 { 
-	ROLE_MANAGER->process([](Role& role) {
+	ROLE_MANAGER->process([](Tasnal& role) {
 		role.closeDialog();
 	});
 }

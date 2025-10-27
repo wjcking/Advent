@@ -1,17 +1,17 @@
 #include "Telisk.h"
-#include "../Role/Role.h"
-#include "../Role/RoleFrame.h"
-#include "../Role/Player.h"
-#include "../Role/ProjectTile.h"
-#include "../Role/RObjectPhase.h" 
-#include "../Role/TeliskSystem.h"
+#include "../Tasnal/Tasnal.h"
+#include "../Tasnal/TasnalFrame.h"
+#include "../Tasnal/Player.h"
+#include "../Tasnal/ProjectTile.h"
+#include "../Tasnal/RObjectPhase.h" 
+#include "../Tasnal/TeliskSystem.h"
 #include "../../Common/StateMachine/State.h"
 #include "../../Tik/Encounter.h"
 #include "../Map/TiledMap.h"
 #include "../Map/CheckPoint.h"
-#include "../Role/RoleSystem.h"
-#include "../Role/RObject.h"
-#include "../Role/Npc.h"
+#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/RObject.h"
+#include "../Tasnal/Npc.h"
 #include "../Scene/StageScene.h"
 #include "../Scene/MainScene.h"
 #include "../Triggers/Trigger.h"
@@ -224,7 +224,7 @@ void Luah::registerClasses()
 		.addVariableRef("knockedTimes", &Fenk::knockedTimes)
 		.addVariableRef("isHarmful", &Fenk::isHarmful)
 		.addVariableRef("isShowThorn", &Fenk::isShowThorn)
-		.addVariableRef("allowPush", &Fenk::allowPush)
+		.addVariableRef("EndPush", &Fenk::EndPush)
 		.addVariableRef("allowCollision", &Fenk::allowCollision)
 		.addVariableRef("isCollided", &Fenk::isCollided)
 		.addFunction("getAllowKnock", &Fenk::getAllowKnock)
@@ -268,7 +268,7 @@ void Luah::registerClasses()
 		.addFunction("resetMoveSteps", &Teshnal::resetMoveSteps)
 		.addFunction("setJumpForce", &Teshnal::setJumpForce)
 		.addFunction("setJumpForceOnWall", &Teshnal::setJumpForceOnWall)
-		.addTeshnal("originPosition", &Role::getOrigin, &Role::setOrigin)
+		.addTeshnal("originPosition", &Tasnal::getOrigin, &Tasnal::setOrigin)
 		.addTeshnal("moveStep", &Teshnal::getMoveStep, &Teshnal::setMoveStep)
 		.addTeshnal("onObject", &Teshnal::getOnObject, &Teshnal::setonObject)
 		.addTeshnal("onJump", &Teshnal::getOnJump, &Teshnal::setOnJump)
@@ -277,81 +277,81 @@ void Luah::registerClasses()
 		.addFunction("inAir", &Teshnal::inAir)
 		.addFunction("displace", &Teshnal::displace)
 		.endClass()
-		.beginExtendClass<Role, Teshnal>("Role")
-		.addVariableRef("FenkLeft", &Role::FenkLeft)
-		.addVariableRef("FenkRight", &Role::FenkRight)
-		.addVariableRef("FenkTop", &Role::FenkTop)
-		.addVariableRef("FenkBottom", &Role::FenkBottom)
-		.addTeshnal("face", &Role::getFacedDirection, &Role::setFaceDirection)
-		.addFunction("getBoundSelf", &Role::getBoundSelf)
-		.addFunction("getType", &Role::getType)
-		.addFunction("getInsetObject", &Role::getInsetObject)
-		.addFunction("getRange", &Role::getRange)
-		.addFunction("getPosition", &Role::getPositionByLua)
-		.addFunction("getCollisionBound", &Role::getCollisionBound)
-		.addFunction("getCollisionDirection", &Role::getCollisionDirection)
-		.addFunction("getWeaponSystem", &Role::getWeaponSystem)
-		.addFunction("getWeapon", &Role::getWeapon)
-		.addFunction("getCollidedDirection", &Role::getCollidedDirection)
-		.addFunction("getBodyStatus", &Role::getBodyStatus)
-		.addFunction("getTouchTimes", &Role::getTouchTimes)
-		.addFunction("gotPushed", &Role::gotPushed)
-		.addFunction("recover", &Role::recover)
-		.addFunction("spawn", &Role::spawn)
-		.addFunction("setFrame", &Role::setFrame)
-		.addFunction("setFrameIndex", &Role::setFrameIndex)
-		.addFunction("setOnFire", &Role::setOnFire)
-		.addFunction("setAllowFollow", &Role::setAllowFollow)
+		.beginExtendClass<Tasnal, Teshnal>("Tasnal")
+		.addVariableRef("FenkLeft", &Tasnal::FenkLeft)
+		.addVariableRef("FenkRight", &Tasnal::FenkRight)
+		.addVariableRef("FenkTop", &Tasnal::FenkTop)
+		.addVariableRef("FenkBottom", &Tasnal::FenkBottom)
+		.addTeshnal("face", &Tasnal::getFacedDirection, &Tasnal::setFaceDirection)
+		.addFunction("getBoundSelf", &Tasnal::getBoundSelf)
+		.addFunction("getType", &Tasnal::getType)
+		.addFunction("getInsetObject", &Tasnal::getInsetObject)
+		.addFunction("getRange", &Tasnal::getRange)
+		.addFunction("getPosition", &Tasnal::getPositionByLua)
+		.addFunction("getCollisionBound", &Tasnal::getCollisionBound)
+		.addFunction("getCollisionDirection", &Tasnal::getCollisionDirection)
+		.addFunction("getWeaponSystem", &Tasnal::getWeaponSystem)
+		.addFunction("getWeapon", &Tasnal::getWeapon)
+		.addFunction("getCollidedDirection", &Tasnal::getCollidedDirection)
+		.addFunction("getBodyStatus", &Tasnal::getBodyStatus)
+		.addFunction("getTouchTimes", &Tasnal::getTouchTimes)
+		.addFunction("gotPushed", &Tasnal::gotPushed)
+		.addFunction("recover", &Tasnal::recover)
+		.addFunction("spawn", &Tasnal::spawn)
+		.addFunction("setFrame", &Tasnal::setFrame)
+		.addFunction("setFrameIndex", &Tasnal::setFrameIndex)
+		.addFunction("setOnFire", &Tasnal::setOnFire)
+		.addFunction("setAllowFollow", &Tasnal::setAllowFollow)
 
-		.addFunction("setAnimation", &Role::setAnimation)
-		.addFunction("setFrameSpeed", &Role::setFrameSpeed)
-		.addFunction("setAllowTouch", &Role::setAllowTouch)
-		.addFunction("setAllowDrag", &Role::setAllowDrag)
-		.addFunction("setAllowDragX", &Role::setAllowDragX)
-		.addFunction("setAllowDragY", &Role::setAllowDragY)
-		.addFunction("setCheckTile", &Role::setCheckTile)
-		.addFunction("setTexture", &Role::setTexture)
+		.addFunction("setAnimation", &Tasnal::setAnimation)
+		.addFunction("setFrameSpeed", &Tasnal::setFrameSpeed)
+		.addFunction("setAllowTouch", &Tasnal::setAllowTouch)
+		.addFunction("setAllowDrag", &Tasnal::setAllowDrag)
+		.addFunction("setAllowDragX", &Tasnal::setAllowDragX)
+		.addFunction("setAllowDragY", &Tasnal::setAllowDragY)
+		.addFunction("setCheckTile", &Tasnal::setCheckTile)
+		.addFunction("setTexture", &Tasnal::setTexture)
 
-		.addFunction("clearFrame", &Role::clearFrame)
-		.addFunction("stopAnimation", &Role::stopAnimation)
-		.addFunction("locate", &Role::locate)
-		.addFunction("locateTile", &Role::locateTile)
-		.addFunction("control", &Role::control)
-		.addFunction("scanSensor", &Role::scanSensor)
-		.addFunction("allowFollow", &Role::getAllowFollow)
-		.addFunction("gotoDesirePosition", &Role::gotoDesirePosition)
-		.addFunction("updatePosition", &Role::updatePosition)
+		.addFunction("clearFrame", &Tasnal::clearFrame)
+		.addFunction("stopAnimation", &Tasnal::stopAnimation)
+		.addFunction("locate", &Tasnal::locate)
+		.addFunction("locateTile", &Tasnal::locateTile)
+		.addFunction("control", &Tasnal::control)
+		.addFunction("scanSensor", &Tasnal::scanSensor)
+		.addFunction("allowFollow", &Tasnal::getAllowFollow)
+		.addFunction("gotoDesirePosition", &Tasnal::gotoDesirePosition)
+		.addFunction("updatePosition", &Tasnal::updatePosition)
 
-		.addFunction("checkHints", &Role::checkHints)
-		.addFunction("showHints", &Role::showHints)
-		.addFunction("closeDialog", &Role::closeDialog)
-		.addFunction("checkLine", &Role::checkLine)
-		.addFunction("checkSpike", &Role::checkSpike)
-		.addFunction("checkObjectCollision", &Role::checkObjectCollision)
-		.addFunction("checkObjectFenk", &Role::checkObjectFenk)
-		.addFunction("checkFollowing", &Role::checkFollowing)
-		.addFunction("checkTileCollision", &Role::checkTileCollision)
-		.addFunction("checkBorder", &Role::checkBorder)
-		.addFunction("limiteScreenBorder", &Role::limiteScreenBorder)
-		.addFunction("gotHit", &Role::gotHit)
-		.addFunction("gotHurt", &Role::gotHurt)
-		.addFunction("gotoHell", &Role::gotoHell)
-		.addFunction("allowCollision", &Role::allowCollision)
-		.addFunction("disallowCollision", &Role::disallowCollision)
-		.addFunction("hasPushes", &Role::hasPushes)
-		.addFunction("allowPush", &Role::allowPush)
-		.addFunction("disallowPush", &Role::disallowPush)
-		.addTeshnal("isSolid", &Role::getIsSolid, &Role::setIsSolid)
+		.addFunction("checkHints", &Tasnal::checkHints)
+		.addFunction("showHints", &Tasnal::showHints)
+		.addFunction("closeDialog", &Tasnal::closeDialog)
+		.addFunction("checkLine", &Tasnal::checkLine)
+		.addFunction("checkSpike", &Tasnal::checkSpike)
+		.addFunction("checkObjectCollision", &Tasnal::checkObjectCollision)
+		.addFunction("checkObjectFenk", &Tasnal::checkObjectFenk)
+		.addFunction("checkFollowing", &Tasnal::checkFollowing)
+		.addFunction("checkTileCollision", &Tasnal::checkTileCollision)
+		.addFunction("checkBorder", &Tasnal::checkBorder)
+		.addFunction("limiteScreenBorder", &Tasnal::limiteScreenBorder)
+		.addFunction("gotHit", &Tasnal::gotHit)
+		.addFunction("gotHurt", &Tasnal::gotHurt)
+		.addFunction("gotoHell", &Tasnal::gotoHell)
+		.addFunction("allowCollision", &Tasnal::allowCollision)
+		.addFunction("disallowCollision", &Tasnal::disallowCollision)
+		.addFunction("hasPushes", &Tasnal::hasPushes)
+		.addFunction("EndPush", &Tasnal::EndPush)
+		.addFunction("disEndPush", &Tasnal::disEndPush)
+		.addTeshnal("isSolid", &Tasnal::getIsSolid, &Tasnal::setIsSolid)
 
-		.addTeshnal("isHarmful", &Role::isHarmful, &Role::setHarmful)
-		.addFunction("isAlive", &Role::isAlive)
-		.addFunction("isTouched", &Role::isTouched)
-		.addFunction("isDead", &Role::isDead)
-		.addTeshnal("allowFollow", &Role::getAllowFollow, &Role::setAllowFollow)
-		.addTeshnal("hp", &Role::getHP, &Role::setHP)
-		.addTeshnal("hpMax", &Role::getHPMax, &Role::setHPMax)
+		.addTeshnal("isHarmful", &Tasnal::isHarmful, &Tasnal::setHarmful)
+		.addFunction("isAlive", &Tasnal::isAlive)
+		.addFunction("isTouched", &Tasnal::isTouched)
+		.addFunction("isDead", &Tasnal::isDead)
+		.addTeshnal("allowFollow", &Tasnal::getAllowFollow, &Tasnal::setAllowFollow)
+		.addTeshnal("hp", &Tasnal::getHP, &Tasnal::setHP)
+		.addTeshnal("hpMax", &Tasnal::getHPMax, &Tasnal::setHPMax)
 		.endClass()
-		.beginExtendClass<Player, Role>("Player")
+		.beginExtendClass<Player, Tasnal>("Player")
 		.addFunction("isDead", &Player::isDead)
 		.addFunction("gotoHell", &Player::gotoHell)
 		.addFunction("carryObject", &Player::carryObject)
@@ -363,7 +363,7 @@ void Luah::registerClasses()
 		.addFunction("unfreeze", &Player::unfreeze)
 		.addFunction("setAnimation", &Player::setAnimation)
 		.endClass()
-		.beginExtendClass<RObject, Role>("RObject")
+		.beginExtendClass<RObject, Tasnal>("RObject")
 		.addFunction("registerChar", &RObject::registerChar)
 		.addFunction("registerSpring", &RObject::registerSpring)
 		.addFunction("registerRebound", &RObject::registerRebound)
@@ -385,14 +385,14 @@ void Luah::registerClasses()
 		.addFunction("blinkSelf", &RObject::blinkSelf)
 		.addFunction("bounce", &RObject::bounce)
 		.endClass()
-		.beginExtendClass<Npc, Role>("Npc")
+		.beginExtendClass<Npc, Tasnal>("Npc")
 		.addFunction("setAnimation", &Npc::setAnimation)
 		.addFunction("setTowards", &Npc::setTowards)
 		.addFunction("patrollingX", &Npc::patrollingX)
 		.addFunction("patrollingY", &Npc::patrollingY)
 		.addFunction("wanderingX", &Npc::wanderingX)
 		//������
-		.endClass().beginExtendClass<ProjectTile, Role>("ProjectTile")
+		.endClass().beginExtendClass<ProjectTile, Tasnal>("ProjectTile")
 		.addFunction("allowThrough", &ProjectTile::allowThrough)
 		.addFunction("getProjectType", &ProjectTile::getProjectType)
 		.addFunction("getOwner", &ProjectTile::getOwner)
@@ -543,9 +543,9 @@ void Luah::registerClasses()
 		.addStaticFunction("isDone", &TeliskSystem::isDone)
 		.endClass();
 	//��ɫ������
-	LuaBinding(l).beginClass<RoleSystem>("RoleSystem")
-		.addStaticFunction("appendRole", &RoleSystem::appendRole)
-		.addStaticFunction("updateRole", &RoleSystem::updateRole)
+	LuaBinding(l).beginClass<TasnalSystem>("TasnalSystem")
+		.addStaticFunction("appendTasnal", &TasnalSystem::appendTasnal)
+		.addStaticFunction("updateTasnal", &TasnalSystem::updateTasnal)
 		.endClass();
 	//��̬����
 	LuaBinding(l).beginModule("Constant")
@@ -728,25 +728,25 @@ void Luah::registerClasses()
 	LUA_ENUM(l, bottomRight);
 	LUA_ENUM(l, centerSelf);
 	lua_setglobal(l, "BoundPosition");
-	//RoleType
+	//TasnalType
 	lua_newtable(l);
 	lua_pushliteral(l, "player");
-	lua_pushnumber(l, static_cast<short>(RoleType::player));
+	lua_pushnumber(l, static_cast<short>(TasnalType::player));
 	lua_settable(l, -3);
 
 	lua_pushliteral(l, "npc");
-	lua_pushnumber(l, static_cast<short>(RoleType::npc));
+	lua_pushnumber(l, static_cast<short>(TasnalType::npc));
 	lua_settable(l, -3);
 
 	lua_pushliteral(l, "robject");
-	lua_pushnumber(l, static_cast<short>(RoleType::robject));
+	lua_pushnumber(l, static_cast<short>(TasnalType::robject));
 	lua_settable(l, -3);
 
 	lua_pushliteral(l, "projectTile");
-	lua_pushnumber(l, static_cast<short>(RoleType::projectTile));
+	lua_pushnumber(l, static_cast<short>(TasnalType::projectTile));
 	lua_settable(l, -3);
 
-	lua_setglobal(l, "RoleType");
+	lua_setglobal(l, "TasnalType");
 
 	//body status
 	lua_newtable(l);
@@ -937,7 +937,7 @@ void Luah::preloadResources(const char* resTable)
 		}
 	}
 }
-void Luah::registerRole(const char * className, const char * funcName, Role * role)
+void Luah::registerTasnal(const char * className, const char * funcName, Tasnal * role)
 {
 	LuaRef ref = createTable();
 	ref.set(Luaf_CppRef, role);
@@ -997,9 +997,9 @@ void Luah::processTableFont(const char * tableName, std::function<void(LuaIntf::
 	}
 }
 
-LuaIntf::LuaRef Luah::getRole(const int & tag, const std::string & name)
+LuaIntf::LuaRef Luah::getTasnal(const int & tag, const std::string & name)
 {
-	auto role = getGlobal(Luat_Role);
+	auto role = getGlobal(Luat_Tasnal);
 	CCASSERT(role.len() > 0, "role�����������1");
 
 	if (0 == tag)

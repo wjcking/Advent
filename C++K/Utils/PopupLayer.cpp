@@ -2,8 +2,8 @@
 #include "Constant.h"
 #include "../Map/CheckPoint.h"
 #include "ResourceHelper.h"
-#include "../Role/RObject.h"
-#include "../Role/RoleSystem.h"
+#include "../Tasnal/RObject.h"
+#include "../Tasnal/TasnalSystem.h"
 #include "Utils.h"
 short PopupLayer::nextTag = 1;
 
@@ -222,23 +222,23 @@ bool PopupLayer::loadScript(const LuaIntf::LuaRef& ref)
 			}
 			else if (type == static_cast<short>(ItemType::robject))
 			{
-				Role* role = nullptr;
+				Tasnal* role = nullptr;
 				if (ref.has(Luaf_Frame))
 				{
 					auto frame = ref[Luaf_Frame].value<std::string>();
-					role = Role::createWithFrameName<RObject>(frame);
+					role = Tasnal::createWithFrameName<RObject>(frame);
 				}
 				else if (ref.has(Luaf_File))
 				{
 					auto  file = ref[Luaf_File].value<std::string>();
-					role = Role::createWithFileName<RObject>(file);
+					role = Tasnal::createWithFileName<RObject>(file);
 
 				}
 				if (role != nullptr)
 				{
 					role->setName(name);
 					role->setPosition(pos);
-					RoleSystem::setTeshnal(ref, role);
+					TasnalSystem::setTeshnal(ref, role);
 					background->addChild(role);
 				}
 			}

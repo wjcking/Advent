@@ -42,7 +42,7 @@ void DelayCollection::clear()
 bool DelayCollection::isTimeUp(const short& id, const float& ds)
 {
 	if (delay.size() == 0)
-		delay.reserve(2000);
+		delay.reserve();
 
 	if (ds != delay[id].delaySecond)
 		delay[id].delaySecond = ds;

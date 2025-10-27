@@ -8,11 +8,11 @@
 #include "../Utils/Telisk.h"
 using namespace cocos2d;
 
-class Role;
+class Tasnal;
 class Weapon
 {
 protected:
-	Role* owner;
+	Tasnal* owner;
 	//ǹ����
 	unsigned short	type = 0;
 	//����������
@@ -40,7 +40,7 @@ protected:
 
 	bool isFire = false;
 public:
-	Weapon(Role& o) : owner(&o)
+	Weapon(Tasnal& o) : owner(&o)
 	{
 		nextAvailable = Clock::getTickFloat();
 	}
@@ -89,7 +89,7 @@ private:
 	const float  RateOfFire = 115.f;
 	const float  bulletSpeed = 3.f;
 public:
-	Pistol(Role& o) : Weapon(o)
+	Pistol(Tasnal& o) : Weapon(o)
 	{
 		//��ֵԽ���ٶ�Խ��,versa vice
 		rate = RateOfFire;

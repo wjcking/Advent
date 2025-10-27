@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <math.h>
-//#include "Role\RoleSystem.h"
+//#include "Tasnal\TasnalSystem.h"
 struct Telegram
 {
 	int senderID;
@@ -16,13 +16,13 @@ struct Telegram
 	double dispatchTime;
 	void* extraInfo;
 
- //   Role& getSender()  
+ //   Tasnal& getSender()  
 	//{
-	//	return *ROLE_MANAGER->getRoleByTag(senderID);
+	//	return *ROLE_MANAGER->getTasnalByTag(senderID);
 	//}
-	//inline const Role& getReceiver()  
+	//inline const Tasnal& getReceiver()  
 	//{
-	//	return *ROLE_MANAGER->getRoleByTag(receiverID);
+	//	return *ROLE_MANAGER->getTasnalByTag(receiverID);
 	//}
 	Telegram() :dispatchTime(-1),
 		senderID(-1),

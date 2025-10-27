@@ -1,5 +1,5 @@
-#include "Role.h"
-#include "RoleSystem.h"
+#include "Tasnal.h"
+#include "TasnalSystem.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "../Map/CheckPoint.h"
@@ -10,42 +10,42 @@
 #include "../Utils/Constant.h"
 #include "../Triggers/Trigger.h"
 #include "../Triggers/TriggerSystem.h"
-Player* RoleSystem::player = nullptr;
+Player* TasnalSystem::player = nullptr;
 
 /*��̬���ʼ��*/
 
-RoleSystem::RoleSystem()
+TasnalSystem::TasnalSystem()
 {
-	entityMap.reserve(Reserve_Role);
+	entityMap.reserve(Reserve_Tasnal);
 }
-RoleSystem* RoleSystem::getInstance()
+TasnalSystem* TasnalSystem::getInstance()
 {
-	static RoleSystem instance;
+	static TasnalSystem instance;
 	return &instance;
 }
-Player& RoleSystem::getPlayerRefer()
+Player& TasnalSystem::getPlayerRefer()
 {
 	if (nullptr == player)
-		player = dynamic_cast<Player*>(ROLE_MANAGER->getRoleByTag(ID_Player));
+		player = dynamic_cast<Player*>(ROLE_MANAGER->getTasnalByTag(ID_Player));
 
 	return *player;
 }
 
-void RoleSystem::process(function<void(Role&)> roleAction)
+void TasnalSystem::process(function<void(Tasnal&)> roleAction)
 {
 	for (auto role : entityMap)
 		roleAction(*role.second);
 }
 
 /*����id�ͷ����õ�����*/
-Role* RoleSystem::getRoleByTag(const int& id, bool allowAssert)const
+Tasnal* TasnalSystem::getTasnalByTag(const int& id, bool allowAssert)const
 {
 	//find the entity
 	auto ent = entityMap.find(id);
 
 	if (allowAssert)
 	{
-		assert((ent != entityMap.end()) && "<RoleSystem::GetEntityFromID>: û�д�ID");
+		assert((ent != entityMap.end()) && "<TasnalSystem::GetEntityFromID>: û�д�ID");
 		assert((ent->second != nullptr) && "role ��mapmanager ����Ϊ��");
 		return  ent->second;
 	}
@@ -53,40 +53,40 @@ Role* RoleSystem::getRoleByTag(const int& id, bool allowAssert)const
 	return ent != entityMap.end() ? ent->second : nullptr;
 }
 
-void RoleSystem::removeRole(Role* entity)
+void TasnalSystem::removeTasnal(Tasnal* entity)
 {
 	entityMap.erase(entityMap.find(entity->getTag()));
 }
 
-void RoleSystem::registerRole(Role* newEntity)
+void TasnalSystem::registerTasnal(Tasnal* newEntity)
 {
 	newEntity->generateTag();
 	entityMap.insert(std::make_pair(newEntity->getTag(), newEntity));
 }
 
-void RoleSystem::updateRole(const int & tag, const bool & isDisposed)
+void TasnalSystem::updateTasnal(const int & tag, const bool & isDisposed)
 { 
-	auto role = ROLE_MANAGER->getRoleByTag(tag,false);
+	auto role = ROLE_MANAGER->getTasnalByTag(tag,false);
 
 	if (nullptr == role)	return;
 
 	//һ��Ҫ��lua��ɾ���������ֻ��ᱨ��
-	if (RoleType::player == role->getType())
+	if (TasnalType::player == role->getType())
 	{
 		auto player = dynamic_cast<Player*>(role);
 		player->update();
 	}
-	else if (RoleType::npc == role->getType())
+	else if (TasnalType::npc == role->getType())
 	{
 		auto npc = dynamic_cast<Npc*>(role);
 		npc->update();
 	}
-	else if (RoleType::robject == role->getType())
+	else if (TasnalType::robject == role->getType())
 	{
 		auto object = dynamic_cast<RObject*>(role);
 		object->update();
 	}
-	else if (RoleType::projectTile == role->getType())
+	else if (TasnalType::projectTile == role->getType())
 	{
 		auto projectTile = dynamic_cast<ProjectTile*>(role);
 		projectTile->update();
@@ -101,85 +101,85 @@ void RoleSystem::updateRole(const int & tag, const bool & isDisposed)
 			delete[] role->frameIndexes;
 
 		role->getMap()->removeChild(role);
-		ROLE_MANAGER->removeRole(tag);
+		ROLE_MANAGER->removeTasnal(tag);
 	}
 }
-void RoleSystem::registerLuaRole(LuaIntf::LuaRef ref)
+void TasnalSystem::registerLuaTasnal(LuaIntf::LuaRef ref)
 {
 	assert(ref.has(Luaf_Type) && "�����ý�ɫ����");
-	auto type = ref[Luaf_Type].value<RoleType>();
+	auto type = ref[Luaf_Type].value<TasnalType>();
 	unsigned short mapTag = 1;
 	if (ref.has(Luaf_MapTag))
 		mapTag = ref[Luaf_MapTag].value<unsigned short>();
-	Role* role = nullptr;
+	Tasnal* role = nullptr;
 
 	//1)����objectͼƬ�ļ�
-	if (RoleType::player == type)
+	if (TasnalType::player == type)
 	{
 		//1)����objectͼƬ�ļ�
 		if (ref.has(Luaf_File))
 		{
 			auto file = ref[Luaf_File].value<std::string>();
 			assert(FileUtils::getInstance()->isFileExist(file) && "�ļ�������");
-			role = Role::createWithFileName<Player>(file);
+			role = Tasnal::createWithFileName<Player>(file);
 		}
 
 		else if (ref.has(Luaf_Frame))
 		{
 			auto frame = ref[Luaf_Frame].value<std::string>();
-			role = Role::createWithFrameName<Player>(frame);
+			role = Tasnal::createWithFrameName<Player>(frame);
 		}
 		else
 		{
 			auto tile = ref.has(Luaf_Tile) ? ref[Luaf_Tile].value<Vec2>() : Vec2(0, 1);
 			auto tileFrame = MAP_WITHTAG(mapTag)->getFrameWithTile(tile);
-			role = Role::createWithFrame<Player>(tileFrame);
+			role = Tasnal::createWithFrame<Player>(tileFrame);
 		}
 
 		role->setLocalZOrder(Z_ROLE);
 	}
-	else if (RoleType::npc == type)
+	else if (TasnalType::npc == type)
 	{
 		//1)����objectͼƬ�ļ�
 		if (ref.has(Luaf_File))
 		{
 			auto file = ref[Luaf_File].value<std::string>();
 			assert(FileUtils::getInstance()->isFileExist(file) && "�ļ�������");
-			role = Role::createWithFileName<Npc>(file);
+			role = Tasnal::createWithFileName<Npc>(file);
 		}
 		else if (ref.has(Luaf_Frame))
 		{
 			auto frame = ref[Luaf_Frame].value<std::string>();
-			role = Role::createWithFrameName<Npc>(frame);
+			role = Tasnal::createWithFrameName<Npc>(frame);
 		}
 		else
 		{
 			auto tile = ref.has(Luaf_Tile) ? ref[Luaf_Tile].value<Vec2>() : Vec2(0, 1);
 			auto tileFrame = MAP_WITHTAG(mapTag)->getFrameWithTile(tile);
-			role = Role::createWithFrame<Npc>(tileFrame);
+			role = Tasnal::createWithFrame<Npc>(tileFrame);
 		}
 
 		role->setLocalZOrder(Z_Enemy);
 	}
-	else if (RoleType::robject == type)
+	else if (TasnalType::robject == type)
 	{
 		//1)����objectͼƬ�ļ�
 		if (ref.has(Luaf_File))
 		{
 			auto file = ref[Luaf_File].value<std::string>();
 			assert(FileUtils::getInstance()->isFileExist(file) && "�ļ�������");
-			role = Role::createWithFileName<RObject>(file);
+			role = Tasnal::createWithFileName<RObject>(file);
 		}
 		else if (ref.has(Luaf_Frame))
 		{
 			auto frame = ref[Luaf_Frame].value<std::string>();
-			role = Role::createWithFrameName<RObject>(frame);
+			role = Tasnal::createWithFrameName<RObject>(frame);
 		}
 		else
 		{
 			auto tile = ref.has(Luaf_Tile) ? ref[Luaf_Tile].value<Vec2>() : Vec2(0, 1);
 			auto tileFrame = MAP_WITHTAG(mapTag)->getFrameWithTile(tile);
-			role = Role::createWithFrame<RObject>(tileFrame);
+			role = Tasnal::createWithFrame<RObject>(tileFrame);
 		}
 		auto robject = dynamic_cast<RObject*>(role);
 		//��ʼ������
@@ -195,37 +195,37 @@ void RoleSystem::registerLuaRole(LuaIntf::LuaRef ref)
 			robject->registerSwitch(ref[Luaf_Switch]);
 		role->setLocalZOrder(Z_RObject);
 	}
-	else if (RoleType::projectTile == type)
+	else if (TasnalType::projectTile == type)
 	{
 		//1)����objectͼƬ�ļ�
 		if (ref.has(Luaf_File))
 		{
 			auto file = ref[Luaf_File].value<std::string>();
 			assert(FileUtils::getInstance()->isFileExist(file) && "�ļ�������");
-			role = Role::createWithFileName<ProjectTile>(file);
+			role = Tasnal::createWithFileName<ProjectTile>(file);
 		}
 		else if (ref.has(Luaf_Frame))
 		{
 			auto frame = ref[Luaf_Frame].value<std::string>();
-			role = Role::createWithFrameName<ProjectTile>(frame);
+			role = Tasnal::createWithFrameName<ProjectTile>(frame);
 		}
 		else
 		{
 			auto tile = ref.has(Luaf_Tile) ? ref[Luaf_Tile].value<Vec2>() : Vec2(0, 1);
 			auto tileFrame = MAP_WITHTAG(mapTag)->getFrameWithTile(tile);
-			role = Role::createWithFrame<ProjectTile>(tileFrame);
+			role = Tasnal::createWithFrame<ProjectTile>(tileFrame);
 		}
 		role->setLocalZOrder(Z_ProjectTile);
 	}
 	role->mapTag = mapTag;
 	role->getMap()->addChild(role);
-	ROLE_MANAGER->registerRole(role);
+	ROLE_MANAGER->registerTasnal(role);
 
 	//���������������checkpoint����λ
 	if (ref.has(Luaf_Pos))
 		role->originMapPosition = ref[Luaf_Pos].value<Vec2>();
 	//������Ƿ����� ,ע��offset
-	if (RoleType::projectTile != type)
+	if (TasnalType::projectTile != type)
 		role->spawn(role->originMapPosition, ref.get(Luaf_Offset, Vec2::ZERO));
 
 	//1.���м��ص�ʱ������ 2.����������
@@ -253,7 +253,7 @@ void RoleSystem::registerLuaRole(LuaIntf::LuaRef ref)
 	LUAH->flush();
 }
 
-void RoleSystem::setTeshnal(LuaIntf::LuaRef ref, Role* role)
+void TasnalSystem::setTeshnal(LuaIntf::LuaRef ref, Tasnal* role)
 {
 	if (ref.has(Luaf_FrameIndexes))
 		role->registerFrameIndexes(ref.get(Luaf_FrameIndexes));
@@ -272,11 +272,11 @@ void RoleSystem::setTeshnal(LuaIntf::LuaRef ref, Role* role)
 
 	role->setAllowFollow(ref.get(Luaf_AllowFollow, false));
 	if (ref.has(Luaf_AllowPush))
-		role->allowPush(ref[Luaf_AllowPush].value<CollisionDirection>());
+		role->EndPush(ref[Luaf_AllowPush].value<CollisionDirection>());
 	//��ͼΪˮƽ�ӽ����������������������ȫ�������ⲻ��Ҫ����
 	if (role->getMap()->getViewType() == MapView::horizontal)
 	{
-		auto defGravity = (role->getType() == RoleType::robject) ? false : true;
+		auto defGravity = (role->getType() == TasnalType::robject) ? false : true;
 		role->isGravityOn = ref.has(Luaf_AllowGravity) ? ref.get(Luaf_AllowGravity, defGravity) : defGravity;
 		role->originGravity = role->isGravityOn;
 	}
@@ -363,7 +363,7 @@ void RoleSystem::setTeshnal(LuaIntf::LuaRef ref, Role* role)
 
 }
 
-void RoleSystem::release()
+void TasnalSystem::release()
 {
 	//�л�����������
 	player = nullptr;
@@ -378,19 +378,19 @@ void RoleSystem::release()
 	entityMap.clear();
 }
 
-void RoleSystem::loadScript()
+void TasnalSystem::loadScript()
 {
-	auto entity = LUAH->getGlobal(Luat_Role);
+	auto entity = LUAH->getGlobal(Luat_Tasnal);
 
 	assert(entity.isTable() && "������entity");
 	assert(entity.len() > 0 && "����Ҫ��һ����ɫ");
 	//���ñ�ʶ
-	Role::nextTag = 1;
+	Tasnal::nextTag = 1;
 	//���
 	release();
 	for (auto iter = entity.begin(); iter != entity.end(); ++iter)
 	{
-		registerLuaRole(iter.value());
+		registerLuaTasnal(iter.value());
 	}
 	//����ÿ��role�ű��ֿ���
 	for (auto role : entityMap)
@@ -398,10 +398,10 @@ void RoleSystem::loadScript()
 
 }
 //��̬����role
-void RoleSystem::appendRole(LuaIntf::LuaRef ref)
+void TasnalSystem::appendTasnal(LuaIntf::LuaRef ref)
 {
-	CCASSERT(ref.isTable(), "RoleSystem:appendRole error");
-	auto roleList = LUAH->getGlobal(Luat_Role);
-	registerLuaRole(ref);
+	CCASSERT(ref.isTable(), "TasnalSystem:appendTasnal error");
+	auto roleList = LUAH->getGlobal(Luat_Tasnal);
+	registerLuaTasnal(ref);
 	//���ܶ�ȡroletableֻ�����ӵ�ǰ��ref
 }

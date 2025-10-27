@@ -1,12 +1,9 @@
-#ifndef ROLE_H
-#define ROLE_H
-
 #include "cocos2d.h"
 #include "../Utils/Fand.h"
 #include <string>
 #include "Teshnal.h"
-#include "RoleFrame.h"
-#include "../Utils/OBB.h"
+#include "TasnalFrame.h"
+#include "../Utils/KastRact.h"
 #include "../../Tik/Encounter.h"
 #include "../Map/MapTeshnal.h"
 #include "../Map/MapManager.h"
@@ -19,49 +16,12 @@
 #include "RObjectPhase.h"
 using namespace cocos2d;
 
-enum BorderLimited
-{
-	notLimited = 0,
-	limiteHorizon = 1,
-	limiteVertical = 2,
-	limiteBoth = 3
-};
-
-enum class BodyStatus
-{
-	healthy,
-	hurting,
-	dead,
-	fall
-};
-enum class RoleType :unsigned short
-{
-	player = 1,
-	npc,
-	robject,
-	projectTile
-};
-enum class Anistyle
-{
-	toast = 1,
-	fade,
-	rollOut,
-	explosion,
-	hovering,
-	rebound,
-	rotate,
-	jump
-};
-
-static const Vec2 InsetTile = Vec2(12.f, 0.0f);
-static const Vec2 InsetObject = Vec2(3.5f, 0.f);
-static const short AniCount = static_cast<short>(Anistyle::rotate) + 1;
-class Role : public Teshnal
+class Tasnal : public Teshnal
 {
 	//��Ҫ����˽�б���lua�ű���ȡ
-	friend class RoleSystem;
+	class TasnalSystem::Tasnal friend;
 private:
-	Role* collidedOpponent;
+	Tasnal* collidedOpponent;
 	Ract objectIntersection;
 	//��ȡ��һ����ײǰ��λ��
 	std::unordered_map<int, CollisionDirection> lastCollideCollection;
@@ -94,11 +54,11 @@ private:
 	void registerTouch();
 	void rebound();
 	//����һ��ֻ�ܴ���һ�����飬λ�õ��˴��ﵽ�⣬�Ժ����
-	static int touchedRole;	
+	static int touchedTasnal;	
 	//ˢ֡���Ⱥ�˳��
 	virtual void updateFrame(const char*);
 protected:
-	RoleType type;
+	TasnalType type;
 	short hp = 1;
 	short hpMax = 1;
 	bool isHazardous;
@@ -143,15 +103,15 @@ public:
 	Fenk FenkRight;
 	Fenk FenkTop;
 	Fenk FenkBottom;
-	Role();
-	virtual ~Role();
+	Tasnal();
+	virtual ~Tasnal();
 	virtual void update();
 	//�������Ϊtrue��ʱ��ִ��
 	virtual void  updatePosition();
 	virtual void loadScript();
 	void registerFrameIndexes(const LuaRef&);
 	inline virtual  bool isDead() { return (getBodyStatus() == BodyStatus::dead || getBodyStatus() == BodyStatus::fall); }
-	MovingDirection scanSensor(Role* opponent);
+	MovingDirection scanSensor(Tasnal* opponent);
 	void spawn(const Vec2&, const Vec2& = Vec2::ZERO);
 
 	void openDialogBox(const HintText&);
@@ -161,9 +121,9 @@ public:
 	//��Ƭ��ײ
 	void checkTileCollision();
 	//������ײ�󣬰Ѷ��ָ���collidedOpponent�Ա���ײϸ�ڵ���
-	bool checkObjectCollision(Role&, const bool& isOriginBound = false);
-	//����Զ�����tag ����Rolemanager���й���
-	//��ִ�д˺����򲻱�lua�е�Role������,�����Ľ�ɫ������ܵ���ʹ��
+	bool checkObjectCollision(Tasnal&, const bool& isOriginBound = false);
+	//����Զ�����tag ����Tasnalmanager���й���
+	//��ִ�д˺����򲻱�lua�е�Tasnal������,�����Ľ�ɫ������ܵ���ʹ��
 	inline void generateTag()
 	{
 		setTag(nextTag);
@@ -202,10 +162,10 @@ public:
 	void registerMoves(const LuaRef&);
 	virtual void setAnimation(const LuaRef&);
 	//�˺�����ײ���
-	inline bool gotHit(Role& opponent) { return getCollisionBound(insetObject).intersectsRact(opponent.getCollisionBound(insetObject)); };
+	inline bool gotHit(Tasnal& opponent) { return getCollisionBound(insetObject).intersectsRact(opponent.getCollisionBound(insetObject)); };
 	BodyStatus& getBodyStatus();
 
-	RangeType getRange(Role*) ;
+	RangeType getRange(Tasnal*) ;
  
 	//ֱ�ӵ���boundRact�����tile position����,����ˢ��һ��
 	inline BoundRact getBoundSelf()
@@ -218,7 +178,7 @@ public:
 	inline bool& getIsSolid() { return  isSolid; };
 	//ע��range�������̫���Ļ�����Щ�ط�������ײ
 	RactAround getRactAround(const bool& = true);
-	inline RoleType& getType() { return this->type; };
+	inline TasnalType& getType() { return this->type; };
 	inline bool& isDisposed() { return this->allowDisposal; };
 	inline bool isAlive() { return getBodyStatus() == BodyStatus::healthy; }
 	inline bool& getOnFire() { return this->onFire; };
@@ -299,7 +259,7 @@ public:
 	inline  MovingDirection& getFacedDirection() { return facedDirection; }
 	inline void setFaceDirection(const MovingDirection& val) { facedDirection = val; }
 	inline	CollisionDirection getCollisionDirection(const Ract& rect) { return Fand::getCollsionDirection(getCollisionBound(insetObject), rect); }
-	inline Role* getCollider() { return collidedOpponent; }
+	inline Tasnal* getCollider() { return collidedOpponent; }
 	inline  void gotoDesirePosition() { setPosition(desiredPosition); }
 	inline WeaponSystem& getWeaponSystem() { return weaponSystem; }
 	inline Weapon* getWeapon() { return weaponSystem.getCurrentWeapon(); }
@@ -336,40 +296,40 @@ public:
 		FenkTop.allowCollision = CollisionDirection::atTop == cd ? false : true;
 		FenkBottom.allowCollision = CollisionDirection::atBottom == cd ? false : true;
 	}	
-	void gotPushed(Role&);
+	void gotPushed(Tasnal&);
 	inline bool hasPushes()
 	{
-		return FenkLeft.allowPush || FenkRight.allowPush || FenkTop.allowPush || FenkBottom.allowPush;
+		return FenkLeft.EndPush || FenkRight.EndPush || FenkTop.EndPush || FenkBottom.EndPush;
 	}
-	void allowPush(CollisionDirection cd = CollisionDirection::intersected)
+	void EndPush(CollisionDirection cd = CollisionDirection::intersected)
 	{
 		if (cd == CollisionDirection::intersected)
 		{
-			FenkLeft.allowPush = true;
-			FenkRight.allowPush = true;
-			FenkTop.allowPush = true;
-			FenkBottom.allowPush = true;
+			FenkLeft.EndPush = true;
+			FenkRight.EndPush = true;
+			FenkTop.EndPush = true;
+			FenkBottom.EndPush = true;
 			return;
 		}
-		FenkLeft.allowPush = CollisionDirection::atLeft == cd;
-		FenkRight.allowPush = CollisionDirection::atRight == cd;
-		FenkTop.allowPush = CollisionDirection::atTop == cd;
-		FenkBottom.allowPush = CollisionDirection::atBottom == cd;
+		FenkLeft.EndPush = CollisionDirection::atLeft == cd;
+		FenkRight.EndPush = CollisionDirection::atRight == cd;
+		FenkTop.EndPush = CollisionDirection::atTop == cd;
+		FenkBottom.EndPush = CollisionDirection::atBottom == cd;
 	}
-	inline void disallowPush(CollisionDirection cd = CollisionDirection::intersected)
+	inline void disEndPush(CollisionDirection cd = CollisionDirection::intersected)
 	{
 		if (cd == CollisionDirection::intersected)
 		{
-			FenkLeft.allowPush = false;
-			FenkRight.allowPush = false;
-			FenkTop.allowPush = false;
-			FenkBottom.allowPush = false;
+			FenkLeft.EndPush = false;
+			FenkRight.EndPush = false;
+			FenkTop.EndPush = false;
+			FenkBottom.EndPush = false;
 			return;
 		}
-		FenkLeft.allowPush = CollisionDirection::atLeft == cd ? false : true;
-		FenkRight.allowPush = CollisionDirection::atRight == cd ? false : true;
-		FenkTop.allowPush = CollisionDirection::atTop == cd ? false : true;
-		FenkBottom.allowPush = CollisionDirection::atBottom == cd ? false : true;
+		FenkLeft.EndPush = CollisionDirection::atLeft == cd ? false : true;
+		FenkRight.EndPush = CollisionDirection::atRight == cd ? false : true;
+		FenkTop.EndPush = CollisionDirection::atTop == cd ? false : true;
+		FenkBottom.EndPush = CollisionDirection::atBottom == cd ? false : true;
 	}
 	inline bool isHarmful()
 	{
@@ -383,4 +343,7 @@ public:
 		FenkBottom.isHarmful = value;
 	}
 };
-#endif
+
+static const Vec2 InsetTile = Vec2(12.f, 0.0f);
+static const Vec2 InsetObject = Vec2(3.5f, 0.f);
+static const short AniCount = static_cast<short>(Anistyle::rotate) + 1;

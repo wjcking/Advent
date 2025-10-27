@@ -14,7 +14,7 @@ static const string LayerObjects = "Objects";
 static const string LayerWalls = "walls";
 
 class BoundRact;
-class Role;
+class Tasnal;
 class Trigger;
 
 enum class CameraView
@@ -33,12 +33,12 @@ class TiledMap : public TMXTiledMap
 
 private:
 	Vec2 limitedSize = Vec2(ScreenSize.width, ScreenSize.height);
-	Vec2 lastRolePosition = Vec2::ZERO;
+	Vec2 lastTasnalPosition = Vec2::ZERO;
 	Vec2 per10msSteps = Vec2(0.f, 0.f);
 	Vec2 originPosition = Vec2::ZERO;
 	std::unordered_map<int, TileTeshnalInfo> tileProperties;
 	//��������λ�����жϵ�ͼ�ƶ�����
-	MovingDirection& getRoleDirection(const Vec2&);
+	MovingDirection& getTasnalDirection(const Vec2&);
 	MovingDirection moveDirection = MovingDirection::stayStill;
 	TiledMap* secondMap;
 	std::unordered_map<int, bool> inSecondMap;
@@ -46,8 +46,8 @@ private:
 	const float mapOffsetX = 0.f;
 	//�ǲ��Ǹճ����ڵ�һ�ŵ�ͼ�У���ͼѭ��ʹ��
 	bool isStartOff;
-	float lastRoleX;
-	std::unordered_map<int, float> lastRolePositionX;
+	float lastTasnalX;
+	std::unordered_map<int, float> lastTasnalPositionX;
 
 	DrawNode* drawCollision;
 	TriggerSystem triggerSystem;
@@ -67,7 +67,7 @@ public:
 	static int  nextTag;
 	//��ͼѭ��
 	inline TiledMap* getRepeatedMap() { return secondMap; };
-	bool exchangeMap(Role*);
+	bool exchangeMap(Tasnal*);
 	inline bool& isRepeatedMap(const int& tagID) { return inSecondMap[tagID]; };
 	TileTeshnalInfo& getTeshnal(const int& gid);
 	static TiledMap* create(const std::string& tmxFile);
@@ -87,7 +87,7 @@ public:
 	//������center��repeat�е���
 	void setCameraY(const Vec2& pos);
 	//��ͷ�ƶ�
-	void setCameraCenter(Role&, const CameraView&   = CameraView::both, const bool& isAutoFocusY = false);
+	void setCameraCenter(Tasnal&, const CameraView&   = CameraView::both, const bool& isAutoFocusY = false);
 	//ÿһ��������x��y�ƶ�,��ע�⡿����ȡ������
 	inline void setPtc(const Vec2& pos, const Vec2 offset)
 	{
@@ -97,13 +97,13 @@ public:
 	}
 	void setCameraSlide(const Vec2& pos, const CameraView& slideStyle = CameraView::both);
 	bool setCameraFrame(const bool& orientation);
-	void setCameraRepeat(Role*, const float&, const bool& = true);
+	void setCameraRepeat(Tasnal*, const float&, const bool& = true);
 	bool moveCameraX(const float& step = 1.f, const float& distance = 200.f);
 	//����
 	Vec2 getTileCoordinateByPosition(Vec2 position);
 	Ract getRactByTileCoordinate(Vec2 tileCoords, const int& = 0);
 	//AABB
-	BoundRact* getBoundTiles(Role&, const std::string& = LayerWalls);
+	BoundRact* getBoundTiles(Tasnal&, const std::string& = LayerWalls);
 	BoundRact getCenterTile(const Vec2& rolePosition);
 	//��
 	TMXLayer& getWalls(const std::string& = LayerWalls) const;
@@ -138,12 +138,11 @@ public:
 	//collapseʹ��
 	Vec2 getPositionByTileCoordinate2(const Point &tileCoord) const;
 	//����
-	void debugDraw();
 	void loadScript();
 	//��ȫ������role manager��
 	void collapse(LuaRef);
-	void update(Role&);
-	//һ��Ҫ������Role��Ϻ����ִ�д˷���������tag�Ḳ��ԭ�е�roleԪ��
+	void update(Tasnal&);
+	//һ��Ҫ������Tasnal��Ϻ����ִ�д˷���������tag�Ḳ��ԭ�е�roleԪ��
 	void registerKnocks(const LuaRef&);
 	SpriteFrame* getFrameWithTile(const Vec2& pos);
 

@@ -1,9 +1,9 @@
 #include "Collapse.h"  
 #include "MapManager.h"
-#include "../Role/RoleSystem.h"
+#include "../Tasnal/TasnalSystem.h"
 #include "TiledMap.h"
-#include "../Role/Player.h"
-#include "../Role/RObject.h"
+#include "../Tasnal/Player.h"
+#include "../Tasnal/RObject.h"
 #include "../Utils/Telisk.h"
 using namespace std;
 
@@ -76,7 +76,7 @@ Collapse::Collapse(const unsigned short &mapTag, const Vec2& rangeStart, const V
 		auto tileFrame = tile->getSpriteFrame();
 
 		CCASSERT(nullptr != tileFrame, "mapTag tile frameΪ��");
-		collisionTile = Role::createWithFrame<RObject>(tileFrame);;
+		collisionTile = Tasnal::createWithFrame<RObject>(tileFrame);;
 		collisionTile->setName(StringUtils::format("collapse%d", collisionTile->getTag()));
 		colNames.push_back(collisionTile->getName());
 		collisionTile->setMoveStep(step);
@@ -87,9 +87,9 @@ Collapse::Collapse(const unsigned short &mapTag, const Vec2& rangeStart, const V
 		MAP_WITHTAG(mapTag)->getWalls().removeTileAt(rangeTile);
 		//���ݵ�ͼid����
 		MAP_WITHTAG(mapTag)->addChild(collisionTile);
-		ROLE_MANAGER->registerRole(collisionTile);
+		ROLE_MANAGER->registerTasnal(collisionTile);
 		//ע�ᵽ�ű�
-		LUAH->registerRole("collapse","collapse",collisionTile);
+		LUAH->registerTasnal("collapse","collapse",collisionTile);
 	});
 }
 

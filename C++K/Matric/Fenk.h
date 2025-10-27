@@ -18,7 +18,7 @@ struct Fenk
 	//��ײ���Ƿ���ʾ��
 	bool isShowThorn = true;
 	//�Ƿ�����������
-	bool allowPush = false;
+	bool EndPush = false;
 	//������ײ�������������ɫֱ�ӹ�ȥ
 	bool allowCollision= true;
 	//�Ƿ��Ѿ���ײ

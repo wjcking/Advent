@@ -1,19 +1,19 @@
 #include "Trigger.h"
 #include "../Utils/Constant.h"
-#include "../Role/Role.h"
+#include "../Tasnal/Tasnal.h"
 #include "../Utils/Utils.h"
 Trigger::Trigger(const bool& bAct) :toBeRemoved(false),
 bActive(bAct)
 //graphNodeIndex(-1)
 {
-	relatedTags.reserve(Reserve_Role);
+	relatedTags.reserve(Reserve_Tasnal);
 }
 Trigger::Trigger(const Size& size, const MovingDirection& md) :sensorRange(size),
 sensorDirection(md),
 toBeRemoved(false),
 bActive(true)
 {
-	relatedTags.reserve(Reserve_Role);
+	relatedTags.reserve(Reserve_Tasnal);
 }
 
 
@@ -29,7 +29,7 @@ TriggerLine::TriggerLine(const Size& range, const MovingDirection& md) : Trigger
 TriggerLine::TriggerLine() {};
 TriggerLine::~TriggerLine() {}
 
-bool& TriggerLine::scanTouching(Role& entityRact)
+bool& TriggerLine::scanTouching(Tasnal& entityRact)
 {
 	isTouched = false;
 	auto bound = entityRact.getCollisionBound();
@@ -46,7 +46,7 @@ void TriggerLine::render(DrawNode* draw)
 	draw->drawLine(start, end, getColor());
 };
 
-void TriggerLine::updateRegion(Role& role, const float& radius)
+void TriggerLine::updateRegion(Tasnal& role, const float& radius)
 {
 	switch (sensorDirection)
 	{
@@ -77,7 +77,7 @@ TriggerCircle::TriggerCircle(const Ract& rect, const float& radius) :radius(radi
 TriggerCircle::TriggerCircle(const Size& range, const MovingDirection& md) : Trigger(range, md) {};
 TriggerCircle::TriggerCircle() {};
 TriggerCircle::~TriggerCircle() {};
-bool& TriggerCircle::scanTouching(Role& entityRact)
+bool& TriggerCircle::scanTouching(Tasnal& entityRact)
 {
 	//distance = Fand::getRange(entityRact, circle);
 	//isTouched = entityRact.intersectsCircle(Vec2(circle.getMidX(), circle.getMidY()), radius == 0 ? circle.size.width / 2 : radius);
@@ -89,7 +89,7 @@ void TriggerCircle::render(DrawNode* draw)
 {
 	draw->drawCircle(Vec2(circle.getMidX(), circle.getMidY()), circle.size.width / 2, 360, 12, true, getColor());
 }
-void TriggerCircle::updateRegion(Role& role, const float& radius)
+void TriggerCircle::updateRegion(Tasnal& role, const float& radius)
 {
 	switch (sensorDirection)
 	{
@@ -118,7 +118,7 @@ TriggerRact::TriggerRact(const Size& range, const MovingDirection& md) : Trigger
 TriggerRact::TriggerRact() {};
 TriggerRact::~TriggerRact() {}
 
-bool& TriggerRact::scanTouching(Role& entityRact)
+bool& TriggerRact::scanTouching(Tasnal& entityRact)
 {
 	auto bound = entityRact.getCollisionBound();
 	distance = Fand::getRange(bound, rect);
@@ -137,7 +137,7 @@ void TriggerRact::render(DrawNode* draw)
 	draw->drawRact(rect.origin, Vec2(rect.getMaxX(), rect.getMaxY()), getColor());
 }
 
-void TriggerRact::updateRegion(Role& role, const float& radius)
+void TriggerRact::updateRegion(Tasnal& role, const float& radius)
 {
 	auto boundBox = role.getCollisionBound();
 

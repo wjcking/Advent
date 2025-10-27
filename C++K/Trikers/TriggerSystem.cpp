@@ -1,4 +1,4 @@
-#include "../Role/Role.h"
+#include "../Tasnal/Tasnal.h"
 #include "Trigger.h"
 #include "TriggerSystem.h"
 #include "../Utils/Telisk.h"
@@ -23,7 +23,7 @@ TriggerSystem::~TriggerSystem()
 	clear();
 }
 
-short TriggerSystem::checkTrigger(const short & tag, Role & role)
+short TriggerSystem::checkTrigger(const short & tag, Tasnal & role)
 {
 	//	return trigerVector[tag]->scanTouching()
 	return 0;
@@ -53,7 +53,7 @@ void TriggerSystem::scanTriggers(std::function<void(Trigger&)> each)
 
 }
 
-void TriggerSystem::scanSensor(Role & opponent, std::function<void(Trigger&)> each)
+void TriggerSystem::scanSensor(Tasnal & opponent, std::function<void(Trigger&)> each)
 {
 	for (auto& iter : trigerVector)
 	{

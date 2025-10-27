@@ -1,10 +1,10 @@
 #pragma once 
-#include "Role.h"
+#include "Tasnal.h"
 
 
 using namespace std;
 
-class RObject : public Role
+class RObject : public Tasnal
 {
 private:
 	//�����ƶ���ɸ������ moves ʹ��
@@ -30,7 +30,7 @@ private:
 	void updateSpring();
 	//void proceedKnocks(function<void(KnockPhase&)> knoPhase);
 	//�Ƿ��뿪���ɻ򿪹أ������ж� �պ��뿪������Ǹ��ڹ���
-	bool isGettingOff(Role&, const Vec2& = Vec2(10.f, 10.f));
+	bool isGettingOff(Tasnal&, const Vec2& = Vec2(10.f, 10.f));
 
 public:
 	RObject();
@@ -44,14 +44,14 @@ public:
 	/*
 	*ִ�ж���
 	*/
-	KnockPhase gotKnocked(Role&);
-	void checkKnocks(Role&);
+	KnockPhase gotKnocked(Tasnal&);
+	void checkKnocks(Tasnal&);
 	void blinkSelf();
 	void blinkGroup();
 	//ע��step Vec2 ��ô���0.7������ײ��׼ȷ
-	SpringInfo& bounce(Role&);
+	SpringInfo& bounce(Tasnal&);
 	std::string pollChar();
-	FrameSwitch switchFrame(Role&);
+	FrameSwitch switchFrame(Tasnal&);
 	/*
 	*ע��ű�
 	*/
@@ -63,7 +63,7 @@ public:
 	void registerSwitch(const LuaRef&);
 
 	void setAnimation(const LuaRef&) override;
-	bool checkRactAround(Role& opponent, const bool& allowFollow);
+	bool checkRactAround(Tasnal& opponent, const bool& allowFollow);
 	inline FrameSwitch& getSwitch(const int& tag) { return frameSwitch[tag]; }
 	inline bool hasSwitches() { return frameSwitchTemplate.framePrefix != ""; }
 	//�û�, ���û������򷢳�, ���һ�Ҫ�ж��û���λ��

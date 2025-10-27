@@ -4,10 +4,10 @@
 #include "../Utils/Fand.h"
 #include "../Utils/Constant.h"
 
-Npc::Npc() :Role()
+Npc::Npc() :Tasnal()
 {
 	setHarmful();
-	type = RoleType::npc;
+	type = TasnalType::npc;
 }
 Npc::~Npc()
 {
@@ -15,7 +15,7 @@ Npc::~Npc()
 }
 void Npc::update()
 {
-	Role::update();
+	Tasnal::update();
 }
 
 void Npc::patrollingX(const bool& allowWalls)

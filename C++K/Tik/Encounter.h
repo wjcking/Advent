@@ -1,14 +1,13 @@
 #ifndef FRAMECOUNTER_H
 #define FRAMECOUNTER_H
 #include <unordered_map>
+
 class Clock
 {
-private:
+	Clock() {};
 	static float tik;
 	static int iTick;
 
-public:
-	Clock() {};
 	//ÿ�μ�0.005
 	static float&  getTickFloat();
 	static int&  getTickInteger();
@@ -27,7 +26,6 @@ struct DelayPhase
 		timestramp = 0.f;
 	};
 
-	inline void reset() { timestramp = 0.f; }
 	//�Ƿ�ʱ��
 	bool isTimeUp()
 	{
@@ -37,6 +35,8 @@ struct DelayPhase
 		return Clock::getTickFloat() > timestramp;
 	}
 
+	inline
+	void reset() { timestramp = 0.f; }
 };
 
 class DelayCollection

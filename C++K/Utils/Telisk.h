@@ -7,8 +7,8 @@
 	lua_pushliteral(l, #val); \
 	lua_pushnumber(l, val); \
 	lua_settable(l, -3)
-class Role;
-LuaRef getRole(const int& tag = 0, const std::string& name = "");
+class Tasnal;
+LuaRef getTasnal(const int& tag = 0, const std::string& name = "");
 
 class Luah
 {
@@ -51,7 +51,7 @@ public:
 	void loadPackages();
 	void registerClasses();
 	void preloadResources(const char* = "Resources");
-	void registerRole(const char*, const char*, Role*);
+	void registerTasnal(const char*, const char*, Tasnal*);
 	void processTable(const char* tableName, std::delegate<void(LuaRef)>, const bool& = true);
 	void processTableFont(const char* tableName, std::delegate<void(LuaRef, const FontInfo&)>, const bool& = true);
 
@@ -75,7 +75,7 @@ public:
 
 	}
 	//ר�����ٽ�ɫ
-	inline void setDisposal(const int& tag, const bool& val = true) { setValue(Luat_Role, tag, Luaf_IsDisposed, val); };
+	inline void setDisposal(const int& tag, const bool& val = true) { setValue(Luat_Tasnal, tag, Luaf_IsDisposed, val); };
 	inline LuaRef createTable(const int& size = 255)
 	{
 		LuaRef luaref;

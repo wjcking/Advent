@@ -5,48 +5,48 @@
 #include "../Utils/Telisk.h"
 using namespace std;
 
-class Role;
+class Tasnal;
 class Player;
 class Npc;
 class RObject;
 class ProjectTile; 
 
-#define ROLE_MANAGER RoleSystem::getInstance()
-#define ROLE_PLAYER RoleSystem::getPlayerRefer()  
+#define ROLE_MANAGER TasnalSystem::getInstance()
+#define ROLE_PLAYER TasnalSystem::getPlayerRefer()  
 
-class RoleSystem
+class TasnalSystem
 {
 	private:
-	unordered_map<unsigned int, Role*> entityMap;
+	unordered_map<unsigned int, Tasnal*> entityMap;
 
-	RoleSystem();
-	RoleSystem(const RoleSystem&);
-	RoleSystem& operator=(const RoleSystem&);
+	TasnalSystem();
+	TasnalSystem(const TasnalSystem&);
+	TasnalSystem& operator=(const TasnalSystem&);
 	static Player* player;
 
 	public:
-	static RoleSystem* getInstance();
+	static TasnalSystem* getInstance();
 	//static Player* getPlayer();
 	static Player& getPlayerRefer();
-	void process(function<void(Role&)> roleAction);
-	static void updateRole(const int&, const bool&);
-	void  registerRole(Role* NewEntity);
+	void process(function<void(Tasnal&)> roleAction);
+	static void updateTasnal(const int&, const bool&);
+	void  registerTasnal(Tasnal* NewEntity);
 	//�ڽ�ɫ���ٺ󣬻�����Ҳ���������Ի������ڸý�ɫ�Ļ�����null�����ж���
-	Role* getRoleByTag(const int&, bool allowAssert = true) const;
+	Tasnal* getTasnalByTag(const int&, bool allowAssert = true) const;
 	template<class T>
-	inline T* getRole(const int& tag)
+	inline T* getTasnal(const int& tag)
 	{
-		return dynamic_cast<T*>(getRoleByTag(tag, false));
+		return dynamic_cast<T*>(getTasnalByTag(tag, false));
 	}
-	void removeRole(Role* pEntity);
-	void removeRole(const unsigned int& tag) { entityMap.erase(tag); };
+	void removeTasnal(Tasnal* pEntity);
+	void removeTasnal(const unsigned int& tag) { entityMap.erase(tag); };
 	void release();
 	//�����ɫ �Լ���ɫ��Ҫ��֡
 	void loadScript();
-	static void registerLuaRole(LuaIntf::LuaRef);
+	static void registerLuaTasnal(LuaIntf::LuaRef);
 	//1.���м��ص�ʱ������ 2.����������
-	static void setTeshnal(LuaIntf::LuaRef ref, Role* role);
+	static void setTeshnal(LuaIntf::LuaRef ref, Tasnal* role);
 	//����
-	static void appendRole(LuaIntf::LuaRef);
+	static void appendTasnal(LuaIntf::LuaRef);
 };
 #endif

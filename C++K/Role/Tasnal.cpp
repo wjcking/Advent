@@ -1,10 +1,10 @@
-#include "Role.h"  
+#include "Tasnal.h"  
 #include "Teshnal.h"
 #include "RObject.h"
 #include "Player.h"
 #include "Npc.h"
-#include "RoleSystem.h"
-#include "RoleFrame.h"
+#include "TasnalSystem.h"
+#include "TasnalFrame.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 
@@ -16,9 +16,9 @@
 
 using namespace CocosDenshion;
 
-int Role::nextTag = 1;
-int Role::touchedRole = 0;
-Role::Role() :Teshnal(), weaponSystem(*this), delayRecovery(0.30f), label(nullptr), delayFrame(0.15f), scaleDialog(nullptr)
+int Tasnal::nextTag = 1;
+int Tasnal::touchedTasnal = 0;
+Tasnal::Tasnal() :Teshnal(), weaponSystem(*this), delayRecovery(0.30f), label(nullptr), delayFrame(0.15f), scaleDialog(nullptr)
 {
 	allowFollow = false;
 	allowDisposal = false;
@@ -29,19 +29,19 @@ Role::Role() :Teshnal(), weaponSystem(*this), delayRecovery(0.30f), label(nullpt
 	facedDirection = MovingDirection::toRight;
 
 	resizeContent();
-	lastCollideCollection.reserve(Reserve_Role);
+	lastCollideCollection.reserve(Reserve_Tasnal);
 	lastCollideLine.reserve(Reserve_65534);
 }
 
-Role::~Role()
+Tasnal::~Tasnal()
 {
 	sensorSystem.clear();
 }
 
 //sensor,��̬���ӵ�roleû��
-void Role::loadScript()
+void Tasnal::loadScript()
 {
-	auto roleTable = LUAH->getRole(getTag());
+	auto roleTable = LUAH->getTasnal(getTag());
 	//���û��sensor
 	if (!roleTable.has(Luaf_Sensor))
 		return;
@@ -89,7 +89,7 @@ const Teshnal::MovingDirection getMovingY() const
 
 	return MovingDirection::toBottom;
 }
-MovingDirection Role::scanSensor(Role* opponent)
+MovingDirection Tasnal::scanSensor(Tasnal* opponent)
 {
 	using namespace LuaIntf;
 
@@ -111,19 +111,19 @@ MovingDirection Role::scanSensor(Role* opponent)
 	return sensedDirection;
 }
 
-void Role::spawn(const Vec2& pos, const Vec2& offset)
+void Tasnal::spawn(const Vec2& pos, const Vec2& offset)
 {
 	auto realPos = getMap()->getPositionByTileCoordinate(pos);
 	realPos = realPos + offset;
 	displace(realPos);
 }
 
-void Role::control(const MovingDirection & direction, const float & angle)
+void Tasnal::control(const MovingDirection & direction, const float & angle)
 {
 	moveAngle = angle;
 	moveDirection = direction;
 }
-void Role::registerMoves(const LuaRef& table)
+void Tasnal::registerMoves(const LuaRef& table)
 {
 	moves.clear();
 	allowFlip = false;//��������ת
@@ -135,7 +135,7 @@ void Role::registerMoves(const LuaRef& table)
 /*
 �����Ѿ����еĽ׶��±�
 */
-unsigned short& Role::moveObject(const bool& isLoop)
+unsigned short& Tasnal::moveObject(const bool& isLoop)
 {
 	for (auto& iter : moves)
 	{
@@ -175,7 +175,7 @@ unsigned short& Role::moveObject(const bool& isLoop)
 }
 
 //������tile ��ȡ�ص�������Ӱ����ʼλ��
-void Role::registerRebound(const LuaRef& ref)
+void Tasnal::registerRebound(const LuaRef& ref)
 {
 	//������tile ��ȡ�ص�������Ӱ����ʼλ��
 	isGravityOn = false;
@@ -200,7 +200,7 @@ void Role::registerRebound(const LuaRef& ref)
 		reboundInfo.allowBack = ref.get(Luaf_AllowBack).toValue<bool>();
 }
 
-void Role::setAnimation(const LuaRef& ref)
+void Tasnal::setAnimation(const LuaRef& ref)
 {
 	if (!ref.has(Luaf_Type))
 		return;
@@ -350,7 +350,7 @@ void Role::setAnimation(const LuaRef& ref)
 	}
 }
 
-void Role::rebound()
+void Tasnal::rebound()
 {
 	//����������˳�
 	if (reboundInfo.isRunning)	return;
@@ -399,7 +399,7 @@ void Role::rebound()
 }
 
 /*���Ŵ�С��Ӧtile*/
-void Role::resizeContent()
+void Tasnal::resizeContent()
 {
 	Size tileSize = getMap()->getTileSize();
 	Size originSize = getContentSize();
@@ -409,7 +409,7 @@ void Role::resizeContent()
 }
 
 /*AABB��Χ��*/
-void Role::setDesirePosition(const BoundPosition& boundPos, const Ract& intersection)
+void Tasnal::setDesirePosition(const BoundPosition& boundPos, const Ract& intersection)
 {
 	switch (boundPos)
 	{
@@ -484,7 +484,7 @@ void Role::setDesirePosition(const BoundPosition& boundPos, const Ract& intersec
 /*
 ����AABB��ײǰ��,����ǲ���solid����ֻ�ܴ��·���ײ��Ҫ�ж�
 */
-bool Role::checkObjectCollision(Role& oppo, const bool& isOriginBound)
+bool Tasnal::checkObjectCollision(Tasnal& oppo, const bool& isOriginBound)
 {
 	//��ש����ԭʼbound
 	auto bound = oppo.getCollisionBound(oppo.insetObject, isOriginBound);
@@ -509,7 +509,7 @@ bool Role::checkObjectCollision(Role& oppo, const bool& isOriginBound)
 	collidedOpponent = &oppo;
 	return true;
 }
-void Role::checkObjectFenk()
+void Tasnal::checkObjectFenk()
 {
 	if (nullptr == collidedOpponent)
 		return;
@@ -569,7 +569,7 @@ void Role::checkObjectFenk()
 	//collidedOpponent->gotoDesirePosition();
 }
 
-void Role::checkLine(const short& tag, const Vec2 & start, const Vec2 & end)
+void Tasnal::checkLine(const short& tag, const Vec2 & start, const Vec2 & end)
 {
 	//���û������
 	if (!isGravityOn)
@@ -600,7 +600,7 @@ void Role::checkLine(const short& tag, const Vec2 & start, const Vec2 & end)
 		this->lastCollideLine[tag].start = bound.origin;
 }
 
-void Role::checkFollowing()
+void Tasnal::checkFollowing()
 {
 	if (nullptr == collidedOpponent)
 		return;
@@ -613,7 +613,7 @@ void Role::checkFollowing()
 	//��robject��npc���ԡ������ƶ��������û�в���ƽ̨�� �˳� 
 	//[??]�̶�����������Ӵ���,��ɫ�ὥ����������
 	//�д����
-	if (collidedOpponent->getType() == RoleType::robject && lastCollideDirection != CollisionDirection::atTop)
+	if (collidedOpponent->getType() == TasnalType::robject && lastCollideDirection != CollisionDirection::atTop)
 		return;
 
 	//����ƽ̨���Ժ�
@@ -648,7 +648,7 @@ void Role::checkFollowing()
 	gotoDesirePosition();
 }
 
-void Role::checkBorder(const Vec2 & min, const Vec2 & max)
+void Tasnal::checkBorder(const Vec2 & min, const Vec2 & max)
 {
 	if (getPositionX() < min.x)
 		addDesiredX(min.x - getPositionX());
@@ -663,7 +663,7 @@ void Role::checkBorder(const Vec2 & min, const Vec2 & max)
 	gotoDesirePosition();
 }
 
-void Role::checkHints(const bool& flag)
+void Tasnal::checkHints(const bool& flag)
 {
 	if (!flag)
 	{
@@ -678,7 +678,7 @@ void Role::checkHints(const bool& flag)
 	openDialogBox(hint);
 
 }
-void Role::showHints(const LuaRef& ref)
+void Tasnal::showHints(const LuaRef& ref)
 {
 	if (!ref.has(Luaf_Text))
 		return;
@@ -691,7 +691,7 @@ void Role::showHints(const LuaRef& ref)
 	scaleDialog->setLocalZOrder(hint.zorder);
 
 }
-bool Role::locate(const Vec2& target, const bool& allowStop)
+bool Tasnal::locate(const Vec2& target, const bool& allowStop)
 {
 	//������0 �� 1 ֮�� �͵���Ŀ�ĵ�
 	// log("[pos]%lf %f [target]%lf %lf", getPositionX(),getPositionY(), target.x,target.y);
@@ -742,7 +742,7 @@ bool Role::locate(const Vec2& target, const bool& allowStop)
 	return false;
 }
 
-MovingDirection Role::getTowards() const
+MovingDirection Tasnal::getTowards() const
 {
 	switch (facedDirection)
 	{
@@ -765,7 +765,7 @@ MovingDirection Role::getTowards() const
 	return MovingDirection::stayStill;
 }
 
-void Role::openDialogBox(const HintText& dlg)
+void Tasnal::openDialogBox(const HintText& dlg)
 {
 	if (nullptr == label)
 		label = Label::createWithSystemFont("", Resh::getFontName(), dlg.font.size);
@@ -815,7 +815,7 @@ void Role::openDialogBox(const HintText& dlg)
 
 }
 
-void Role::closeDialog()
+void Tasnal::closeDialog()
 {//label->removeFromParent();
 		//anchor->removeFromParent();
 		//scaleDialog->removeFromParent();
@@ -832,7 +832,7 @@ void Role::closeDialog()
 /*
 AABB ��Ƭ��ײ
 */
-void Role::checkTileCollision()
+void Tasnal::checkTileCollision()
 {
 	boundRacts = getMap()->getBoundTiles(*this);
 	if (nullptr == boundRacts)
@@ -932,7 +932,7 @@ void Role::checkTileCollision()
 	delete[] boundRacts;
 }
 
-void Role::registerTouch()
+void Tasnal::registerTouch()
 {
 	if (!allowTouch)
 		return;
@@ -944,14 +944,14 @@ void Role::registerTouch()
 		auto isTouched = Ract(Vec2::ZERO, getContentSize()).containsPoint(locationInNode);
 
 		if (isTouched)
-			touchedRole = getTag();
+			touchedTasnal = getTag();
 		return isTouched;
 	};
 
 
 	listener->onTouchMoved = [&](Touch* touch, Event* event) {
 
-		if (touchedRole != getTag())
+		if (touchedTasnal != getTag())
 			return;
 		//auto diffX = abs(getPositionX() - originPosition.x);
 		//auto diffY = abs(getPositionY() - originPosition.x);
@@ -975,13 +975,13 @@ void Role::registerTouch()
 
 	listener->onTouchEnded = [&](Touch* touch, Event* event) {
 		touchedTimes++;
-		touchedRole = 0;
+		touchedTasnal = 0;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 }
 
-bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  boundRacts[BandRact])
+bool Tasnal::checkTileSlopes(const unsigned short& positionIndex, BoundRact  boundRacts[BandRact])
 {
 	if (getMovingY() == MovingDirection::toTop)
 		return false;
@@ -1095,7 +1095,7 @@ bool Role::checkTileSlopes(const unsigned short& positionIndex, BoundRact  bound
 ������ײ
 */
 
-Ract Role::getCollisionBound(const Vec2& inset, const bool& isOriginBound)
+Ract Tasnal::getCollisionBound(const Vec2& inset, const bool& isOriginBound)
 {
 	if (inset.x == 0 && inset.y == 0)
 		return getBoundingBox();
@@ -1109,12 +1109,12 @@ Ract Role::getCollisionBound(const Vec2& inset, const bool& isOriginBound)
 	return boundingBox;
 }
 
-void Role::checkSelfCollision()
+void Tasnal::checkSelfCollision()
 {
 
 }
 
-void Role::update()
+void Tasnal::update()
 {
 	if (framePrefix != "")
 		updateFrame(framePrefix.c_str());
@@ -1128,7 +1128,7 @@ void Role::update()
 
 }
 //�����������ִ��,����onGravity�ж�
-void Role::updatePosition()
+void Tasnal::updatePosition()
 {
 	//log("isJumped:%d;  onObject:%d;", isJumped, onObject);
 	 //if (getTag() == ID_Player && velocity.y != 0)
@@ -1185,7 +1185,7 @@ void Role::updatePosition()
 /*
 *λ���жϷ�������ǰ��
 */
-void Role::updateDirection()
+void Tasnal::updateDirection()
 {
 	//log("md:%d", moveDirection);
 	switch (moveDirection)
@@ -1240,7 +1240,7 @@ void Role::updateDirection()
 	}
 }
 
-void Role::updateFrame(const char* frameName)
+void Tasnal::updateFrame(const char* frameName)
 {
 	//ֻ��û�й�ʱ��ˢ��
 	if (!delayFrame.isTimeUp())
@@ -1323,7 +1323,7 @@ void Role::updateFrame(const char* frameName)
 	if (frameStyle == FrameStyle::die)
 	{
 		//�������µ�֡
-		if (RoleType::player == getType())
+		if (TasnalType::player == getType())
 			delayFrame.delaySecond = 0.08f;
 		if (frameIndexes[index].index == frameIndexes[index].end)
 		{
@@ -1342,7 +1342,7 @@ void Role::updateFrame(const char* frameName)
 	delayFrame.reset();
 
 }
-void Role::registerFrameIndexes(const LuaRef & ref)
+void Tasnal::registerFrameIndexes(const LuaRef & ref)
 {
 	frameIndexes = new FrameIndexes[FrameLength];
 
@@ -1365,7 +1365,7 @@ void Role::registerFrameIndexes(const LuaRef & ref)
 	}
 
 }
-void Role::limiteScreenBorder(const BorderLimited& limitedOption)
+void Tasnal::limiteScreenBorder(const BorderLimited& limitedOption)
 {
 	Vec2 mapPosition = getMap()->getPosition();
 	if (BorderLimited::notLimited == limitedOption)
@@ -1400,7 +1400,7 @@ void Role::limiteScreenBorder(const BorderLimited& limitedOption)
 	}
 	gotoDesirePosition();
 }
-BodyStatus& Role::gotHurt(const short& decreasedHP, const char* soundOuch)
+BodyStatus& Tasnal::gotHurt(const short& decreasedHP, const char* soundOuch)
 { 
 	//ֻ���ڽ���״̬��ȥhp
 	// if (BodyStatus::healthy == getBodyStatus())
@@ -1423,7 +1423,7 @@ BodyStatus& Role::gotHurt(const short& decreasedHP, const char* soundOuch)
 	return bodyStatus;
 }
 
-void Role::gotoHell(const char* soundScream)
+void Tasnal::gotoHell(const char* soundScream)
 {
 	if (bodyStatus != BodyStatus::dead)
 		SimpleAudioEngine::getInstance()->playEffect(soundScream);
@@ -1431,7 +1431,7 @@ void Role::gotoHell(const char* soundScream)
 	bodyStatus = BodyStatus::dead;
 }
 
-BodyStatus& Role::getBodyStatus()
+BodyStatus& Tasnal::getBodyStatus()
 {
 	if (bodyStatus == BodyStatus::hurting)
 	{
@@ -1447,7 +1447,7 @@ BodyStatus& Role::getBodyStatus()
 	return bodyStatus;
 }
 
-RangeType Role::getRange(Role* opponent)
+RangeType Tasnal::getRange(Tasnal* opponent)
 {
 //	 return getMap()->getRange(getPosition(), opponent->getPosition());
 	float distance = getPosition().distance(opponent->getPosition());
@@ -1465,7 +1465,7 @@ RangeType Role::getRange(Role* opponent)
 	return RangeType::rangeOut;
  }
 
-RactAround Role::getRactAround(const bool& flagVertex)
+RactAround Tasnal::getRactAround(const bool& flagVertex)
 {
 	RactAround rbr;
 	auto pt = convertToWorldSpace(Vec2::ZERO);
@@ -1483,16 +1483,16 @@ RactAround Role::getRactAround(const bool& flagVertex)
 
 	return rbr;
 }
-void Role::gotPushed(Role& collider)
+void Tasnal::gotPushed(Tasnal& collider)
 {
-	if (collider.getCollidedDirection() == CollisionDirection::atLeft && FenkLeft.allowPush)
+	if (collider.getCollidedDirection() == CollisionDirection::atLeft && FenkLeft.EndPush)
 		addDesiredX(FenkLeft.pushSteps.x);
-	if (collider.getCollidedDirection() == CollisionDirection::atRight && FenkRight.allowPush)
+	if (collider.getCollidedDirection() == CollisionDirection::atRight && FenkRight.EndPush)
 		addDesiredX(-FenkRight.pushSteps.x);
-	if (collider.getCollidedDirection() == CollisionDirection::atBottom && FenkBottom.allowPush)
+	if (collider.getCollidedDirection() == CollisionDirection::atBottom && FenkBottom.EndPush)
 		addDesiredY(FenkBottom.pushSteps.y);
 	//�����Ƶ�ʱ���ٶȿ죬����2������������������
-	if (collider.getCollidedDirection() == CollisionDirection::atTop && FenkTop.allowPush)
+	if (collider.getCollidedDirection() == CollisionDirection::atTop && FenkTop.EndPush)
 		addDesiredY(-FenkTop.pushSteps.y / 2);
 	gotoDesirePosition();
 }

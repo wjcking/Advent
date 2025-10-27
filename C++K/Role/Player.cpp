@@ -6,10 +6,10 @@
 #include "../Scene/StageScene.h"
 #include "../Scene/MainScene.h"
 
-Player::Player() :Role(), controllable(true)
+Player::Player() :Tasnal(), controllable(true)
 {
 	isSolid = false;
-	type = RoleType::player;
+	type = TasnalType::player;
 }
 
 Player::~Player()
@@ -61,7 +61,7 @@ void Player::update()
 	//һ�������ȥ��������Ծ
 	if (isDead())	setOnJump(false);.
 
-	Role::update();
+	Tasnal::update();
 }
 
 //���̿������ڲ���

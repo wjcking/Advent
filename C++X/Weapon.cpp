@@ -1,6 +1,6 @@
 #include "Weapon.h"
 #include "ProjectTile.h"
-#include "RoleSystem.h"
+#include "TasnalSystem.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "SimpleAudioEngine.h"
@@ -41,29 +41,29 @@ void Pistol::shootAt(const Vec2& pos)
 		switch (projectType)
 		{
 		case ProjectType::deadshot:
-			projectTile = Role::createWithFrame<Deadshot>(frame);
+			projectTile = Tasnal::createWithFrame<Deadshot>(frame);
 			break;
 		case ProjectType::footboard:
-			projectTile = Role::createWithFrame<Footboard>(frame);
+			projectTile = Tasnal::createWithFrame<Footboard>(frame);
 			break;
 		case ProjectType::trace:
-			projectTile = Role::createWithFrame<Trace>(frame);
+			projectTile = Tasnal::createWithFrame<Trace>(frame);
 			//dynamic_cast<Trace*>(projectTile)->setAim(pos);
 			break;
 		default:
-			projectTile = Role::createWithFrame<SlugObject>(frame);
+			projectTile = Tasnal::createWithFrame<SlugObject>(frame);
 			break;
 		}
 		//1.���ӵ��������������tag,�����lua�Ҳ��� tag=-1
-		ROLE_MANAGER->registerRole(projectTile);
+		ROLE_MANAGER->registerTasnal(projectTile);
 		projectTile->getMap()->addChild(projectTile);
 		projectTile->setProjectType(projectType);
 		projectTile->setProject(refProject);
 		//2.����˭�����
 		projectTile->setOwner(*owner);
-		//3.ע��thisָ�뵽Role��
+		//3.ע��thisָ�뵽Tasnal��
 		// ע���е��ӵ�û��target��ֱ�ӻ�ȡ�����޷�ת�� downcast error lua
-		LUAH->registerRole("gun", "shoot", projectTile);
+		LUAH->registerTasnal("gun", "shoot", projectTile);
 		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(sound.c_str(), false);
 		decrementNumRounds();		 
 	}
@@ -88,7 +88,6 @@ void Weapon::registerWeapon(const LuaRef& ref)
 		slugsLeft = ref.get(Luaf_Count).toValue<short>();
 		slugsCount = slugsLeft;
 	}
-
 	//if (ref.has(Luaf_MaxRounds))
 	//	maxRounds = ref.get(Luaf_MaxRounds).toValue<unsigned short>();
 	if (ref.has(Luaf_Sound))

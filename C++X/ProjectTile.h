@@ -1,15 +1,12 @@
 #pragma once
-#include "Role.h"
+#include "Tasnal.h"
 
-/*
-*�����ӵ��࣬��Ϸ������2,3����ʱ���ڽ�����չ
-*/
-class ProjectTile : public Role
+class ProjectTile : public Tasnal
 {
 protected:
 	bool bDestiny = false;
-	Role* owner;
-	Role* target;
+	Tasnal* owner;
+	Tasnal* target;
 	Vec2 offset = Vec2(30, 30);
 	//�ӵ����� 0= ��ͨ�Զ� 1=���ݣ��೤ʱ�����ʧ����timeOfDisappear��
 	ProjectType projectType = ProjectType::object;
@@ -20,11 +17,11 @@ public:
 	ProjectTile();
 	~ProjectTile();
 	//�����ǽ�ɫ����������ӵ��������ƶ�
-	void setOwner(Role&);
+	void setOwner(Tasnal&);
 	inline bool& isDestiny() { return bDestiny; }
-	inline Role& getOwner() { return *owner; }
-	inline Role& getTarget() { return *target; }
-	inline void setTarget(Role& target) { this->target = &target; };
+	inline Tasnal& getOwner() { return *owner; }
+	inline Tasnal& getTarget() { return *target; }
+	inline void setTarget(Tasnal& target) { this->target = &target; };
 
 	//��lua�˵��ã�����ڲ����õĻ��������ӵ���ȫ����������tag�й�
 	virtual bool isDead() override;

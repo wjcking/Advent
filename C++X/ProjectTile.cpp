@@ -1,16 +1,16 @@
 #include "ProjectTile.h"
-#include "RoleSystem.h"
+#include "TasnalSystem.h"
 
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 
 
-ProjectTile::ProjectTile() : Role()
+ProjectTile::ProjectTile() : Tasnal()
 {
 	isGravityOn = false;
 	//�Զ�Ԥ�����ò���ײ��Ƭ
 	onCheckTile = false;
-	type = RoleType::projectTile;
+	type = TasnalType::projectTile;
 	//isSolid = projectType == ProjectType::footboard;
 	setLocalZOrder(Z_ROLE);
 	//��ʱ 
@@ -21,7 +21,7 @@ ProjectTile::~ProjectTile()
 {
 }
 
-void ProjectTile::setOwner(Role& owner)
+void ProjectTile::setOwner(Tasnal& owner)
 {
 	this->owner = &owner;
 	towards = owner.getFacedDirection();
@@ -58,7 +58,7 @@ void ProjectTile::update()
 {
 	//�������λ��
 	//����footboard���棬�������
-	Role::update();
+	Tasnal::update();
 }
 void ProjectTile::setProject(const LuaRef&  ref)
 {
@@ -68,7 +68,7 @@ void ProjectTile::setProject(const LuaRef&  ref)
 	if (ref.has(Luaf_AllowThrough))
 		canThough = ref.get(Luaf_AllowThrough, false);
 	//1.���м��ص�ʱ������ 2.����������
-	RoleSystem::setTeshnal(ref, this);
+	TasnalSystem::setTeshnal(ref, this);
 }
 /*
 * ��������
@@ -159,7 +159,7 @@ void Deadshot::setProject(const LuaRef&  ref)
 	if (ref.has(Luaf_Target))
 	{
 		auto tag = ref.get(Luaf_Target).toValue<int>();
-		target = ROLE_MANAGER->getRoleByTag(tag, false);
+		target = ROLE_MANAGER->getTasnalByTag(tag, false);
 	}
 }
 

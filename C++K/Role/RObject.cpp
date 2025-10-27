@@ -3,16 +3,16 @@
 #include "../Utils/ResourceHelper.h"
 #include "../Utils/ActionExtend.h"
 #include "SimpleAudioEngine.h"
-#include "RoleSystem.h"
+#include "TasnalSystem.h"
 #include "../Map/TiledMap.h"
 #include "../Map/MapManager.h"
 using namespace CocosDenshion;
-RObject::RObject() :Role(), debrisColor(1), springInfo()
+RObject::RObject() :Tasnal(), debrisColor(1), springInfo()
 {
 	isGravityOn = false;
 	isSolid = true;
 
-	type = RoleType::robject;
+	type = TasnalType::robject;
 	moves.reserve(100);
 	knocks.reserve(100);
 	frameSwitch.reserve(5);
@@ -47,15 +47,15 @@ void RObject::updateSpring()
 void RObject::update()
 {
 	updateSpring();
-	Role::update();
+	Tasnal::update();
 }
 //framework
 void RObject::loadScript()
 {
-	Role::loadScript();
+	Tasnal::loadScript();
 }
 
-KnockPhase RObject::gotKnocked(Role& collider)
+KnockPhase RObject::gotKnocked(Tasnal& collider)
 {
 	auto currentKnock = KnockPhase();
 	auto jumpingTo = getActionByTag(1000);
@@ -166,7 +166,7 @@ KnockPhase RObject::gotKnocked(Role& collider)
 }
 
 //�ڽű���ˢִ֡��
-void RObject::checkKnocks(Role& opponent)
+void RObject::checkKnocks(Tasnal& opponent)
 {
 	auto offset = Vec2(getCollisionBound().size.width / 2, getCollisionBound().size.height / 2);
 	//	auto isOff = isGettingOff(opponent, Vec2(getCollisionBound().size.width / 2, getCollisionBound().size.height / 2));
@@ -209,7 +209,7 @@ void RObject::checkKnocks(Role& opponent)
 	}
 }
 
-SpringInfo& RObject::bounce(Role& opponent)
+SpringInfo& RObject::bounce(Tasnal& opponent)
 {
 	if (!checkObjectCollision(opponent))
 		return springInfo;
@@ -276,7 +276,7 @@ void RObject::setAnimation(const LuaRef& ref)
 			runAction(Repeat::create(RotateBy::create(duration, angle), limitedTimes));
 	}
 
-	Role::setAnimation(ref);
+	Tasnal::setAnimation(ref);
 }
 
 std::string RObject::pollChar()
@@ -287,7 +287,7 @@ std::string RObject::pollChar()
 	label->setString(result);
 	return result;
 }
-bool RObject::checkRactAround(Role& opponent, const bool& allowFollow)
+bool RObject::checkRactAround(Tasnal& opponent, const bool& allowFollow)
 {
 	if (getRactAround().isCollidWithRactAround(opponent.getRactAround(false)))
 	{
@@ -475,7 +475,7 @@ void RObject::registerText(const LuaRef & ref)
 
 }
 
-bool RObject::isGettingOff(Role& opponent, const Vec2& offset)
+bool RObject::isGettingOff(Tasnal& opponent, const Vec2& offset)
 {
 	bool isOff = abs(getPositionX() - opponent.getPositionX()) > getCollisionBound().size.width + offset.x
 		|| abs(getCollisionBound().getMinY() - opponent.getCollisionBound().getMinY()) > getCollisionBound().size.height + offset.y;
@@ -483,7 +483,7 @@ bool RObject::isGettingOff(Role& opponent, const Vec2& offset)
 	return isOff;
 }
 
-FrameSwitch RObject::switchFrame(Role & opponent)
+FrameSwitch RObject::switchFrame(Tasnal & opponent)
 {
 	int tag = opponent.getTag();
 	if (frameSwitch.find(tag) == frameSwitch.end())

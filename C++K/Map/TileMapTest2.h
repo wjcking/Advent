@@ -46,7 +46,7 @@ b
  drawCollision->setLocalZOrder(Z_Draw);
  for (auto role : getChildren())
  {
-  auto r = dynamic_cast<Role*>(role);
+  auto r = dynamic_cast<Tasnal*>(role);
 
   if (nullptr != r)
   {

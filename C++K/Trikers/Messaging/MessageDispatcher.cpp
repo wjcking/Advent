@@ -1,10 +1,10 @@
 #include "MessageDispatcher.h"
-#include "../Role/Role.h"
+#include "../Tasnal/Tasnal.h"
 #include "../Utils/Constant.h" 
-#include "../Role/RoleSystem.h"
-#include "../Role/Locations.h"
+#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Locations.h"
 #include "MessageTypes.h"
-#include "../Role/EntityNames.h"
+#include "../Tasnal/EntityNames.h"
 
 #include <iostream>
 using std::cout;
@@ -35,7 +35,7 @@ MessageDispatcher* MessageDispatcher::Instance()
 void MessageDispatcher::discharge(const int& receiver,
 	const Telegram& telegram)
 {
-	auto pReceiver = ROLE_MANAGER->getRoleByTag(receiver);
+	auto pReceiver = ROLE_MANAGER->getTasnalByTag(receiver);
 	if (!pReceiver->handleMessage(telegram))
 	{
 		//telegram could not be handled

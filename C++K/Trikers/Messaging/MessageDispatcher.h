@@ -6,7 +6,7 @@
 #include <set>//#include "misc/ConsoleUtils.h"
 #include "Telegram.h"
 
-class Role;
+class Tasnal;
 //to make code easier to read
 const double SEND_MSG_IMMEDIATELY = 0.0f;
 const int   NO_ADDITIONAL_INFO = 0;
@@ -42,7 +42,7 @@ public:
 
 	//send a message to another agent. Receiving agent is referenced by ID.
 	void dispatchMessage(double  delay, int    sender, int    receiver, int    msg, void*  ExtraInfo = nullptr);
-	//ÖØÔØÁ¢¼´·¢ËÍ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	inline void dispatchMessage(const int&    sender, const int& receiver, const  int& msg) { dispatchMessage(SEND_MSG_IMMEDIATELY, sender, receiver, msg); };
 	//send out any delayed messages. This method is called each time through   
 	//the main game loop.

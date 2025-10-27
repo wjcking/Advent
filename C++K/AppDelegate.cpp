@@ -28,7 +28,6 @@ void AppDelegate::initGLContextAttrs()
 {
 	//red,green,blue,alpha,depth,stencil
 	GLContextAttrs glContextAttrs = { 8, 8, 8, 8, 24, 8 };
-
 	GLView::setGLContextAttrs(glContextAttrs);
 }
 

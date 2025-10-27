@@ -2,7 +2,7 @@
 #define TRIGGER_H
 
 struct Telegram;
-class Role;
+class Tasnal;
 #include "cocos2d.h"
 #include "../Utils/Fand.h"
 #include "../Utils/Utils.h"
@@ -37,7 +37,7 @@ public:
 	//�����Ƿ񼤻ͼ
 	inline void setActivation(const bool& val) { bActive = val; }
 
-	virtual bool& scanTouching(Role& role) = 0;
+	virtual bool& scanTouching(Tasnal& role) = 0;
 
 	inline float& getDistance() { return distance; } ;
 	inline bool& isTouching() { return isTouched; }
@@ -52,7 +52,7 @@ public:
 	inline std::string& getName() { return name; }
 	//���bActive = trueɨ��������Ƿ�����ײ��
  	//[Sensor]����ˢ�¾��鴥����ײ��λ��
-	virtual void updateRegion(Role&, const float& radius = 0) = 0;
+	virtual void updateRegion(Tasnal&, const float& radius = 0) = 0;
 	virtual void render(DrawNode*) = 0;
 	Trigger(const bool& bAct = true);
 	Trigger(const Size& size, const MovingDirection& md);
@@ -71,9 +71,9 @@ public:
 	TriggerLine();
 	~TriggerLine();
 
-	bool& scanTouching(Role& entityRact)   override;
+	bool& scanTouching(Tasnal& entityRact)   override;
 	void render(DrawNode* draw) override;
-	void updateRegion(Role& role, const float& radius = 0) override;
+	void updateRegion(Tasnal& role, const float& radius = 0) override;
 };
 class TriggerCircle : public Trigger
 {
@@ -88,10 +88,10 @@ public:
 	TriggerCircle(const Size& range, const MovingDirection& md);
 	TriggerCircle();
 	~TriggerCircle();
-	virtual bool& scanTouching(Role& entityRact) override;
+	virtual bool& scanTouching(Tasnal& entityRact) override;
 
 	void render(DrawNode* draw)override;
-	void updateRegion(Role& role, const float& radius = 0) override;
+	void updateRegion(Tasnal& role, const float& radius = 0) override;
 }
 
 class TriggerRact : public Trigger
@@ -106,9 +106,9 @@ b
 	TriggerRact();
 	~TriggerRact();
 
-	virtual bool& scanTouching(Role& rect)  override;
+	virtual bool& scanTouching(Tasnal& rect)  override;
 
 	void render(DrawNode* draw)override;
-	void updateRegion(Role& role, const float& radius = 0) override;
+	void updateRegion(Tasnal& role, const float& radius = 0) override;
 d
 #endif

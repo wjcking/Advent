@@ -4,16 +4,13 @@
 #include "cocos2d.h"
 #include "Weapon.h"
 using namespace cocos2d;
-class Role;
+class Tasnal;
 class WeaponSystem
 {
 private:
 
-	Role* owner;
-
-	std::unordered_map< unsigned short, Weapon*>        weaponMap;
-
-	//a pointer to the weapon the bot is currently holding
+	Tasnal* owner;
+	unordered_map< unsigned short, Weapon*> weaponMap;
 	unsigned short    currentWeaponType;
 
 	//this is the minimum amount of time a bot needs to see an opponent before
@@ -31,10 +28,9 @@ private:
 	//the amount of time a bot will continue aiming at the position of the target
 	//even if the target disappears from view.
 	//float            aimPersistance;
-
 public:
 
-	WeaponSystem(Role& owner);
+	WeaponSystem(Tasnal& owner);
 	~WeaponSystem();
 
 	//sets up the weapon map with just one weapon: the blaster
@@ -48,11 +44,7 @@ public:
 	//shoots the current weapon at the given position
 	void shootAt(const Vec2& pos = Vec2::ZERO);
 
-	//returns a pointer to the current weapon
 	Weapon* getCurrentWeapon();
-
-	//returns a pointer to the specified weapon type (if in inventory, null if 
-	//not)
 	Weapon& getWeaponFromInventory(const unsigned short&   weapon_type);
 
 	//returns the amount of ammo remaining for the specified weapon

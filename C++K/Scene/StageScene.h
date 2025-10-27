@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "../Utils/JoyStick.h" 
-#include "../Role/Telisk.h"
+#include "../Tasnal/Telisk.h"
 
 
 class Joystick;

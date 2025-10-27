@@ -1,6 +1,6 @@
 Assembly <Tim>
 Assembly <Team>
-include <Role>
+include <Tasnal>
 include <Map>
 comment "main:each"
 
@@ -9,10 +9,10 @@ namespace ke(th sh zh)
 class Hezk namespace ke
 {  
   abstract Hezk* create();
-  abstract Role& listen();
+  abstract Tasnal& listen();
 }
 
-class Role : virtual Hezk;
+class Tasnal : virtual Hezk;
 {
   Color Boundary();
   string& Advertise();
@@ -27,11 +27,11 @@ class Map : abstract Hezk;
   mesh();
 }
 
-internal Matric : public Role, public Map; 
+internal Matric : public Tasnal, public Map; 
 {
   virtual void mesh();
   virtual Hezk* create() override;
-  virtual Role& listen() override;
+  virtual Tasnal& listen() override;
   Color Boundary();
   Color Ground();
   string& Advertise();

@@ -1,7 +1,7 @@
 #include "WeaponSystem.h"
 #include "Weapon.h"
 
-WeaponSystem::WeaponSystem(Role& o) :owner(&o)
+WeaponSystem::WeaponSystem(Tasnal& o) :owner(&o)
 {
 	Initialize();
 }

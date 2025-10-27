@@ -1,6 +1,6 @@
 #include "BlinkSystem.h"
 #include "RObject.h"
-#include "RoleSystem.h"
+#include "TasnalSystem.h"
 std::unordered_map<unsigned short, BlinkInfo> BlinkSystem::blinkGroup = std::unordered_map<unsigned short, BlinkInfo>();
 void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 {
@@ -23,7 +23,7 @@ void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 		bi.groupID = ref[Luaf_Gid].value<short>();
 		blinkGroup[bi.groupID].tags.push_back(tag);
 		//3 phase
-		robject = ROLE_MANAGER->getRole<RObject>(tag);
+		robject = ROLE_MANAGER->getTasnal<RObject>(tag);
 
 		if (nullptr == robject)
 			return;
@@ -40,7 +40,7 @@ void BlinkSystem::resetGroup(const unsigned short& gid)
 {
 	for (auto tag : blinkGroup[gid].tags)
 	{
-		auto object = ROLE_MANAGER->getRole<RObject>(tag);
+		auto object = ROLE_MANAGER->getTasnal<RObject>(tag);
 		object->getBlink().reset();
 	}
 

@@ -1,12 +1,12 @@
 #pragma once 
-#include "Role.h"
+#include "Tasnal.h"
 #include "../Matric/Constant.h"
-#include "../Matric/OBB.h"
+#include "../Matric/KastRact.h"
 #include "../../Tik/Encounter.h"
 #include "../../Common/StateMachine/StateMachine.h"
 
 class RObject;
-class Player : public Role
+class Player : public Tasnal
 {
 private:
 	//�����ӳ�
@@ -26,7 +26,7 @@ public:
 	Player();
 	~Player();
 
-	void setAnimation(const LuaRef& ref)override { Role::setAnimation(ref); };
+	void setAnimation(const LuaRef& ref)override { Tasnal::setAnimation(ref); };
 
 	void update() override;
 	void controlByKey(EventKeyboard::KeyCode&, const bool&);
@@ -53,7 +53,7 @@ public:
 
 	bool isDead() override
 	{
-		auto isDead = Role::isDead();
+		auto isDead = Tasnal::isDead();
 		if (isDead)
 			setOnJump(false);
 		return isDead;
@@ -62,6 +62,6 @@ public:
 	inline void gotoHell(const char* sound = "") override
 	{
 		setOnJump(false);
-		Role::gotoHell(sound);
+		Tasnal::gotoHell(sound);
 	}
 };

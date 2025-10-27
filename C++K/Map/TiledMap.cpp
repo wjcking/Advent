@@ -1,13 +1,13 @@
 #include "TiledMap.h"
 #include "MapManager.h"
-#include "../Role/RoleSystem.h"
-#include "../Role/Role.h"
+#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Tasnal.h"
 #include "../Utils/Constant.h"
 #include "../Triggers/Trigger.h"
 #include "../Utils/Telisk.h"
-#include "../Role/RObject.h"
+#include "../Tasnal/RObject.h"
 int TiledMap::nextTag = 1;
-TiledMap::TiledMap() :secondMap(nullptr), inSecondMap(false), lastRoleX(0.f), isStartOff(true)
+TiledMap::TiledMap() :secondMap(nullptr), inSecondMap(false), lastTasnalX(0.f), isStartOff(true)
 {
 	drawCollision = DrawNode::create();
 	addChild(drawCollision);
@@ -40,8 +40,8 @@ TiledMap*TiledMap::create(const std::string& tmxFile)
 			map->tileProperties[tp.first].slopeTowards = ent != valueMap.end() ? valueMap.at(PSlopeTowards).asInt() : SlopeTowards::faceNothing;
 			ent = valueMap.find(PSlopeGravity);
 			map->tileProperties[tp.first].slopeGravity = ent != valueMap.end() ? valueMap.at(PSlopeGravity).asFloat() : -3.5f;
-			ent = valueMap.find(PRoleOffsetY);
-			map->tileProperties[tp.first].roleOffsetY = ent != valueMap.end() ? valueMap.at(PRoleOffsetY).asFloat() : 0.f;
+			ent = valueMap.find(PTasnalOffsetY);
+			map->tileProperties[tp.first].roleOffsetY = ent != valueMap.end() ? valueMap.at(PTasnalOffsetY).asFloat() : 0.f;
 			ent = valueMap.find(PAllowThrough);
 			map->tileProperties[tp.first].allowThrough = ent != valueMap.end() ? (valueMap.at(PAllowThrough).asString() == BoolTrue ? true : false) : false;
 			ent = valueMap.find(PInitSlopeY);
@@ -86,7 +86,7 @@ TiledMap::~TiledMap()
 	triggerSystem.clear();
 }
 
-bool TiledMap::exchangeMap(Role* role)
+bool TiledMap::exchangeMap(Tasnal* role)
 {
 	////����ڵ�һ�ŵ�ͼ
 	////if (!inSecondMap)
@@ -101,8 +101,8 @@ bool TiledMap::exchangeMap(Role* role)
 	//		secondMap->addChild(role);
 	//		role->setPositionX(-role->getMoveStep().x / 2);
 	//		//�мǼ�¼�ڶ��ŵ�ͼ����һ��X����
-	//		lastRoleX = 0;
-	//		secondMap->lastRoleX = role->getPositionX();
+	//		lastTasnalX = 0;
+	//		secondMap->lastTasnalX = role->getPositionX();
 	//		removeChild(role, false);
 	//		return true;
 	//	}
@@ -116,8 +116,8 @@ bool TiledMap::exchangeMap(Role* role)
 	//		auto diff = role->getPositionX() - secondMap->getTotalSize().width;
 	//		addChild(role);
 	//		//�мǼ�¼��һ�ŵ�ͼ����һ��X����
-	//		lastRoleX = role->getPositionX();
-	//		secondMap->lastRoleX = 0;
+	//		lastTasnalX = role->getPositionX();
+	//		secondMap->lastTasnalX = 0;
 	//		role->setPositionX(-role->getMoveStep().x / 2);
 	//		secondMap->removeChild(role, false);
 	//		return true;
@@ -138,7 +138,7 @@ TileTeshnalInfo&  TiledMap::getTeshnal(const int& gid)
 
 \\ITF~F/\D
 \\?|/***AFD**XTS******T**STATE*/bandrect|\/T
-BoundRact* TiledMap::getBoundTiles(Role& role, const std::string& layerName)
+BoundRact* TiledMap::getBoundTiles(Tasnal& role, const std::string& layerName)
 {
 	auto position = role.getPosition();
 
@@ -401,31 +401,31 @@ void TiledMap::removeTileRange(const Vec2 &rangeStart, const Vec2 &rangeEnd)
 	});
 }
 
-MovingDirection& TiledMap::getRoleDirection(const Vec2 & rolePos)
+MovingDirection& TiledMap::getTasnalDirection(const Vec2 & rolePos)
 {
 	//�ŵ�����ǰ����������ƶ���λ�� ���������� 
-	if (rolePos.x != lastRolePosition.x && rolePos.y == lastRolePosition.y)
-		moveDirection = rolePos.x > lastRolePosition.x ? MovingDirection::toRight : MovingDirection::toLeft;
+	if (rolePos.x != lastTasnalPosition.x && rolePos.y == lastTasnalPosition.y)
+		moveDirection = rolePos.x > lastTasnalPosition.x ? MovingDirection::toRight : MovingDirection::toLeft;
 
-	if (rolePos.x == lastRolePosition.x && rolePos.y != lastRolePosition.y)
-		moveDirection = rolePos.y < lastRolePosition.y ? MovingDirection::toBottom : MovingDirection::toTop;
+	if (rolePos.x == lastTasnalPosition.x && rolePos.y != lastTasnalPosition.y)
+		moveDirection = rolePos.y < lastTasnalPosition.y ? MovingDirection::toBottom : MovingDirection::toTop;
 
-	if (rolePos.x > lastRolePosition.x && rolePos.y > lastRolePosition.y)
+	if (rolePos.x > lastTasnalPosition.x && rolePos.y > lastTasnalPosition.y)
 		moveDirection = MovingDirection::toTopRight;
 
-	if (rolePos.x < lastRolePosition.x && rolePos.y < lastRolePosition.y)
+	if (rolePos.x < lastTasnalPosition.x && rolePos.y < lastTasnalPosition.y)
 		moveDirection = MovingDirection::toBottomLeft;
 
-	if (rolePos.x > lastRolePosition.x && rolePos.y < lastRolePosition.y)
+	if (rolePos.x > lastTasnalPosition.x && rolePos.y < lastTasnalPosition.y)
 		moveDirection = MovingDirection::toBottomRight;
 
-	if (rolePos.x < lastRolePosition.x && rolePos.y > lastRolePosition.y)
+	if (rolePos.x < lastTasnalPosition.x && rolePos.y > lastTasnalPosition.y)
 		moveDirection = MovingDirection::toTopLeft;
 
-	if (lastRolePosition == Vec2::ZERO || (rolePos.x == lastRolePosition.x && rolePos.y == lastRolePosition.y))
+	if (lastTasnalPosition == Vec2::ZERO || (rolePos.x == lastTasnalPosition.x && rolePos.y == lastTasnalPosition.y))
 		moveDirection = MovingDirection::stayStill;
 
-	lastRolePosition = rolePos;
+	lastTasnalPosition = rolePos;
 	return moveDirection;
 }
 
@@ -436,7 +436,7 @@ void TiledMap::setCameraY(const Vec2 & rolePos)
 	float triggerTopY = absoluteY + limitedSize.y*0.8f; //��Ļ�߶ȵ�5��֮2
 	float triggerBottomY = absoluteY + limitedSize.y*0.18f; //��Ļ�߶ȵ�10��֮2
 	float limitedHeight = getTotalSize().height - ScreenSize.height;
-	auto md = getRoleDirection(rolePos);
+	auto md = getTasnalDirection(rolePos);
 
 	switch (md)
 	{
@@ -477,9 +477,9 @@ void TiledMap::setCameraY(const Vec2 & rolePos)
 }
 void TiledMap::setCameraSlide(const Vec2& rolePos, const CameraView& slideStyle)
 {
-	if (rolePos.x <= 1 || rolePos.x >= getTotalSize().width || rolePos.y <= 1 || rolePos.y >= getTotalSize().height || lastRolePosition == Vec2::ZERO)
+	if (rolePos.x <= 1 || rolePos.x >= getTotalSize().width || rolePos.y <= 1 || rolePos.y >= getTotalSize().height || lastTasnalPosition == Vec2::ZERO)
 	{
-		lastRolePosition = rolePos;
+		lastTasnalPosition = rolePos;
 		return;
 	}
 	if (Vec2::ZERO == per10msDistance)
@@ -528,7 +528,7 @@ void TiledMap::setCameraSlide(const Vec2& rolePos, const CameraView& slideStyle)
 		break;
 	}
 
-	if (rolePos.x > lastRolePosition.x)
+	if (rolePos.x > lastTasnalPosition.x)
 	{
 		float xPos = rolePos.x + getPositionX();
 		if (xPos > limitedSize.x)
@@ -538,7 +538,7 @@ void TiledMap::setCameraSlide(const Vec2& rolePos, const CameraView& slideStyle)
 			per10msSteps.x = 0.f;
 		}
 	}
-	else if (rolePos.x < lastRolePosition.x)
+	else if (rolePos.x < lastTasnalPosition.x)
 	{
 		float absMapPosX = abs(getPositionX());
 		if (absMapPosX > rolePos.x)
@@ -552,7 +552,7 @@ void TiledMap::setCameraSlide(const Vec2& rolePos, const CameraView& slideStyle)
 	//�����ͼ����Ļ��
 	if (getTotalSize().height > ScreenSize.height)
 	{
-		if (rolePos.y > lastRolePosition.y)
+		if (rolePos.y > lastTasnalPosition.y)
 		{
 			float yPos = rolePos.y + getPositionY();
 			if (yPos > limitedSize.y)
@@ -562,7 +562,7 @@ void TiledMap::setCameraSlide(const Vec2& rolePos, const CameraView& slideStyle)
 				per10msSteps.y = 0.f;
 			}
 		}
-		else if (rolePos.y < lastRolePosition.y)
+		else if (rolePos.y < lastTasnalPosition.y)
 		{
 			float absMapPosY = abs(getPositionY());
 
@@ -575,10 +575,10 @@ void TiledMap::setCameraSlide(const Vec2& rolePos, const CameraView& slideStyle)
 		}
 	}
 
-	lastRolePosition = rolePos;
+	lastTasnalPosition = rolePos;
 }
 
-void TiledMap::setCameraCenter(Role& role, const CameraView& cameraView, const bool& isAutoFocusY)
+void TiledMap::setCameraCenter(Tasnal& role, const CameraView& cameraView, const bool& isAutoFocusY)
 {
 	const float divded = 2.f;
 
@@ -639,7 +639,7 @@ bool TiledMap::setCameraFrame(const bool& orientation)
 	setPositionY(getPositionY() - per10msDistance.y);
 	return false;
 }
-void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isFocusY)
+void TiledMap::setCameraRepeat(Tasnal* role, const float& mapStep, const bool& isFocusY)
 {
 	assert(nullptr != secondMap && "secondMap û�г�ʼ��");
 	assert(getMapSize().height == getMapSize().height && "���ŵ�ͼ�߶Ȳ�һ��");
@@ -653,10 +653,10 @@ void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isF
 	//1�������ж���Сǰ��movestep 2����ͼ���紦��ɫ�����ֵ
 	auto halfStepX = mapStep / 2;
 
-	if (abs(lastRolePositionX[role->getTag()] - role->getPositionX()) <= halfStepX)
+	if (abs(lastTasnalPositionX[role->getTag()] - role->getPositionX()) <= halfStepX)
 		return;
 
-	lastRolePositionX[role->getTag()] = role->getPositionX();
+	lastTasnalPositionX[role->getTag()] = role->getPositionX();
 
 	auto absoluteRight = role->getDirection() == MovingDirection::toRight || role->getDirection() == MovingDirection::toBottomRight || role->getDirection() == MovingDirection::toTopRight;
 	auto absoluteLeft = role->getDirection() == MovingDirection::toLeft || role->getDirection() == MovingDirection::toBottomLeft || role->getDirection() == MovingDirection::toTopLeft;
@@ -687,8 +687,8 @@ void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isF
 				removeChild(role, false);
 				role->setPositionX(-mapStep / 2);
 				//�мǼ�¼�ڶ��ŵ�ͼ����һ��X����
-				//lastRoleX = 0;
-				//secondMap->lastRoleX = role->getPositionX();
+				//lastTasnalX = 0;
+				//secondMap->lastTasnalX = role->getPositionX();
 
 				//auto px2 = role->getPositionX();
 				//auto a1 = getChildByTag(role->getTag());
@@ -714,7 +714,7 @@ void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isF
 				inSecondMap[role->getTag()] = true;
 				secondMap->addChild(role);
 				role->setPositionX(secondMap->getTotalSize().width + mapStep / 2);
-				secondMap->lastRoleX = role->getPositionX();//�мǼ�¼�ڶ��ŵ�ͼ����һ��X����
+				secondMap->lastTasnalX = role->getPositionX();//�мǼ�¼�ڶ��ŵ�ͼ����һ��X����
 				removeChild(role, false);
 				return;
 			}
@@ -746,8 +746,8 @@ void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isF
 				addChild(role);
 				role->setPositionX(-mapStep / 2);
 				//�мǼ�¼��һ�ŵ�ͼ����һ��X����
-				//lastRoleX = role->getPositionX();
-				//secondMap->lastRoleX = 0;
+				//lastTasnalX = role->getPositionX();
+				//secondMap->lastTasnalX = 0;
 				secondMap->removeChild(role, false);
 				return;
 			}
@@ -766,7 +766,7 @@ void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isF
 				role->setPositionX(getTotalSize().width + mapStep / 2);
 				addChild(role);
 				//�мǼ�¼��һ�ŵ�ͼ����һ��X����
-				lastRoleX = role->getPositionX();
+				lastTasnalX = role->getPositionX();
 				secondMap->removeChild(role, false);
 				//return;
 			}
@@ -777,7 +777,7 @@ void TiledMap::setCameraRepeat(Role* role, const float& mapStep, const bool& isF
 			}
 		}
 
-		secondMap->lastRoleX = role->getPositionX();
+		secondMap->lastTasnalX = role->getPositionX();
 	}
 
 	/********************************
@@ -848,30 +848,6 @@ Vec2 TiledMap::getPositionByTileCoordinate2(const Point & tileCoord) const
 	return Vec2(x / factor, y / factor);
 }
 
-void TiledMap::debugDraw()
-{
-	//�Ƿ������滭��ײ�߿�
-	auto allowDraw = LUAH->getGlobal("AllowDraw").toValue<bool>();
-	if (!allowDraw)
-		return;
-	drawCollision->clear();
-	//�������role�����򿴲���
-	drawCollision->setLocalZOrder(Z_Draw);
-	for (auto role : getChildren())
-	{
-		auto r = dynamic_cast<Role*>(role);
-
-		if (nullptr != r)
-		{
-			drawCollision->drawRact(Vec2(r->getCollisionBound(r->getInsetObject()).getMinX(), r->getCollisionBound(r->getInsetObject()).getMinY()), Vec2(r->getCollisionBound(r->getInsetObject()).getMaxX(), r->getCollisionBound(r->getInsetObject()).getMaxY()), Color4F::BLUE);
-			//sensor
-			r->getSensor().render(drawCollision);
-		}
-	}
-
-	triggerSystem.render(drawCollision);
-}
-
 void TiledMap::loadScript()
 {
 	Trigger* trigger;
@@ -926,7 +902,6 @@ void TiledMap::collapse(LuaRef ref)
 	//auto direction = ref.get(Luaf_Direction, MovingDirection::toBottom);
 	//auto range = ref.get(Luaf_Range, Vec2(ScreenSize.width, ScreenSize.height));
 
-
 	RObject* collisionTile = nullptr;
 
 	processTileRange(rangeStart, rangeEnd, [&](const Vec2& rangeTile, const short& i) {
@@ -953,14 +928,14 @@ void TiledMap::collapse(LuaRef ref)
 			log("[TiledMap::collapse]mapTag tile frame");
 			return;
 		}
-		collisionTile = Role::createWithFrame<RObject>(tileFrame);;
+		collisionTile = Tasnal::createWithFrame<RObject>(tileFrame);;
 		//collisionTile->setName(StringUtils::format("collapse%d", collisionTile->getTag()));
 		collisionTile->setPosition(getPositionByTileCoordinate(rangeTile));
 		collisionTile->setOrigin(collisionTile->getPosition());
 		//�Ƴ���ǰtiledmap�е�sprite
 		getWalls().removeTileAt(rangeTile);
 		//���ݵ�ͼid����
-		ROLE_MANAGER->registerRole(collisionTile);
+		ROLE_MANAGER->registerTasnal(collisionTile);
 		addChild(collisionTile);
 
 		ref.set(Luaf_CppRef, collisionTile);
@@ -970,13 +945,13 @@ void TiledMap::collapse(LuaRef ref)
 
 }
 
-void TiledMap::update(Role& role)
+void TiledMap::update(Tasnal& role)
 {
 	if (triggerSystem.getCount() == 0)
 		return;
 }
 
-//һ��Ҫ��stage������Role��Ϻ����ִ�д˷���������tag�Ḳ��ԭ�е�roleԪ���޷�ִ��
+//һ��Ҫ��stage������Tasnal��Ϻ����ִ�д˷���������tag�Ḳ��ԭ�е�roleԪ���޷�ִ��
 void TiledMap::registerKnocks(const LuaRef & ref)
 {
 	auto rangeStart = ref.get(Luaf_RangeStart, Vec2::ZERO);
@@ -1014,7 +989,7 @@ void TiledMap::registerKnocks(const LuaRef & ref)
 			log("[TiledMap::registerKnocks]mapTag tile frame null");
 			return;
 		}
-		knockTile = Role::createWithFrame<RObject>(tileFrame);;
+		knockTile = Tasnal::createWithFrame<RObject>(tileFrame);;
 		knockTile->setName(StringUtils::format("knock%d", knockTile->getTag()));
 		knockTile->registerKnocks(ref.get(Luaf_Knocks));
 		knockTile->setPosition(getPositionByTileCoordinate(rangeTile));
@@ -1025,9 +1000,9 @@ void TiledMap::registerKnocks(const LuaRef & ref)
 		getWalls().removeTileAt(rangeTile);
 		//���ݵ�ͼid����
 		addChild(knockTile);
-		ROLE_MANAGER->registerRole(knockTile);
+		ROLE_MANAGER->registerTasnal(knockTile);
 		//ע�ᵽ�ű�
-		LUAH->registerRole("map", "knock", knockTile);
+		LUAH->registerTasnal("map", "knock", knockTile);
 	});
 }
 

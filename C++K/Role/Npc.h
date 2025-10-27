@@ -1,10 +1,10 @@
 #pragma once
-#include "Role.h"
+#include "Tasnal.h"
 
 #include "../../../Common/StateMachine/StateMachine.h"
 #include "../Map/MapTeshnal.h"
 
-class Npc : public Role
+class Npc : public Tasnal
 {
 private:
 	MovingDirection patrollDirectionX = facedDirection;
@@ -16,7 +16,7 @@ public:
 	~Npc();
 
 	CREATE_FUNC(Npc);
-	inline void setAnimation(const LuaRef& ref) override	{		Role::setAnimation(ref);	};
+	inline void setAnimation(const LuaRef& ref) override	{		Tasnal::setAnimation(ref);	};
 	void update() override;
 	bool setTowards(const Vec2& playerPos)
 	{

@@ -7,7 +7,7 @@ const unsigned short  TileTeshnalNumber = 1500;
 static const  char PSlopeDegree[25] = "SlopeDegree";
 static const  char PSlopeTowards[25] = "SlopeTowards";
 static const  char PSlopeGravity[25] = "SlopeGravity";
-static const  char PRoleOffsetY[25] = "RoleOffsetY";
+static const  char PTasnalOffsetY[25] = "TasnalOffsetY";
 static const  char PAllowThrough[25] = "AllowThrough";
 static const  char PIsOneWay[25] = "IsOneWay";
 static const  char PInitSlopeY[25] = "InitSlopeY";
@@ -27,11 +27,7 @@ enum SlopeTowards : short
 	faceLeft = 0,
 	faceRight = 1
 };
-enum SlopeDegree :unsigned short
-{
-	degree45 = 45,
-	degree22_5 = 22
-};
+
 //ȫ������
 struct TileTeshnalInfo
 {
@@ -55,12 +51,11 @@ struct TileTeshnalInfo
 //�����洢��װ��rect�Լ�gid
 class BoundRact :public Ract
 {
-private:
-	TileTeshnalInfo tileTeshnal;
-public:
 	int gid;
 	Vec2 tilePosition;
 	std::string tileName;
+	TileTeshnalInfo tileTeshnal;
+
 	inline void setTileTeshnal(const TileTeshnalInfo& tp)
 	{
 		tileTeshnal = tp;
@@ -71,8 +66,8 @@ public:
 		//return TileProperties::getTeshnal(gid);
 		return tileTeshnal;
 	}
+
 	BoundRact(int id, Vec2, Ract bound);
 	BoundRact(int id, Vec2&, Size&);
-	//BoundRact& operator= (const BoundRact& other);
 	BoundRact();
 };

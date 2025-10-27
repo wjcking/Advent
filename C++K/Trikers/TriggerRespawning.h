@@ -28,7 +28,7 @@ public:
   virtual ~TriggerRespawning(){}
 
   //to be implemented by child classes
-  void  scan(Role& role)  override
+  void  scan(Tasnal& role)  override
   {
   };
   //this is called each game-tick to update the trigger's internal state

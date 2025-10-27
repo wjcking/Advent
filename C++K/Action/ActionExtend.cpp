@@ -49,7 +49,7 @@ void ActionExtend::toast(const LuaIntf::LuaRef& ref)
 {
 	//if (!ref.isTable())
 	//	return;
-	//Role* role = nullptr;
+	//Tasnal* role = nullptr;
 	//if (ref.has(Luaf_CppRef))
 	//	role = 
 	//Spawn::create()

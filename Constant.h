@@ -41,7 +41,7 @@ static const unsigned short Lang_Chinwan = 1;
 static const  unsigned short Lang_English = 2;
 //lua��
 static const char Luat_Ref[12] = "Ref";
-static const char Luat_Role[12] = "Role";
+static const char Luat_Tasnal[12] = "Tasnal";
 static const char Luat_Joystick[12] = "Joystick";
 static const char Luat_Joypad[12] = "Joypad";
 static const char Luat_Atlas[12] = "Atlas";
@@ -105,7 +105,7 @@ static const char Luaf_AC[15] = "ac";
 static const char Luaf_DC[25] = "dc";
 static const char Luaf_AllowFlip[15] = "allowFlip";
 static const char Luaf_AllowFollow[15] = "allowFollow";
-static const char Luaf_AllowPush[15] = "allowPush";
+static const char Luaf_AllowPush[15] = "EndPush";
 static const char Luaf_OnCheckTile[15] = "onCheckTile";
 static const char Luaf_Visible[15] = "visible";
 static const char Luaf_Duration[15]= "duration";
@@ -191,7 +191,7 @@ static const char Luaf_Interval[11] = "interval";
 //��ѡ������tile���к������20��
 static  const  unsigned short RangeTileMax = 25;
 //reserve vector map
-static const unsigned short Reserve_Role = 500;
+static const unsigned short Reserve_Tasnal = 500;
 static const unsigned short Reserve_65534 = 65535;
 static const unsigned short Reserve_Delay = 500;
 //popup
