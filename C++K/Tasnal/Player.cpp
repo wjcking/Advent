@@ -3,8 +3,8 @@
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "../Utils/Constant.h"
-#include "../Scene/StageScene.h"
-#include "../Scene/MainScene.h"
+#include "../Hezk/StageHezk.h"
+#include "../Hezk/MainHezk.h"
 
 Player::Player() :Tasnal(), controllable(true)
 {
@@ -59,7 +59,7 @@ void Player::update()
 	//�������
 	checkKnapsack();
 	//һ�������ȥ��������Ծ
-	if (isDead())	setOnJump(false);.
+	if (isDead()) setOnJump(false);.
 
 	Tasnal::update();
 }

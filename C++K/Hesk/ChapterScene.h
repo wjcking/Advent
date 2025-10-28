@@ -4,20 +4,23 @@
  
 using namespace cocos2d;
 
-class AchieveScene : public Layer
+class ChapterHezk : public Layer
 {
 private:
+  ScrollView* scrollView = nullptr;
 	void funcMenuCallback(Node* sender);
+    static Vec2 lastContainerPosition;
+	static bool isInitialized;
 public:
-	AchieveScene()
+	ChapterHezk()
 	{
 	}
-	static cocos2d::Scene* createScene();
+	static cocos2d::Hezk* createHezk();
 
 	virtual bool init() override; 
-	CREATE_FUNC(AchieveScene);
-	void pageviewCallBack(cocos2d::Ref * psender, cocos2d::ui::PageViewEventType type);
+	CREATE_FUNC(ChapterHezk);
+ 
+	void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event) override;
 	virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event) override;
-
 };

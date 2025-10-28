@@ -1,5 +1,5 @@
-#include "StageScene.h"
-#include "ChapterScene.h"
+#include "StageHezk.h"
+#include "ChapterHezk.h"
 #include "../Utils/PopupLayer.h"
 #include "../Utils/Constant.h"
 #include "../Utils/ResourceHelper.h"
@@ -22,7 +22,7 @@
 #include "../Utils/Utils.h"
 #include "../Tasnal/TeliskSystem.h"
 #include "../Ads/Ads.h"
-std::string StageScene::doLuaFunction(const std::string & funcName, const int& tag)
+std::string StageHezk::doLuaFunction(const std::string & funcName, const int& tag)
 {
 	std::string output = "";
 	try
@@ -45,27 +45,27 @@ std::string StageScene::doLuaFunction(const std::string & funcName, const int& t
 
 	return output;
 }
-Scene* StageScene::createScene()
+Hezk* StageHezk::createHezk()
 {
-	auto scene = Scene::create();
-	auto layer = StageScene::create();
+	auto scene = Hezk::create();
+	auto layer = StageHezk::create();
 	scene->addChild(layer);
 	return scene;
 }
 
-bool StageScene::loadScript()
+bool StageHezk::loadScript()
 {
 	/**************�̶��˵� *********/
 	menuButton = Menu::create();
 	// ����ͼƬ�˵���ť goback
-	auto miGoback = MenuItemImage::create("control/goback2.png", "control/goback2_s.png", this, menu_selector(StageScene::menuCallback));
+	auto miGoback = MenuItemImage::create("control/goback2.png", "control/goback2_s.png", this, menu_selector(StageHezk::menuCallback));
 	miGoback->setName("goback");
 	//menuImage->setTag(tag);
 	miGoback->setPosition(Vec2(56 / 2 - 2, ScreenHeight - 56 / 2));
 	menuButton->addChild(miGoback);
 
 	// ����ͼƬ�˵���ť prompt
-	miPrompt = MenuItemImage::create("control/prompt.png", "control/prompt_s.png", this, menu_selector(StageScene::menuCallback));
+	miPrompt = MenuItemImage::create("control/prompt.png", "control/prompt_s.png", this, menu_selector(StageHezk::menuCallback));
 	miPrompt->setName("prompt");
 	//menuImage->setTag(tag);
 	miPrompt->setPosition(Vec2(ScreenWidth - 28, ScreenHeight - 56 / 2));
@@ -114,7 +114,7 @@ bool StageScene::loadScript()
 	joystick = Joystick::create();
 	joystick->setPosition(Vec2::ZERO);
 	joystick->loadScript();
-	joystick->callbackFunc(this, callfuncN_selector(StageScene::joystickCallback));
+	joystick->callbackFunc(this, callfuncN_selector(StageHezk::joystickCallback));
 	addChild(joystick, Z_JoyStick);
 	//������ʾlabel
 	lbOutput = Label::createWithSystemFont("", Resh::getFontName(), 16.0f);
@@ -145,7 +145,7 @@ bool StageScene::loadScript()
 	}
 
 	//ע��stage
-	LUAH->registerRef(Luaf_StageScene, this);
+	LUAH->registerRef(Luaf_StageHezk, this);
 	//��ʼ���¼�
 	lbOutput->setString(doLuaFunction("initiate"));
 
@@ -153,13 +153,13 @@ bool StageScene::loadScript()
 	return true;
 }
 
-void StageScene::joystickCallback(Node* pSender)
+void StageHezk::joystickCallback(Node* pSender)
 {
 	//auto object = static_cast<Node*>(pSender);
 
 	//log("name=%s end:=%d", object->getName().c_str(), object->getTag());
 }
-void StageScene::promptAchieve(const short& unlockedID, const LuaRef& ref)
+void StageHezk::promptAchieve(const short& unlockedID, const LuaRef& ref)
 {
 	//����⿪�˻���û�ҵ����ֶ�������
 	if (Resh::getAchieve(unlockedID))
@@ -170,7 +170,7 @@ void StageScene::promptAchieve(const short& unlockedID, const LuaRef& ref)
 	prompt(ref);
 }
 
-void StageScene::gotoNext()
+void StageHezk::gotoNext()
 {
 	Luah::CurrentStage++;
 	//�ϴ���������
@@ -182,10 +182,10 @@ void StageScene::gotoNext()
 }
 
 
-void StageScene::prompt(const LuaRef & ref)
+void StageHezk::prompt(const LuaRef & ref)
 {
 	auto promptCustomer = PopupLayer::create();
-	promptCustomer->callbackFunc(this, callfuncN_selector(StageScene::dialogCallback));
+	promptCustomer->callbackFunc(this, callfuncN_selector(StageHezk::dialogCallback));
 	promptCustomer->loadScript(ref);
 	//promptCustomer->setName(Name_Prompt);
 	auto zorder = ref.get(Luaf_ZOrder, Z_PopupLayer);
@@ -199,7 +199,7 @@ void StageScene::prompt(const LuaRef & ref)
 }
 
 
-void StageScene::dialogCallback(cocos2d::Node *node)
+void StageHezk::dialogCallback(cocos2d::Node *node)
 {
 	auto menuItem = dynamic_cast<MenuItemImage*>(node);
 	if ("retry" == menuItem->getName())
@@ -224,7 +224,7 @@ void StageScene::dialogCallback(cocos2d::Node *node)
 
 	}
 }
-bool StageScene::init()
+bool StageHezk::init()
 {
 	if (!Layer::init())
 		return false;
@@ -237,20 +237,20 @@ bool StageScene::init()
 		return true;
 	//�¼�
 	auto listenerKeyboard = EventListenerKeyboard::create();
-	listenerKeyboard->onKeyPressed = CC_CALLBACK_2(StageScene::onKeyPressed, this);
-	listenerKeyboard->onKeyReleased = CC_CALLBACK_2(StageScene::onKeyReleased, this);
+	listenerKeyboard->onKeyPressed = CC_CALLBACK_2(StageHezk::onKeyPressed, this);
+	listenerKeyboard->onKeyReleased = CC_CALLBACK_2(StageHezk::onKeyReleased, this);
 
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerKeyboard, this);
+	_eventDispatcher->addEventListenerWithHezkGraphPriority(listenerKeyboard, this);
 	//���㴥��
 	auto listener = EventListenerTouchOneByOne::create();
-	listener->onTouchBegan = CC_CALLBACK_2(StageScene::onTouchBegan, this);
-	listener->onTouchEnded = CC_CALLBACK_2(StageScene::onTouchEnded, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	listener->onTouchBegan = CC_CALLBACK_2(StageHezk::onTouchBegan, this);
+	listener->onTouchEnded = CC_CALLBACK_2(StageHezk::onTouchEnded, this);
+	_eventDispatcher->addEventListenerWithHezkGraphPriority(listener, this);
 	//ˢ֡
-	Director::getInstance()->getScheduler()->schedule(SEL_SCHEDULE(&StageScene::update), this, DeltaInterval, false);
+	Director::getInstance()->getScheduler()->schedule(SEL_SCHEDULE(&StageHezk::update), this, DeltaInterval, false);
 	return true;
 }
-void StageScene::menuCallback(Ref * pSender)
+void StageHezk::menuCallback(Ref * pSender)
 {
 	//���ֻ�û����ɣ���ʲô������
 	//if (!isTypeCurtainDone)
@@ -258,11 +258,11 @@ void StageScene::menuCallback(Ref * pSender)
 	auto menuItem = dynamic_cast<MenuItemImage*>(pSender);
 	if ("goback" == menuItem->getName())
 	{
-		unschedule(schedule_selector(StageScene::update));
+		unschedule(schedule_selector(StageHezk::update));
 		//�ͷ�lua,�����msgdispatcher�ӳٵ����Ѿ��ͷŵ�cpp����
 		doLuaFunction("unload");
 
-		Director::getInstance()->replaceScene(ChapterScene::createScene());
+		Director::getInstance()->replaceHezk(ChapterHezk::createHezk());
 	}
 	else if ("prompt" == menuItem->getName())
 	{
@@ -272,23 +272,23 @@ void StageScene::menuCallback(Ref * pSender)
 		LUAH->callmenu("stage", "menu", table);
 	}
 }
-void StageScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+void StageHezk::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	ROLE_PLAYER.controlByKey(keyCode, true);
 }
-void StageScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+void StageHezk::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	ROLE_PLAYER.controlByKey(keyCode, false);
 }
 
-bool StageScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+bool StageHezk::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {
 	beginDelta = MAP_STAGE->convertTouchToNodeSpace(touch);
 	touchedBeginID = touch->getID();
 	return true;
 }
 
-void StageScene::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+void StageHezk::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {	//[ע��ǰ�����˳��]������Ļ
 	if (!processCurtain())
 		return;
@@ -299,7 +299,7 @@ void StageScene::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_ev
 	LUAH->callback("stage", "ended");
 }
 
-void StageScene::update(float dt)
+void StageHezk::update(float dt)
 {
 	updateCurtainText();
 	std::string result = "";
@@ -310,12 +310,12 @@ void StageScene::update(float dt)
 
 	//����������ֹͣˢ֡
 	if (result != "")
-		unschedule(schedule_selector(StageScene::update));
+		unschedule(schedule_selector(StageHezk::update));
 
 	//�ۼ���
 	Clock::addDeltaCount();
 }
-void StageScene::release(const bool& isClearAll)
+void StageHezk::release(const bool& isClearAll)
 {
 
 	TeliskSystem::isTeliskOn = false;
@@ -342,7 +342,7 @@ void StageScene::release(const bool& isClearAll)
 		//��ע�⡿�洢���ͷţ����˳��ܿ���
 		Checkpoint::reset();
 		//�����ʱ��
-	//	unschedule(schedule_selector(StageScene::update));
+	//	unschedule(schedule_selector(StageHezk::update));
 		//����ֻ�б任�ؿ�ʱ���ͷ�
 		isCurtainDrawn = false;
 		Resh::release();
@@ -350,7 +350,7 @@ void StageScene::release(const bool& isClearAll)
 	}
 
 }
-void StageScene::onExit()
+void StageHezk::onExit()
 {
 	if (!isStageCorrect)
 	{
@@ -367,7 +367,7 @@ void StageScene::onExit()
 }
 
 
-void StageScene::loadCurtain(const LuaRef& curtainTable)
+void StageHezk::loadCurtain(const LuaRef& curtainTable)
 {
 	if (isCurtainDrawn || !curtainTable.isTable())
 		return;
@@ -473,7 +473,7 @@ void StageScene::loadCurtain(const LuaRef& curtainTable)
 	}
 }
 
-void StageScene::dropCurtain(const LuaRef& curtainTable)
+void StageHezk::dropCurtain(const LuaRef& curtainTable)
 {
 	if (!curtainTable.isTable())
 		return;
@@ -504,7 +504,7 @@ void StageScene::dropCurtain(const LuaRef& curtainTable)
 	curtainTop->runAction(dropTop);
 	curtainBottom->runAction(dropBottom);
 }
-void StageScene::shutCurtain()
+void StageHezk::shutCurtain()
 {
 	//����Ѿ�лĻ��ʲô������
 	if (isCurtainDrawn)
@@ -531,7 +531,7 @@ void StageScene::shutCurtain()
 	curtainBottom->runAction(seqBottom);
 }
 
-void StageScene::updateCurtainText()
+void StageHezk::updateCurtainText()
 {
 	//��ʶλ������������лĻ
 	if (isTypeCurtainDone || curtainInfo.type != CurtainType::black)
@@ -563,7 +563,7 @@ void StageScene::updateCurtainText()
 	}
 }
 
-bool StageScene::processCurtain()
+bool StageHezk::processCurtain()
 {
 	if (isTypeCurtainDone || curtainInfo.type != CurtainType::black)
 		return true;

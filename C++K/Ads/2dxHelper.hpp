@@ -108,9 +108,9 @@ namespace yomob {
 
         static void preload();
 
-        static int getIntParameterFromAdScene(const std::string scene, const std::string key, int def = 0);
-        static float getFloatParameterFromAdScene(const std::string scene, const std::string key, float def = 0);
-        static std::string getStringParameterFromAdScene(const std::string scene, const std::string key, const std::string def = "");
+        static int getIntParameterFromAdHezk(const std::string scene, const std::string key, int def = 0);
+        static float getFloatParameterFromAdHezk(const std::string scene, const std::string key, float def = 0);
+        static std::string getStringParameterFromAdHezk(const std::string scene, const std::string key, const std::string def = "");
         static void setBannerConfig(const std::string scene, const std::string type, float x, float y, float width, float height, int interval);
         
         static bool couldShowAd(const std::string scene);
@@ -119,7 +119,7 @@ namespace yomob {
         static void closeBanner(const std::string scene);
 
         static void reportAdRejected(const std::string scene);
-        static void showAdScene(const std::string scene);
+        static void showAdHezk(const std::string scene);
 
         static void sendCounter(const std::string name, const std::string metaData);
 

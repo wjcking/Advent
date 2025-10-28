@@ -12,8 +12,8 @@
 #include "../Tasnal/TasnalSystem.h"
 #include "../Tasnal/RObject.h"
 #include "../Tasnal/Npc.h"
-#include "../Scene/StageScene.h"
-#include "../Scene/MainScene.h"
+#include "../Hezk/StageHezk.h"
+#include "../Hezk/MainHezk.h"
 #include "../Triggers/Trigger.h"
 #include "../Ads/Ads.h"
 
@@ -152,7 +152,7 @@ std::string Luah::LoadStage()
 
 }
 
-void Luah::LoadScene()
+void Luah::LoadHezk()
 {
 	//�ֻ��豸�洢Ŀ¼
 	auto language = UserDefault::getInstance()->getIntegerForKey(User_Language, Lang_Chinwan);
@@ -190,22 +190,22 @@ void Luah::registerClasses()
 	LuaBinding(l).beginClass<Layer>("Layer")
 		.addFunction("getName",&Layer::getName)
 		.endClass()
-		.beginExtendClass<MainScene, Layer>("MainScene")
-		.addFunction("promptAchieve", &MainScene::promptAchieve)
+		.beginExtendClass<MainHezk, Layer>("MainHezk")
+		.addFunction("promptAchieve", &MainHezk::promptAchieve)
 		.endClass()
-		.beginExtendClass<StageScene, Layer>("StageScene")
-		.addFunction("gotoNext", &StageScene::gotoNext)
-		.addFunction("getBeginDelta", &StageScene::getBeginDelta)
-		.addFunction("getEndDelta", &StageScene::getEndDelta)
-		.addFunction("isSlided", &StageScene::isSlided)
-		.addFunction("isTypeDone", &StageScene::isTypeDone )
-		.addFunction("prompt", &StageScene::prompt)
-		.addFunction("promptAchieve", &StageScene::promptAchieve)
-		.addFunction("output", &StageScene::output)
-		.addFunction("loadCurtain", &StageScene::loadCurtain)
-		.addFunction("dropCurtain", &StageScene::dropCurtain)
-		.addFunction("shutCurtain", &StageScene::shutCurtain)
-		.addFunction("setToolbar", &StageScene::setToolbar)
+		.beginExtendClass<StageHezk, Layer>("StageHezk")
+		.addFunction("gotoNext", &StageHezk::gotoNext)
+		.addFunction("getBeginDelta", &StageHezk::getBeginDelta)
+		.addFunction("getEndDelta", &StageHezk::getEndDelta)
+		.addFunction("isSlided", &StageHezk::isSlided)
+		.addFunction("isTypeDone", &StageHezk::isTypeDone )
+		.addFunction("prompt", &StageHezk::prompt)
+		.addFunction("promptAchieve", &StageHezk::promptAchieve)
+		.addFunction("output", &StageHezk::output)
+		.addFunction("loadCurtain", &StageHezk::loadCurtain)
+		.addFunction("dropCurtain", &StageHezk::dropCurtain)
+		.addFunction("shutCurtain", &StageHezk::shutCurtain)
+		.addFunction("setToolbar", &StageHezk::setToolbar)
 		.endClass()
 		.beginExtendClass<PopupLayer, Layer>("PopupLayer")	//�Ի���
 		.addFunction("getChild", &PopupLayer::getChild)

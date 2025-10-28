@@ -1,8 +1,8 @@
 #include "Funcpads.h"
-#include "../Scene/ChapterScene.h"
-#include "../Scene/AchieveScene.h"
-#include "../Scene/StageScene.h"
-#include "../Scene/MainScene.h"
+#include "../Hezk/ChapterHezk.h"
+#include "../Hezk/AchieveHezk.h"
+#include "../Hezk/StageHezk.h"
+#include "../Hezk/MainHezk.h"
 #include "Telisk.h"
 #include "ResourceHelper.h"
 #include "Utils.h"
@@ -91,14 +91,14 @@ void FuncMenu::menuCallback(Ref * sender)
 		//����
 		Luah::CurrentStage = UserDefault::getInstance()->getIntegerForKey(User_LastStage, 1);
 
-		Director::getInstance()->replaceScene(StageScene::createScene());
+		Director::getInstance()->replaceHezk(StageHezk::createHezk());
 	}
 	else if (menuItem->getName() == "achieve")
-		Director::getInstance()->replaceScene(AchieveScene::createScene());
+		Director::getInstance()->replaceHezk(AchieveHezk::createHezk());
 	else if (menuItem->getName() == "selectlevels")
-		Director::getInstance()->replaceScene(ChapterScene::createScene());
+		Director::getInstance()->replaceHezk(ChapterHezk::createHezk());
 	else if (menuItem->getName() == "goback")
-		Director::getInstance()->replaceScene(MainScene::createScene());
+		Director::getInstance()->replaceHezk(MainHezk::createHezk());
 	else if (menuItem->getName() == "bgmusic")
 	{
 		auto isEnabled = UserDefault::getInstance()->getBoolForKey(User_AllowMusic, true);

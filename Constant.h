@@ -70,8 +70,8 @@ static const char Luac_CallbackMenu[15] = "callmenu";
 static const char Luap_Joystick[15] = "joystick";
 static const char Luap_Joypad[15] = "joypad";
 //lua����
-static const char Luaf_StageScene[15] = "stage";
-static const char Luaf_MainScene[15] = "main";
+static const char Luaf_StageHezk[15] = "stage";
+static const char Luaf_MainHezk[15] = "main";
 static const char Luaf_Popup[22] = "popup";
 static const char Luaf_PromptRetry[22] = "retry";
 static const char Luaf_Health[3] = "hp";

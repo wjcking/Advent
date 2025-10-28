@@ -977,7 +977,7 @@ void Tasnal::registerTouch()
 		touchedTimes++;
 		touchedTasnal = 0;
 	};
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	_eventDispatcher->addEventListenerWithHezkGraphPriority(listener, this);
 
 }
 

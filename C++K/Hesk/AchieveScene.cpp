@@ -1,19 +1,19 @@
-#include "AchieveScene.h"
+#include "AchieveHezk.h"
 #include "../Utils/ResourceHelper.h"
 #include "../Utils/Funcpads.h"
 #include "../Utils/Telisk.h"
 #include "../Utils/Constant.h"
 #include "ui/UIButton.h"
-#include "StageScene.h"
+#include "StageHezk.h"
 using namespace ui;
 
-cocos2d::Scene* AchieveScene::createScene()
+cocos2d::Hezk* AchieveHezk::createHezk()
 {
 	// 'scene' is an autorelease object
-	auto scene = Scene::create();
+	auto scene = Hezk::create();
 
 	// 'layer' is an autorelease object
-	auto layer = AchieveScene::create();
+	auto layer = AchieveHezk::create();
 
 	// add layer as a child to scene
 	scene->addChild(layer);
@@ -22,7 +22,7 @@ cocos2d::Scene* AchieveScene::createScene()
 	return scene;
 }
 
-bool AchieveScene::init()
+bool AchieveHezk::init()
 {
 	if (!Layer::init())
 		return false;
@@ -34,9 +34,9 @@ bool AchieveScene::init()
 	bgSky->setPosition(bgSky->getContentSize().width / 2.f, bgSky->getContentSize().height / 2.f - 2);
 
 	//LUAH->doStage();
-	LUAH->doScene();
+	LUAH->doHezk();
 	auto  funcMenu = FuncMenu::create();
-	funcMenu->callbackFunc(this, callfuncN_selector(AchieveScene::funcMenuCallback));
+	funcMenu->callbackFunc(this, callfuncN_selector(AchieveHezk::funcMenuCallback));
 	funcMenu->loadScript("AchieveMenu");
 	funcMenu->setPosition(Vec2::ZERO);
 	addChild(funcMenu, Z_JoyStick);
@@ -111,12 +111,12 @@ bool AchieveScene::init()
 
 	//pageview��
 	pageview->setPosition(Vec2(80, ScreenHeight / 4));
-	//pageview->addEventListener(CC_CALLBACK_2(this, &pagevieweventselector(AchieveScene::pageviewCallBack));
+	//pageview->addEventListener(CC_CALLBACK_2(this, &pagevieweventselector(AchieveHezk::pageviewCallBack));
 	this->addChild(pageview, Z_JoyStick);
 
 	return true;
 }
-void AchieveScene::funcMenuCallback(Node * sender)
+void AchieveHezk::funcMenuCallback(Node * sender)
 {
 	//if (callback && callbackListener)
 	//{
@@ -124,16 +124,16 @@ void AchieveScene::funcMenuCallback(Node * sender)
 	//}
 }
  
-void AchieveScene::pageviewCallBack(cocos2d::Ref * psender, cocos2d::ui::PageViewEventType type)
+void AchieveHezk::pageviewCallBack(cocos2d::Ref * psender, cocos2d::ui::PageViewEventType type)
 {
 
 }
 
-bool AchieveScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+bool AchieveHezk::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {
 	return false;
 }
 
-void AchieveScene::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+void AchieveHezk::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {
 }

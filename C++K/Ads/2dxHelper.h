@@ -199,32 +199,32 @@ static bool jsb_TGSDK_function_preload(se::State& s) {
 SE_BIND_FUNC(jsb_TGSDK_function_preload)
 
 
-static bool jsb_TGSDK_function_parameterFromAdScene(se::State& s) {
-    LOGD("JSB TGSDK.parameterFromAdScene called");
+static bool jsb_TGSDK_function_parameterFromAdHezk(se::State& s) {
+    LOGD("JSB TGSDK.parameterFromAdHezk called");
     const auto& args = s.args();
     size_t argc = args.size();
     CC_UNUSED bool ok = true;
     if (argc >= 2) {
         std::string scene, key;
         ok &= seval_to_std_string(args[0], &scene);
-        SE_PRECONDITION2(ok, false, "JSB TGSDK.parameterFromAdScene: Error processing arguments");
+        SE_PRECONDITION2(ok, false, "JSB TGSDK.parameterFromAdHezk: Error processing arguments");
         ok &= seval_to_std_string(args[1], &key);
-        SE_PRECONDITION2(ok, false, "JSB TGSDK.parameterFromAdScene: Error processing arguments");
-        std::string val = TGSDKCocos2dxHelper::getStringParameterFromAdScene(scene, key);
+        SE_PRECONDITION2(ok, false, "JSB TGSDK.parameterFromAdHezk: Error processing arguments");
+        std::string val = TGSDKCocos2dxHelper::getStringParameterFromAdHezk(scene, key);
         if (val.compare(TGSDK_NONE) == 0) {
             if (argc > 2) {
                 std::string def;
                 ok &= seval_to_std_string(args[2], &def);
-                SE_PRECONDITION2(ok, false, "JSB TGSDK.parameterFromAdScene: Error processing arguments");
+                SE_PRECONDITION2(ok, false, "JSB TGSDK.parameterFromAdHezk: Error processing arguments");
                 std_string_to_seval(def, &s.rval());
             }
         }
         return true;
     }
-    SE_REPORT_ERROR("JSB TGSDK.parameterFromAdScene: Wrong number of arguments");
+    SE_REPORT_ERROR("JSB TGSDK.parameterFromAdHezk: Wrong number of arguments");
     return false;
 }
-SE_BIND_FUNC(jsb_TGSDK_function_parameterFromAdScene)
+SE_BIND_FUNC(jsb_TGSDK_function_parameterFromAdHezk)
 
 
 static bool jsb_TGSDK_function_setBannerConfig(se::State& s) {
@@ -351,22 +351,22 @@ static bool jsb_TGSDK_function_reportAdRejected(se::State& s) {
 SE_BIND_FUNC(jsb_TGSDK_function_reportAdRejected)
 
 
-static bool jsb_TGSDK_function_showAdScene(se::State& s) {
-    LOGD("JSB TGSDK.showAdScene called");
+static bool jsb_TGSDK_function_showAdHezk(se::State& s) {
+    LOGD("JSB TGSDK.showAdHezk called");
     const auto& args = s.args();
     size_t argc = args.size();
     CC_UNUSED bool ok = true;
     if (argc == 1) {
         std::string scene;
         ok &= seval_to_std_string(args[0], &scene);
-        SE_PRECONDITION2(ok, false, "JSB TGSDK.showAdScene: Error processing arguments");
-        TGSDKCocos2dxHelper::showAdScene(scene);
+        SE_PRECONDITION2(ok, false, "JSB TGSDK.showAdHezk: Error processing arguments");
+        TGSDKCocos2dxHelper::showAdHezk(scene);
         return true;
     }
-    SE_REPORT_ERROR("JSB TGSDK.showAdScene: Wrong number of arguments");
+    SE_REPORT_ERROR("JSB TGSDK.showAdHezk: Wrong number of arguments");
     return false;
 }
-SE_BIND_FUNC(jsb_TGSDK_function_showAdScene)
+SE_BIND_FUNC(jsb_TGSDK_function_showAdHezk)
 
 
 static bool jsb_TGSDK_function_sendCounter(se::State& s) {
@@ -525,14 +525,14 @@ bool register_jsb_tgsdk(se::Object* obj)
     DEFINE_JSB_FUNCTION(initialize);
     DEFINE_JSB_FUNCTION(isWIFI);
     DEFINE_JSB_FUNCTION(preload);
-    DEFINE_JSB_FUNCTION(parameterFromAdScene);
+    DEFINE_JSB_FUNCTION(parameterFromAdHezk);
     DEFINE_JSB_FUNCTION(setBannerConfig);
     DEFINE_JSB_FUNCTION(couldShowAd);
     DEFINE_JSB_FUNCTION(showAd);
     DEFINE_JSB_FUNCTION(showTestView);
     DEFINE_JSB_FUNCTION(closeBanner);
     DEFINE_JSB_FUNCTION(reportAdRejected);
-    DEFINE_JSB_FUNCTION(showAdScene);
+    DEFINE_JSB_FUNCTION(showAdHezk);
     DEFINE_JSB_FUNCTION(sendCounter);
     DEFINE_JSB_FUNCTION(tagPayingUser);
     DEFINE_JSB_FUNCTION(getUserGDPRConsentStatus);
@@ -716,17 +716,17 @@ bool jsb_TGSDK_function_preload(JSContext* cx, uint32_t argc, jsval* vp) {
     return true;
 }
 
-bool jsb_TGSDK_function_parameterFromAdScene(JSContext* cx, uint32_t argc, jsval* vp) {
-    LOGD("JSB TGSDK.parameterFromAdScene called");
+bool jsb_TGSDK_function_parameterFromAdHezk(JSContext* cx, uint32_t argc, jsval* vp) {
+    LOGD("JSB TGSDK.parameterFromAdHezk called");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc >= 2) {
         std::string scene;
         std::string key;
         bool ok = jsval_to_std_string(cx, args.get(0), &scene);
-        JSB_PRECONDITION2(ok, cx, false, "JSB TGSDK.parameterFromAdScene scene must be string");
+        JSB_PRECONDITION2(ok, cx, false, "JSB TGSDK.parameterFromAdHezk scene must be string");
         ok = jsval_to_std_string(cx, args.get(1), &key);
-        JSB_PRECONDITION2(ok, cx, false, "JSB TGSDK.parameterFromAdScene key must be string");
-        std::string ret = TGSDKCocos2dxHelper::getStringParameterFromAdScene(scene, key, TGSDK_NONE);
+        JSB_PRECONDITION2(ok, cx, false, "JSB TGSDK.parameterFromAdHezk key must be string");
+        std::string ret = TGSDKCocos2dxHelper::getStringParameterFromAdHezk(scene, key, TGSDK_NONE);
         if (ret.compare(TGSDK_NONE) == 0) {
             if (argc > 2) {
                 args.rval().set(args.get(2));
@@ -737,7 +737,7 @@ bool jsb_TGSDK_function_parameterFromAdScene(JSContext* cx, uint32_t argc, jsval
             args.rval().set(std_string_to_jsval(cx, ret));
         }
     } else {
-        JS_ReportError(cx, "JSB TGSDK.parameterFromAdScene: Wrong number of arguments");
+        JS_ReportError(cx, "JSB TGSDK.parameterFromAdHezk: Wrong number of arguments");
         return false;
     }
     return true;
@@ -847,18 +847,18 @@ bool jsb_TGSDK_function_reportAdRejected(JSContext* cx, uint32_t argc, jsval* vp
     return false;
 }
 
-bool jsb_TGSDK_function_showAdScene(JSContext* cx, uint32_t argc, jsval* vp) {
-    LOGD("JSB TGSDK.showAdScene called");
+bool jsb_TGSDK_function_showAdHezk(JSContext* cx, uint32_t argc, jsval* vp) {
+    LOGD("JSB TGSDK.showAdHezk called");
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (1 == argc) {
         std::string scene;
         bool ok = jsval_to_std_string(cx, args.get(0), &scene);
-        JSB_PRECONDITION2(ok, cx, false, "JSB TGSDK.showAdScene scene must be string");
-        TGSDKCocos2dxHelper::showAdScene(scene);
+        JSB_PRECONDITION2(ok, cx, false, "JSB TGSDK.showAdHezk scene must be string");
+        TGSDKCocos2dxHelper::showAdHezk(scene);
         args.rval().set(JSVAL_NULL);
         return true;
     }
-    JS_ReportError(cx, "JSB TGSDK.showAdScene: Wrong number of arguments");
+    JS_ReportError(cx, "JSB TGSDK.showAdHezk: Wrong number of arguments");
     return false;
 }
 
@@ -1010,14 +1010,14 @@ void register_jsb_tgsdk(JSContext* cx, JS::HandleObject global) {
         JS_FN("initialize", jsb_TGSDK_function_initialize, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isWIFI", jsb_TGSDK_function_isWIFI, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("preload", jsb_TGSDK_function_preload, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("parameterFromAdScene", jsb_TGSDK_function_parameterFromAdScene, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("parameterFromAdHezk", jsb_TGSDK_function_parameterFromAdHezk, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBannerConfig", jsb_TGSDK_function_setBannerConfig, 7, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("couldShowAd", jsb_TGSDK_function_couldShowAd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showAd", jsb_TGSDK_function_showAd, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("showTestView", jsb_TGSDK_function_showTestView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("closeBanner", jsb_TGSDK_function_closeBanner, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reportAdRejected", jsb_TGSDK_function_reportAdRejected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("showAdScene", jsb_TGSDK_function_showAdScene, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("showAdHezk", jsb_TGSDK_function_showAdHezk, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("sendCounter", jsb_TGSDK_function_sendCounter, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("tagPayingUser", jsb_TGSDK_function_tagPayingUser, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getUserGDPRConsentStatus", jsb_TGSDK_function_getUserGDPRConsentStatus, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1215,17 +1215,17 @@ static int tolua_TGSDK_function_getSDKConfig(lua_State* tolua_S) {
     return 1;
 }
 
-static int tolua_TGSDK_function_parameterFromAdScene(lua_State* tolua_S) {
-    LOGD("Lua TGSDK.parameterFromAdScene called");
+static int tolua_TGSDK_function_parameterFromAdHezk(lua_State* tolua_S) {
+    LOGD("Lua TGSDK.parameterFromAdHezk called");
     tolua_Error tolua_err;
     if (tolua_isstring(tolua_S, 1, 0, &tolua_err)
         &&  tolua_isstring(tolua_S, 2, 0, &tolua_err)) {
         std::string scene;
         std::string key;
-        bool ok = __luaval_to_std_string(tolua_S, 1, &scene, "parameterFromAdScene");
-        ok &= __luaval_to_std_string(tolua_S, 2, &key, "parameterFromAdScene");
+        bool ok = __luaval_to_std_string(tolua_S, 1, &scene, "parameterFromAdHezk");
+        ok &= __luaval_to_std_string(tolua_S, 2, &key, "parameterFromAdHezk");
         if (ok) {
-            std::string ret = TGSDKCocos2dxHelper::getStringParameterFromAdScene(scene, key, TGSDK_NONE);
+            std::string ret = TGSDKCocos2dxHelper::getStringParameterFromAdHezk(scene, key, TGSDK_NONE);
             if (ret.compare(TGSDK_NONE) == 0) {
                 if (lua_gettop(tolua_S) > 2) {
                     lua_pushvalue(tolua_S, 3);
@@ -1237,8 +1237,8 @@ static int tolua_TGSDK_function_parameterFromAdScene(lua_State* tolua_S) {
             }
         }
     } else {
-        LOGD("Lua TGSDK.parameterFromAdScene: Wrong number of arguments");
-        tolua_error(tolua_S,"#ferror in function 'TGSDK.parameterFromAdScene'.",&tolua_err);
+        LOGD("Lua TGSDK.parameterFromAdHezk: Wrong number of arguments");
+        tolua_error(tolua_S,"#ferror in function 'TGSDK.parameterFromAdHezk'.",&tolua_err);
         lua_pushnil(tolua_S);
     }
     return 1;
@@ -1400,18 +1400,18 @@ static int tolua_TGSDK_function_reportAdRejected(lua_State* tolua_S) {
     return 0;
 }
 
-static int tolua_TGSDK_function_showAdScene(lua_State* tolua_S) {
-    LOGD("Lua TGSDK.showAdScene called");
+static int tolua_TGSDK_function_showAdHezk(lua_State* tolua_S) {
+    LOGD("Lua TGSDK.showAdHezk called");
     tolua_Error tolua_err;
     if (tolua_isstring(tolua_S, 1, 0, &tolua_err)) {
         std::string scene;
-        bool ok = __luaval_to_std_string(tolua_S, 1, &scene, "showAdScene");
+        bool ok = __luaval_to_std_string(tolua_S, 1, &scene, "showAdHezk");
         if (ok) {
-            TGSDKCocos2dxHelper::showAdScene(scene);
+            TGSDKCocos2dxHelper::showAdHezk(scene);
         }
     } else {
-        LOGD("Lua TGSDK.showAdScene: Wrong number of arguments");
-        tolua_error(tolua_S,"#ferror in function 'TGSDK.showAdScene'.",&tolua_err);
+        LOGD("Lua TGSDK.showAdHezk: Wrong number of arguments");
+        tolua_error(tolua_S,"#ferror in function 'TGSDK.showAdHezk'.",&tolua_err);
     }
     return 0;
 }
@@ -1567,14 +1567,14 @@ TOLUA_API int tolua_tgsdk_open(lua_State* tolua_S){
         tolua_function(tolua_S, "initialize", tolua_TGSDK_function_initialize);
         tolua_function(tolua_S, "isWIFI", tolua_TGSDK_function_isWIFI);
         tolua_function(tolua_S, "preload", tolua_TGSDK_function_preload);
-        tolua_function(tolua_S, "parameterFromAdScene", tolua_TGSDK_function_parameterFromAdScene);
+        tolua_function(tolua_S, "parameterFromAdHezk", tolua_TGSDK_function_parameterFromAdHezk);
         tolua_function(tolua_S, "setBannerConfig", tolua_TGSDK_function_setBannerConfig);
         tolua_function(tolua_S, "couldShowAd", tolua_TGSDK_function_couldShowAd);
         tolua_function(tolua_S, "showAd", tolua_TGSDK_function_showAd);
         tolua_function(tolua_S, "showTestView", tolua_TGSDK_function_showTestView);
         tolua_function(tolua_S, "closeBanner", tolua_TGSDK_function_closeBanner);
         tolua_function(tolua_S, "reportAdRejected", tolua_TGSDK_function_reportAdRejected);
-        tolua_function(tolua_S, "showAdScene", tolua_TGSDK_function_showAdScene);
+        tolua_function(tolua_S, "showAdHezk", tolua_TGSDK_function_showAdHezk);
         tolua_function(tolua_S, "sendCounter", tolua_TGSDK_function_sendCounter);
         tolua_function(tolua_S, "tagPayingUser", tolua_TGSDK_function_tagPayingUser);
         tolua_function(tolua_S, "getUserGDPRConsentStatus", tolua_TGSDK_function_getUserGDPRConsentStatus);
@@ -1906,13 +1906,13 @@ void TGSDKCocos2dxHelper::preload() {
 #endif
 }
 
-int TGSDKCocos2dxHelper::getIntParameterFromAdScene(const std::string scene, const std::string key, int def) {
+int TGSDKCocos2dxHelper::getIntParameterFromAdHezk(const std::string scene, const std::string key, int def) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     JniMethodInfo minfo;
     bool isHave = JniHelper::getStaticMethodInfo(
                                                  minfo,
                                                  JTGSDKCocos2dxHelper,
-                                                 "getIntParameterFromAdScene",
+                                                 "getIntParameterFromAdHezk",
                                                  "(Ljava/lang/String;Ljava/lang/String;I)I"
     );
     if (isHave) {
@@ -1929,10 +1929,10 @@ int TGSDKCocos2dxHelper::getIntParameterFromAdScene(const std::string scene, con
         minfo.env->DeleteLocalRef(minfo.classID);
         return (int)jret;
     } else {
-        LOGD("TGSDKCocos2dxHelper jni getIntParameterFromAdScene() not found");
+        LOGD("TGSDKCocos2dxHelper jni getIntParameterFromAdHezk() not found");
     }
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    id ret = [TGSDK parameterFromAdScene:[NSString stringWithUTF8String:scene.c_str()]
+    id ret = [TGSDK parameterFromAdHezk:[NSString stringWithUTF8String:scene.c_str()]
                                  WithKey:[NSString stringWithUTF8String:key.c_str()]];
     if (ret && [ret isKindOfClass:[NSNumber class]]) {
         return [ret intValue];
@@ -1942,13 +1942,13 @@ int TGSDKCocos2dxHelper::getIntParameterFromAdScene(const std::string scene, con
 #endif
 }
 
-float TGSDKCocos2dxHelper::getFloatParameterFromAdScene(const std::string scene, const std::string key, float def) {
+float TGSDKCocos2dxHelper::getFloatParameterFromAdHezk(const std::string scene, const std::string key, float def) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     JniMethodInfo minfo;
     bool isHave = JniHelper::getStaticMethodInfo(
                                                  minfo,
                                                  JTGSDKCocos2dxHelper,
-                                                 "getFloatParameterFromAdScene",
+                                                 "getFloatParameterFromAdHezk",
                                                  "(Ljava/lang/String;Ljava/lang/String;F)F"
     );
     if (isHave) {
@@ -1965,10 +1965,10 @@ float TGSDKCocos2dxHelper::getFloatParameterFromAdScene(const std::string scene,
         minfo.env->DeleteLocalRef(minfo.classID);
         return (float)jret;
     } else {
-        LOGD("TGSDKCocos2dxHelper jni getIntParameterFromAdScene() not found");
+        LOGD("TGSDKCocos2dxHelper jni getIntParameterFromAdHezk() not found");
     }
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    id ret = [TGSDK parameterFromAdScene:[NSString stringWithUTF8String:scene.c_str()]
+    id ret = [TGSDK parameterFromAdHezk:[NSString stringWithUTF8String:scene.c_str()]
                                  WithKey:[NSString stringWithUTF8String:key.c_str()]];
     if (ret && [ret isKindOfClass:[NSNumber class]]) {
         return [ret floatValue];
@@ -1978,13 +1978,13 @@ float TGSDKCocos2dxHelper::getFloatParameterFromAdScene(const std::string scene,
 #endif
 }
 
-std::string TGSDKCocos2dxHelper::getStringParameterFromAdScene(const std::string scene, const std::string key, const std::string def) {
+std::string TGSDKCocos2dxHelper::getStringParameterFromAdHezk(const std::string scene, const std::string key, const std::string def) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     JniMethodInfo minfo;
     bool isHave = JniHelper::getStaticMethodInfo(
                                              minfo,
                                              JTGSDKCocos2dxHelper,
-                                             "getStringParameterFromAdScene",
+                                             "getStringParameterFromAdHezk",
                                              "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"
     );
     if (isHave) {
@@ -2006,11 +2006,11 @@ std::string TGSDKCocos2dxHelper::getStringParameterFromAdScene(const std::string
         minfo.env->DeleteLocalRef(minfo.classID);
         return val;
     } else {
-        LOGD("TGSDK jni getStringParameterFromAdScene( key ) not found");
+        LOGD("TGSDK jni getStringParameterFromAdHezk( key ) not found");
         return def;
     }
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    id ret = [TGSDK parameterFromAdScene:[NSString stringWithUTF8String:scene.c_str()]
+    id ret = [TGSDK parameterFromAdHezk:[NSString stringWithUTF8String:scene.c_str()]
                                  WithKey:[NSString stringWithUTF8String:key.c_str()]];
     if (ret && [ret isKindOfClass:[NSString class]]) {
         return ([ret UTF8String]);
@@ -2202,13 +2202,13 @@ void TGSDKCocos2dxHelper::reportAdRejected(const std::string scene) {
 #endif
 }
 
-void TGSDKCocos2dxHelper::showAdScene(const std::string scene) {
+void TGSDKCocos2dxHelper::showAdHezk(const std::string scene) {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     JniMethodInfo minfo;
     bool isHave = JniHelper::getStaticMethodInfo(
                                                  minfo,
                                                  JTGSDKClass,
-                                                 "showAdScene",
+                                                 "showAdHezk",
                                                  "(Ljava/lang/String;)V"
     );
     if (isHave) {
@@ -2220,10 +2220,10 @@ void TGSDKCocos2dxHelper::showAdScene(const std::string scene) {
         minfo.env->DeleteLocalRef(jscene);
         minfo.env->DeleteLocalRef(minfo.classID);
     } else {
-        LOGD("TGSDK jni showAdScene( scene ) not found");
+        LOGD("TGSDK jni showAdHezk( scene ) not found");
     }
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    [TGSDK showAdScene:[NSString stringWithUTF8String:scene.c_str()]];
+    [TGSDK showAdHezk:[NSString stringWithUTF8String:scene.c_str()]];
 #endif
 }
 

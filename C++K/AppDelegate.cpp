@@ -1,5 +1,5 @@
 #include "AppDelegate.h" 
-#include "Scene/MainScene.h"
+#include "Hezk/MainHezk.h"
 #include "Utils/Constant.h"
 #include "Utils/Telisk.h"
 #include "Ads/Ads.h"
@@ -52,12 +52,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 	LUAH->openLuaState();
 	LUAH->registerClasses();
 	LUAH->loadPackages();
-	LUAH->doScene();
+	LUAH->doHezk();
 
   Ads::init();
 
-	auto scene = MainScene::createScene();
-	director->runWithScene(scene);
+	auto scene = MainHezk::createHezk();
+	director->runWithHezk(scene);
 
 	return true;
 }

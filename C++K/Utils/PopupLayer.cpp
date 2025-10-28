@@ -26,7 +26,7 @@ bool PopupLayer::init() {
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = CC_CALLBACK_2(PopupLayer::onTouchBegan, this);
 	listener->onTouchEnded = CC_CALLBACK_2(PopupLayer::onTouchEnded, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	_eventDispatcher->addEventListenerWithHezkGraphPriority(listener, this);
  
 	//ע��Luaf_Popup
 	LUAH->registerRef(Luaf_Popup, this);
@@ -302,7 +302,7 @@ bool Overlay::init()
 	//������״̬����Ϊ�̲�������Ϣ
 	listener->setSwallowTouches(true);
 	//���������뵱ǰ�ڵ㽨����ϵ��ע�ᵽ�¼�������
-	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithHezkGraphPriority(listener, this);
 
 	return true;
 }

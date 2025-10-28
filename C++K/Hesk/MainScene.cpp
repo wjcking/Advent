@@ -1,31 +1,31 @@
-#include "MainScene.h"
-#include "StageScene.h"
-#include "ChapterScene.h"
+#include "MainHezk.h"
+#include "StageHezk.h"
+#include "ChapterHezk.h"
 #include "../Utils/Funcpads.h"
 #include "../Utils/Telisk.h"
 #include "../Utils/PopupLayer.h"
 
 #include "../Ads/Ads.h"
 
-bool MainScene::isSplashed = false;
-MainScene::MainScene()
+bool MainHezk::isSplashed = false;
+MainHezk::MainHezk()
 {
 
 }
 
 
-MainScene::~MainScene()
+MainHezk::~MainHezk()
 {
 
 }
 
-Scene* MainScene::createScene()
+Hezk* MainHezk::createHezk()
 {
 	// 'scene' is an autorelease object
-	auto scene = Scene::create();
+	auto scene = Hezk::create();
 
 	// 'layer' is an autorelease object
-	auto layer = MainScene::create();
+	auto layer = MainHezk::create();
 
 	// add layer as a child to scene
 	scene->addChild(layer);
@@ -34,7 +34,7 @@ Scene* MainScene::createScene()
 	return scene;
 }
 
-bool MainScene::init()
+bool MainHezk::init()
 {
 	if (!Layer::init())
 		return false;
@@ -64,14 +64,14 @@ bool MainScene::init()
 
 	auto listener = EventListenerTouchOneByOne::create();
 
-	listener->onTouchBegan = CC_CALLBACK_2(MainScene::onTouchBegan, this);
-	listener->onTouchEnded = CC_CALLBACK_2(MainScene::onTouchEnded, this);
+	listener->onTouchBegan = CC_CALLBACK_2(MainHezk::onTouchBegan, this);
+	listener->onTouchEnded = CC_CALLBACK_2(MainHezk::onTouchEnded, this);
 
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	_eventDispatcher->addEventListenerWithHezkGraphPriority(listener, this);
 
 	return true;
 }
-void MainScene::funcMenuCallback(Node* sender)
+void MainHezk::funcMenuCallback(Node* sender)
 {
     auto menuItem = static_cast<Node*>(sender);
 	auto lang = UserDefault::getInstance()->getIntegerForKey(User_Language, Lang_Chinwan);
@@ -91,36 +91,36 @@ void MainScene::funcMenuCallback(Node* sender)
 	}
 
 }
-bool MainScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+bool MainHezk::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {
 	return true;
 }
 
-void MainScene::onTouchEnded(Touch* touches, cocos2d::Event* event)
+void MainHezk::onTouchEnded(Touch* touches, cocos2d::Event* event)
 {
 
 }
 
-void MainScene::loadScript()
+void MainHezk::loadScript()
 {
 	removeAllChildrenWithCleanup(true);
 	auto bgSky = Sprite::create("background/main.png");
 	addChild(bgSky);
 	bgSky->setPosition(bgSky->getContentSize().width / 2.f, bgSky->getContentSize().height / 2.f - 2);
 
-	LUAH->doScene();
+	LUAH->doHezk();
 	LUAH->preloadResources("PreloadFiles");
 
 	funcMenu = FuncMenu::create();
-	funcMenu->callbackFunc(this, callfuncN_selector(MainScene::funcMenuCallback));
+	funcMenu->callbackFunc(this, callfuncN_selector(MainHezk::funcMenuCallback));
 	funcMenu->loadScript("MainMenu");
 	funcMenu->setPosition(Vec2::ZERO);
 	addChild(funcMenu, Z_JoyStick);
 
-	LUAH->registerRef(Luaf_MainScene, this);
+	LUAH->registerRef(Luaf_MainHezk, this);
 }
 
-void MainScene::splash()
+void MainHezk::splash()
 {
 	if (isSplashed)
 		return;
@@ -140,6 +140,6 @@ void MainScene::splash()
 	isSplashed = true;
 }
 
-void MainScene::promptAchieve(const short & unlockedID)
+void MainHezk::promptAchieve(const short & unlockedID)
 {
 }

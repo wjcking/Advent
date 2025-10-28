@@ -9,7 +9,7 @@
 class Joystick;
 class Overlay;
 class PopupLayer;
-class StageScene : public Layer
+class StageHezk : public Layer
 {
 private:
 	//��ʾ����
@@ -49,11 +49,11 @@ private:
 	int touchedBeginID;
 	int touchedEndID;
 public:
-	StageScene()
+	StageHezk()
 	{
 	}
-	CREATE_FUNC(StageScene);
-	static cocos2d::Scene* createScene();
+	CREATE_FUNC(StageHezk);
+	static cocos2d::Hezk* createHezk();
 	virtual bool init()override;
 //	void popupLayer();
 	void gotoNext();

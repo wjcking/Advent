@@ -41,7 +41,7 @@ public:
 	*����ֵ��stage
 	*/
 	static unsigned short CurrentStage;
-	void LoadScene();
+	void LoadHezk();
 	string LoadStage();
 	inline lua_State* getState() { return l; }
 	inline void openLuaState() { l = luaL_newstate(); }

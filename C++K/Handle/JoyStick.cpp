@@ -106,7 +106,7 @@ void Joystick::onEnter()
 	listener->onTouchesEnded = CC_CALLBACK_2(Joystick::onTouchesEnded, this);
 
 	/*ע�����*/
-	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithHezkGraphPriority(listener, this);
 
 }
 

@@ -1,20 +1,20 @@
-#include "ChapterScene.h"
+#include "ChapterHezk.h"
 #include "../Utils/Funcpads.h"
 #include "../Utils/Telisk.h"
 #include "../Utils/Constant.h"
 #include "../Utils/ResourceHelper.h"
 #include "ui/UIButton.h"
-#include "StageScene.h"
+#include "StageHezk.h"
 using namespace ui;
-Vec2 ChapterScene::lastContainerPosition = Vec2::ZERO;
-bool ChapterScene::isInitialized = false;
-cocos2d::Scene* ChapterScene::createScene()
+Vec2 ChapterHezk::lastContainerPosition = Vec2::ZERO;
+bool ChapterHezk::isInitialized = false;
+cocos2d::Hezk* ChapterHezk::createHezk()
 {
 	// 'scene' is an autorelease object
-	auto scene = Scene::create();
+	auto scene = Hezk::create();
 
 	// 'layer' is an autorelease object
-	auto layer = ChapterScene::create();
+	auto layer = ChapterHezk::create();
 
 	// add layer as a child to scene
 	scene->addChild(layer);
@@ -23,7 +23,7 @@ cocos2d::Scene* ChapterScene::createScene()
 	return scene;
 }
 
-bool ChapterScene::init()
+bool ChapterHezk::init()
 {
 	if (!Layer::init())
 		return false;
@@ -34,10 +34,10 @@ bool ChapterScene::init()
 	addChild(bgSky, Z_BACKGROUND);
 	bgSky->setPosition(bgSky->getContentSize().width / 2.f, bgSky->getContentSize().height / 2.f - 2);
 
-	LUAH->doScene();
+	LUAH->doHezk();
 
 	auto  funcMenu = FuncMenu::create();
-	funcMenu->callbackFunc(this, callfuncN_selector(ChapterScene::funcMenuCallback));
+	funcMenu->callbackFunc(this, callfuncN_selector(ChapterHezk::funcMenuCallback));
 	funcMenu->loadScript("LevelMenu");
 	funcMenu->setPosition(Vec2::ZERO);
 	addChild(funcMenu, Z_JoyStick);
@@ -86,7 +86,7 @@ bool ChapterScene::init()
 
 			btnStage = dynamic_cast<Button*>(btnStage);
 			btnStage->setName(StringUtils::format("stage%d.png", stageNumber++));
-			btnStage->addTouchEventListener(CC_CALLBACK_2(ChapterScene::onButtonClicked, this));
+			btnStage->addTouchEventListener(CC_CALLBACK_2(ChapterHezk::onButtonClicked, this));
 			btnStage->setPosition(Vec2(btnStage->getContentSize().width * multi + 10 * multi, btnStage->getContentSize().height));
 			layout->addChild(btnStage);
 			multi++;
@@ -136,7 +136,7 @@ bool ChapterScene::init()
 
 	return true;
 }
-void ChapterScene::funcMenuCallback(Node * sender)
+void ChapterHezk::funcMenuCallback(Node * sender)
 {
 	//if (callback && callbackListener)
 	//{
@@ -145,7 +145,7 @@ void ChapterScene::funcMenuCallback(Node * sender)
 }
 
 
-void ChapterScene::onButtonClicked(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
+void ChapterHezk::onButtonClicked(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	//������Ϻ�û����ԭ���İ�ť�����˳�
 	if (Widget::TouchEventType::ENDED != type)
@@ -158,15 +158,15 @@ void ChapterScene::onButtonClicked(cocos2d::Ref * sender, cocos2d::ui::Widget::T
 	auto table = LUAH->createTable();
 	table.set(Luaf_Tag, Luah::CurrentStage);
 	LUAH->callmenu("chapter", "stage", table);
-	auto scene = StageScene::createScene();
-	Director::getInstance()->replaceScene(scene);
+	auto scene = StageHezk::createHezk();
+	Director::getInstance()->replaceHezk(scene);
 }
 
-bool ChapterScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+bool ChapterHezk::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {
 	return false;
 }
 
-void ChapterScene::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_event)
+void ChapterHezk::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * unused_event)
 {
 }
