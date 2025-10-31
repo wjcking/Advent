@@ -7,7 +7,6 @@
 #include "ResourceHelper.h"
 #include "Utils.h"
 
-USING_NS_CC;
 short FuncMenu::nextTag = 1;
 
 bool FuncMenu::init()
