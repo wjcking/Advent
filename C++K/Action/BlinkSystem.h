@@ -2,8 +2,7 @@
 #define  BLINKSYSTEM_H
 #include "cocos2d.h"  
 #include "../Utils/Telisk.h"
-using namespace cocos2d;
-#define BlinkInstance BlinkSystem::getInstance()
+
 enum BlinkStatus
 {
 	blinkDoneHidden,

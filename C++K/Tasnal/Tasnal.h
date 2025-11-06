@@ -19,7 +19,7 @@ using namespace cocos2d;
 class Tasnal : public Teshnal
 {
 	//��Ҫ����˽�б���lua�ű���ȡ
-	class TasnalSystem::Tasnal friend;
+	class Tasmina::Tasnal friend;
 private:
 	Tasnal* collidedOpponent;
 	Ract objectIntersection;

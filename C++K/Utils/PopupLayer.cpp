@@ -3,7 +3,7 @@
 #include "../Map/CheckPoint.h"
 #include "ResourceHelper.h"
 #include "../Tasnal/RObject.h"
-#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Tasmina.h"
 #include "Utils.h"
 short PopupLayer::nextTag = 1;
 
@@ -238,7 +238,7 @@ bool PopupLayer::loadScript(const LuaIntf::LuaRef& ref)
 				{
 					role->setName(name);
 					role->setPosition(pos);
-					TasnalSystem::setTeshnal(ref, role);
+					Tasmina::setTeshnal(ref, role);
 					background->addChild(role);
 				}
 			}

@@ -1,7 +1,7 @@
 #include "TeliskSystem.h"
 #include "Telisk.h"
 #include "Tasnal.h"
-#include "TasnalSystem.h"
+#include "Tasmina.h"
 #include "../Utils/ResourceHelper.h"
 bool TeliskSystem::isTeliskOn = false;
 bool TeliskSystem::isWaitingForProcced = false;

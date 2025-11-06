@@ -3,7 +3,7 @@
 #include "../Utils/ResourceHelper.h"
 #include "../Utils/ActionExtend.h"
 #include "SimpleAudioEngine.h"
-#include "TasnalSystem.h"
+#include "Tasmina.h"
 #include "../Map/TiledMap.h"
 #include "../Map/MapManager.h"
 using namespace CocosDenshion;

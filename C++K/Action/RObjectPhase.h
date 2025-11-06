@@ -68,8 +68,8 @@ struct MovePhase : DelayPhase
 		direction = ref.get(Luaf_Direction, MovingDirection::stayStill);
 		distance = ref.get(Luaf_Distance, Vec2(100, 100));
 	}
-
-	inline void reset()
+	inline
+	void reset()
 	{
 		isDone = false;
 		DelayPhase::reset();
@@ -89,16 +89,14 @@ struct BlinkPhase :DelayPhase
 	int tag = 0;
 
 	BlinkPhase() {}
-	BlinkPhase(LuaIntf::LuaRef ref)
+	BlinkPhase(LuaIntf& ref)
 	{
-		if (ref.has(Luaf_Pos))
 			spawnPosition = ref.get(Luaf_Pos).toValue<Vec2>();
-		if (ref.has(Luaf_Duration))
 			visibleDuration = ref.get(Luaf_Duration).toValue<float>();
-		if (ref.has(Luaf_Delay))
 			delaySecond = ref.get(Luaf_Delay).toValue<float>();
 	}
-	inline void reset()
+	inline
+	void reset()
 	{
 		isDone = false;
 		isShown = false;
@@ -113,7 +111,7 @@ struct LabelPhase : DelayPhase
 	char end;
 	char current;
 	LabelPhase() {}
-	LabelPhase(const LuaRef& ref)
+	LabelPhase(const Ref& ref)
 	{
 		start = ref.get(Luaf_RangeStart, 'A');
 		end = ref.get(Luaf_RangeEnd, 'Z');

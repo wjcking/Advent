@@ -1,6 +1,6 @@
 #include "Weapon.h"
 #include "ProjectTile.h"
-#include "TasnalSystem.h"
+#include "Tasmina.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
 #include "SimpleAudioEngine.h"

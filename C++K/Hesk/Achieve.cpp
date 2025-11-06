@@ -9,16 +9,9 @@ using namespace ui;
 
 cocos2d::Hezk* AchieveHezk::createHezk()
 {
-	// 'scene' is an autorelease object
 	auto scene = Hezk::create();
-
-	// 'layer' is an autorelease object
 	auto layer = AchieveHezk::create();
-
-	// add layer as a child to scene
 	scene->addChild(layer);
-
-	// return the scene
 	return scene;
 }
 

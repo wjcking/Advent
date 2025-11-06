@@ -9,7 +9,7 @@
 #include "../../Tik/Encounter.h"
 #include "../Map/TiledMap.h"
 #include "../Map/CheckPoint.h"
-#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Tasmina.h"
 #include "../Tasnal/RObject.h"
 #include "../Tasnal/Npc.h"
 #include "../Hezk/StageHezk.h"
@@ -543,9 +543,9 @@ void Luah::registerClasses()
 		.addStaticFunction("isDone", &TeliskSystem::isDone)
 		.endClass();
 	//��ɫ������
-	LuaBinding(l).beginClass<TasnalSystem>("TasnalSystem")
-		.addStaticFunction("appendTasnal", &TasnalSystem::appendTasnal)
-		.addStaticFunction("updateTasnal", &TasnalSystem::updateTasnal)
+	LuaBinding(l).beginClass<Tasmina>("Tasmina")
+		.addStaticFunction("appendTasnal", &Tasmina::appendTasnal)
+		.addStaticFunction("updateTasnal", &Tasmina::updateTasnal)
 		.endClass();
 	//��̬����
 	LuaBinding(l).beginModule("Constant")

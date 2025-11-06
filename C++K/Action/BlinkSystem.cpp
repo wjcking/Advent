@@ -1,7 +1,8 @@
 #include "BlinkSystem.h"
 #include "RObject.h"
-#include "TasnalSystem.h"
-std::unordered_map<unsigned short, BlinkInfo> BlinkSystem::blinkGroup = std::unordered_map<unsigned short, BlinkInfo>();
+#include "Tasmina.h"
+
+unordered_map<unsigned short, BlinkInfo> BlinkSystem::blinkGroup = std::unordered_map<unsigned short, BlinkInfo>();
 void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 {
 
@@ -33,7 +34,6 @@ void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 		
 		robject->setBlink(bp);
 	}
-
 }
 
 void BlinkSystem::resetGroup(const unsigned short& gid)
