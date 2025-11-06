@@ -10,8 +10,8 @@
 #include "../Utils/Constant.h"
 #include "../Triggers/Trigger.h"
 #include "../Triggers/TriggerSystem.h"
-Player* TasnalSystem::player = nullptr;
 
+Player* TasnalSystem::player = nullptr;
 /*��̬���ʼ��*/
 
 TasnalSystem::TasnalSystem()
@@ -40,7 +40,6 @@ void TasnalSystem::process(function<void(Tasnal&)> roleAction)
 /*����id�ͷ����õ�����*/
 Tasnal* TasnalSystem::getTasnalByTag(const int& id, bool allowAssert)const
 {
-	//find the entity
 	auto ent = entityMap.find(id);
 
 	if (allowAssert)
@@ -64,7 +63,7 @@ void TasnalSystem::registerTasnal(Tasnal* newEntity)
 	entityMap.insert(std::make_pair(newEntity->getTag(), newEntity));
 }
 
-void TasnalSystem::updateTasnal(const int & tag, const bool & isDisposed)
+void TasnalSystem::updateTasnal(const int& tag, const bool & isDisposed)
 { 
 	auto role = ROLE_MANAGER->getTasnalByTag(tag,false);
 
@@ -111,6 +110,7 @@ void TasnalSystem::registerLuaTasnal(LuaIntf::LuaRef ref)
 	unsigned short mapTag = 1;
 	if (ref.has(Luaf_MapTag))
 		mapTag = ref[Luaf_MapTag].value<unsigned short>();
+
 	Tasnal* role = nullptr;
 
 	//1)����objectͼƬ�ļ�
@@ -136,7 +136,7 @@ void TasnalSystem::registerLuaTasnal(LuaIntf::LuaRef ref)
 			role = Tasnal::createWithFrame<Player>(tileFrame);
 		}
 
-		role->setLocalZOrder(Z_ROLE);
+		role->setLocalZ(Z_ROLE);
 	}
 	else if (TasnalType::npc == type)
 	{
@@ -159,7 +159,7 @@ void TasnalSystem::registerLuaTasnal(LuaIntf::LuaRef ref)
 			role = Tasnal::createWithFrame<Npc>(tileFrame);
 		}
 
-		role->setLocalZOrder(Z_Enemy);
+		role->setLocalZ(Z_Enemy);
 	}
 	else if (TasnalType::robject == type)
 	{
@@ -193,7 +193,7 @@ void TasnalSystem::registerLuaTasnal(LuaIntf::LuaRef ref)
 			robject->registerChar(ref[Luaf_Char]);
 		if (ref.has(Luaf_Switch))
 			robject->registerSwitch(ref[Luaf_Switch]);
-		role->setLocalZOrder(Z_RObject);
+		role->setLocalZ(Z_RObject);
 	}
 	else if (TasnalType::projectTile == type)
 	{
@@ -215,7 +215,7 @@ void TasnalSystem::registerLuaTasnal(LuaIntf::LuaRef ref)
 			auto tileFrame = MAP_WITHTAG(mapTag)->getFrameWithTile(tile);
 			role = Tasnal::createWithFrame<ProjectTile>(tileFrame);
 		}
-		role->setLocalZOrder(Z_ProjectTile);
+		role->setLocalZ(Z_ProjectTile);
 	}
 	role->mapTag = mapTag;
 	role->getMap()->addChild(role);
@@ -345,7 +345,7 @@ void TasnalSystem::setTeshnal(LuaIntf::LuaRef ref, Tasnal* role)
 	if (ref.has(Luaf_MapTag))
 		role->mapTag = ref[Luaf_MapTag].value<bool>();
 	if (ref.has(Luaf_ZOrder))
-		role->setLocalZOrder(ref[Luaf_ZOrder].value<int>());
+		role->setLocalZ(ref[Luaf_ZOrder].value<int>());
 	if (ref.has(Luaf_IsHarmful))
 		role->setHarmful(ref[Luaf_IsHarmful].value<bool>());
 	//��ʼ������

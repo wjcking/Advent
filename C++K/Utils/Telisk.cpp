@@ -233,7 +233,7 @@ void Luah::registerClasses()
 
 	LuaBinding(l).beginClass<Node>("Node")
 		.addFunction("getTag", &Node::getTag)
-		.addFunction("setZOrder", &Node::setLocalZOrder)
+		.addFunction("setZOrder", &Node::setLocalZ)
 		.addFunction("getPositionX", &Node::getPositionX)
 		.addFunction("getPositionY", &Node::getPositionY)
 		.addFunction("getBoundingBox",&Node::getBoundingBox)

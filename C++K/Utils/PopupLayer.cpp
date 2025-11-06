@@ -157,7 +157,7 @@ bool PopupLayer::loadScript(const LuaIntf::LuaRef& ref)
 	auto pos = bgField.get(Luaf_Pos, Vec2(ScreenSize.width / 2, ScreenSize.height / 2));
 	background->setPosition(pos);
 	addChild(background);
-	setLocalZOrder(ref.get(Luaf_ZOrder, Z_PopupLayer));
+	setLocalZ(ref.get(Luaf_ZOrder, Z_PopupLayer));
 	//���ŵ���������
 	if (bgField.has(Luaf_Sound))
 		Resh::playSound(bgField.get(Luaf_Sound).toValue<const char*>());

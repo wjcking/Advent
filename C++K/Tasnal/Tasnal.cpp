@@ -339,7 +339,7 @@ void Tasnal::setAnimation(const LuaRef& ref)
 		{
 			isAnimateFinished = false;
 			explode->setPosition(getCollisionBound().getMidX(), getCollisionBound().getMidY());
-			explode->setLocalZOrder(getLocalZOrder() + 1);
+			explode->setLocalZ(getLocalZOrder() + 1);
 			getMap()->addChild(explode);
 
 			explode->runAction(Sequence::create(DelayTime::create(delay),
@@ -688,7 +688,7 @@ void Tasnal::showHints(const LuaRef& ref)
 	hint.font = FontInfo(ref);
 	hint.zorder = ref.get(Luaf_ZOrder, Z_Dialog);
 	openDialogBox(hint);
-	scaleDialog->setLocalZOrder(hint.zorder);
+	scaleDialog->setLocalZ(hint.zorder);
 
 }
 bool Tasnal::locate(const Vec2& target, const bool& allowStop)
@@ -771,7 +771,7 @@ void Tasnal::openDialogBox(const HintText& dlg)
 		label = Label::createWithSystemFont("", Resh::getFontName(), dlg.font.size);
 	//ÿ�ζԻ�����������ɫ��С
 	label->setColor(dlg.font.color);
-	//label->setLocalZOrder(Z_Dialog);
+	//label->setLocalZ(Z_Dialog);
 	label->setSystemFontSize(dlg.font.size);
 	label->setString(dlg.text);
 	if (nullptr == scaleDialog)
@@ -781,7 +781,7 @@ void Tasnal::openDialogBox(const HintText& dlg)
 
 		scaleDialog->addChild(anchor);
 		scaleDialog->addChild(label);
-		scaleDialog->setLocalZOrder(Z_Dialog);
+		scaleDialog->setLocalZ(Z_Dialog);
 		label->setContentSize(Size(dlg.scaleWidth, 50));
 		scaleDialog->setContentSize(Size(dlg.scaleWidth, 50));
 		getMap()->addChild(scaleDialog);

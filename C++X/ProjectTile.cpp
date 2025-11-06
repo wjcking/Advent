@@ -12,7 +12,7 @@ ProjectTile::ProjectTile() : Tasnal()
 	onCheckTile = false;
 	type = TasnalType::projectTile;
 	//isSolid = projectType == ProjectType::footboard;
-	setLocalZOrder(Z_ROLE);
+	setLocalZ(Z_ROLE);
 	//��ʱ 
 	//��ҪԤ������isDispose���������������Ļ�Ĭ��Ϊtrue
 	//LUAH->setDisposal(getTag(), false);

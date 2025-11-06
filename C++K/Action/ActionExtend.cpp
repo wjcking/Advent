@@ -35,7 +35,7 @@ void ActionExtend::corrupt(const Vec2& ptc, const unsigned short& shardIndex)
 		debris = Sprite::createWithSpriteFrame(frame);
 		debris->setPosition(position);
 		MAP_STAGE->addChild(debris);
-		debris->setLocalZOrder(Z_ROLE + 1);
+		debris->setLocalZ(Z_ROLE + 1);
 		debris->runAction(RepeatForever::create(RotateBy::create(0.8f, 360)));
 		debris->runAction(Sequence::create(
 			CastArch(1.5f, debris->getPosition(), Vec2(debris->getPositionX() + ((i % 2) == 0 ? 50 : -50), 30), random(-24, -14), random(78, 84)),
@@ -64,7 +64,7 @@ void ActionExtend::explode(const LuaIntf::LuaRef& ref)
 	//{
 	//	 
 	//	explode->setPosition(getCollisionBound().getMidX(), getCollisionBound().getMidY());
-	//	explode->setLocalZOrder(getLocalZOrder() + 1);
+	//	explode->setLocalZ(getLocalZOrder() + 1);
 	//	MAP_STAGE->addChild(explode);
 
 	//	explode->runAction(Sequence::create(DelayTime::create(delay),

@@ -43,7 +43,7 @@ bool AchieveHezk::init()
 
 
 	auto pageview = PageView::create();
-	pageview->setLocalZOrder(-100);
+	pageview->setLocalZ(-100);
 	//pageview->setTouchEnabled(true);
 	pageview->setContentSize(Size(ScreenSize.width, ScreenHeight * 0.7));
 	

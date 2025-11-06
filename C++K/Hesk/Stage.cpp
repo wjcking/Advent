@@ -496,8 +496,8 @@ void StageHezk::dropCurtain(const LuaRef& curtainTable)
 	curtainBottom->setName(nameOfCurtianBottom);
 	addChild(curtainTop, curtainInfo.zorder);
 	addChild(curtainBottom, curtainInfo.zorder);
-	curtainTop->setLocalZOrder(curtainInfo.zorder);
-	curtainBottom->setLocalZOrder(curtainInfo.zorder);
+	curtainTop->setLocalZ(curtainInfo.zorder);
+	curtainBottom->setLocalZ(curtainInfo.zorder);
 	auto dropTop = MoveTo::create(curtainInfo.delay, Vec2(curtainX, ScreenSize.height - curtainTop->getContentSize().height / 2));
 	auto dropBottom = MoveTo::create(curtainInfo.delay, Vec2(curtainX, curtainTop->getContentSize().height / 2 - 1));//offset������ȫ����ס
 
