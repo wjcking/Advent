@@ -12,9 +12,8 @@ static const unsigned short   DROrange = 3;
 static const unsigned short   DRRed = 4;
 class ActionExtend
 {
-private:
 	SpriteFrame* frame;
-public:
+
 	ActionExtend() :frame(nullptr)
 	{
 

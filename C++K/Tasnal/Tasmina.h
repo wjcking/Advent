@@ -11,21 +11,21 @@ class Npc;
 class RObject;
 class ProjectTile; 
 
-#define ROLE_MANAGER TasnalSystem::getInstance()
-#define ROLE_PLAYER TasnalSystem::getPlayerRefer()  
+#define ROLE_MANAGER Tasmina::getInstance()
+#define ROLE_PLAYER Tasmina::getPlayerRefer()  
 
-class TasnalSystem
+class Tasmina
 {
 	private:
 	unordered_map<unsigned int, Tasnal*> entityMap;
 
-	TasnalSystem();
-	TasnalSystem(const TasnalSystem&);
-	TasnalSystem& operator=(const TasnalSystem&);
+	Tasmina();
+	Tasmina(const Tasmina&);
+	Tasmina& operator=(const Tasmina&);
 	static Player* player;
 
 	public:
-	static TasnalSystem* getInstance();
+	static Tasmina* getInstance();
 	//static Player* getPlayer();
 	static Player& getPlayerRefer();
 	void process(function<void(Tasnal&)> roleAction);
@@ -43,10 +43,5 @@ class TasnalSystem
 	void release();
 	//�����ɫ �Լ���ɫ��Ҫ��֡
 	void loadScript();
-	static void registerLuaTasnal(LuaIntf::LuaRef);
-	//1.���м��ص�ʱ������ 2.����������
-	static void setTeshnal(LuaIntf::LuaRef ref, Tasnal* role);
-	//����
-	static void appendTasnal(LuaIntf::LuaRef);
 };
 #endif

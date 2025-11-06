@@ -1,5 +1,5 @@
 #include "ProjectTile.h"
-#include "TasnalSystem.h"
+#include "Tasmina.h"
 
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
@@ -68,7 +68,7 @@ void ProjectTile::setProject(const LuaRef&  ref)
 	if (ref.has(Luaf_AllowThrough))
 		canThough = ref.get(Luaf_AllowThrough, false);
 	//1.���м��ص�ʱ������ 2.����������
-	TasnalSystem::setTeshnal(ref, this);
+	Tasmina::setTeshnal(ref, this);
 }
 /*
 * ��������

@@ -3,7 +3,7 @@
 #include "RObject.h"
 #include "Player.h"
 #include "Npc.h"
-#include "TasnalSystem.h"
+#include "Tasmina.h"
 #include "TasnalFrame.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"

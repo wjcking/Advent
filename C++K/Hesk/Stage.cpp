@@ -10,7 +10,7 @@
 #include "../Tasnal/Player.h"
 #include "../Tasnal/Npc.h"
 #include "../Tasnal/ProjectTile.h"
-#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Tasmina.h"
 #include "../Tasnal/TasnalFrame.h"
 #include "../Utils/ResourceHelper.h" 
 #include "../Utils/Telisk.h"

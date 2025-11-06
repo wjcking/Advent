@@ -1,6 +1,6 @@
 #include "TiledMap.h"
 #include "MapManager.h"
-#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Tasmina.h"
 #include "../Tasnal/Tasnal.h"
 #include "../Utils/Constant.h"
 #include "../Triggers/Trigger.h"

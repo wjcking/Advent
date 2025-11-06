@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <math.h>
-//#include "Tasnal\TasnalSystem.h"
+//#include "Tasnal\Tasmina.h"
 struct Telegram
 {
 	int senderID;

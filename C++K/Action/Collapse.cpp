@@ -1,6 +1,6 @@
 #include "Collapse.h"  
 #include "MapManager.h"
-#include "../Tasnal/TasnalSystem.h"
+#include "../Tasnal/Tasmina.h"
 #include "TiledMap.h"
 #include "../Tasnal/Player.h"
 #include "../Tasnal/RObject.h"
@@ -83,7 +83,7 @@ Collapse::Collapse(const unsigned short &mapTag, const Vec2& rangeStart, const V
 		collisionTile->setPosition(MAP_WITHTAG(mapTag)->getPositionByTileCoordinate(rangeTile));
 		if (i == 0)
 			startPosition = collisionTile->getPosition();
-		//�Ƴ���ǰtiledmap�е�sprite
+		//�Ƴ���ǰtilemap�е�
 		MAP_WITHTAG(mapTag)->getWalls().removeTileAt(rangeTile);
 		//���ݵ�ͼid����
 		MAP_WITHTAG(mapTag)->addChild(collisionTile);
