@@ -4,7 +4,7 @@
 #include "../Utils/Fand.h"
 #include "cocos2d.h"
 #include "MapTeshnal.h"
-#include "../Triggers/TriggerSystem.h"
+#include "../Trikers/TrikerSystem.h"
 
 #include "../Utils/Telisk.h"
 using namespace std;
@@ -15,7 +15,7 @@ static const string LayerWalls = "walls";
 
 class BoundRact;
 class Tasnal;
-class Trigger;
+class Triker;
 
 enum class CameraView
 {
@@ -50,7 +50,7 @@ private:
 	std::unordered_map<int, float> lastTasnalPositionX;
 
 	DrawNode* drawCollision;
-	TriggerSystem triggerSystem;
+	TrikerSystem triggerSystem;
 
 	//�浵
 
@@ -79,7 +79,7 @@ public:
 	{
 		return  Size(getMapSize().width * getTileSize().width, getMapSize().height * getTileSize().height);
 	}
-	inline TriggerSystem& getTriggerSystem() { return triggerSystem; }
+	inline TrikerSystem& getTrikerSystem() { return triggerSystem; }
 	TiledMap();
 	TiledMap(const string& tmxFile);
 	~TiledMap();

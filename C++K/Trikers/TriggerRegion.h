@@ -5,14 +5,14 @@
 #include "../../Common/Misc/Utils.h"
 using namespace cocos2d;
 
-class TriggerRegion
+class TrikerRegion
 {
 protected:
 	BoundPosition boundPosition = BoundPosition::centerSelf;
 	bool isTouched = false;
 public:
 
-	virtual ~TriggerRegion() {  }
+	virtual ~TrikerRegion() {  }
 	//returns true if an entity of the given size and position is intersecting
 	//the trigger region.
 	virtual bool& isTouching(const Ract& = Ract::ZERO, float radius = 0) = 0;

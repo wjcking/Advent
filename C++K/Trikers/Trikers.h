@@ -6,7 +6,7 @@ class Tasnal;
 #include "cocos2d.h"
 #include "../Utils/Fand.h"
 #include "../Utils/Utils.h"
-class Trigger
+class Triker
 {
 protected:
 	float distance;
@@ -54,28 +54,28 @@ public:
  	//[Sensor]����ˢ�¾��鴥����ײ��λ��
 	virtual void updateRegion(Tasnal&, const float& radius = 0) = 0;
 	virtual void render(DrawNode*) = 0;
-	Trigger(const bool& bAct = true);
-	Trigger(const Size& size, const MovingDirection& md);
-	virtual ~Trigger();
+	Triker(const bool& bAct = true);
+	Triker(const Size& size, const MovingDirection& md);
+	virtual ~Triker();
 };
 
-class TriggerLine : public Trigger
+class TrikerLine : public Triker
 {
 private:
 	Vec2 start;
 	Vec2 end;
 public:
 
-	TriggerLine(const Vec2& start, const Vec2& end);
-	TriggerLine(const Size& range, const MovingDirection& md);
-	TriggerLine();
-	~TriggerLine();
+	TrikerLine(const Vec2& start, const Vec2& end);
+	TrikerLine(const Size& range, const MovingDirection& md);
+	TrikerLine();
+	~TrikerLine();
 
 	bool& scanTouching(Tasnal& entityRact)   override;
 	void render(DrawNode* draw) override;
 	void updateRegion(Tasnal& role, const float& radius = 0) override;
 };
-class TriggerCircle : public Trigger
+class TrikerCircle : public Triker
 {
 private:
 	//the center of the region
@@ -84,27 +84,27 @@ private:
 
 public:
 
-	TriggerCircle(const Ract& rect, const float& radius = 0);
-	TriggerCircle(const Size& range, const MovingDirection& md);
-	TriggerCircle();
-	~TriggerCircle();
+	TrikerCircle(const Ract& rect, const float& radius = 0);
+	TrikerCircle(const Size& range, const MovingDirection& md);
+	TrikerCircle();
+	~TrikerCircle();
 	virtual bool& scanTouching(Tasnal& entityRact) override;
 
 	void render(DrawNode* draw)override;
 	void updateRegion(Tasnal& role, const float& radius = 0) override;
 }
 
-class TriggerRact : public Trigger
+class TrikerRact : public Triker
 b
 	private:
 	Ract rect;
 
 	public:
-	TriggerRact(const Ract& rect, const bool& isAct = true);
+	TrikerRact(const Ract& rect, const bool& isAct = true);
 
-	TriggerRact(const Size& range, const MovingDirection& md);
-	TriggerRact();
-	~TriggerRact();
+	TrikerRact(const Size& range, const MovingDirection& md);
+	TrikerRact();
+	~TrikerRact();
 
 	virtual bool& scanTouching(Tasnal& rect)  override;
 

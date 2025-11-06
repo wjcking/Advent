@@ -360,7 +360,7 @@ void RObject::blinkGroup()
 {
 	//���û������ִ��
 	auto blinkInfo = BlinkSystem::getBlinkInfo(blink.groupID);
-	if (!blinkInfo.isTriggered)
+	if (!blinkInfo.isTrikered)
 		return;
 
 	bool isGroupDone = BlinkSystem::isGroupDone(blink.groupID);

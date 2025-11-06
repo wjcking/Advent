@@ -4,7 +4,6 @@
 
 class Clock
 {
-	Clock() {};
 	static float tik;
 	static int iTick;
 

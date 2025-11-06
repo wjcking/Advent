@@ -1,9 +1,9 @@
 #ifndef TRIGGER_LIMITEDLIFETIME_H
 #define TRIGGER_LIMITEDLIFETIME_H
 
-#include "Trigger.h"
+#include "Triker.h"
 template <class entity_type>
-class TriggerLimitedLifetime : public Trigger<entity_type>
+class TrikerLimitedLifetime : public Triker<entity_type>
 {
 protected:
 
@@ -12,11 +12,11 @@ protected:
 
 public:
 
-  TriggerLimitedLifetime(int lifetime):Trigger<entity_type>(1),
+  TrikerLimitedLifetime(int lifetime):Triker<entity_type>(1),
                                         lifeTime(lifetime)
   {}
 
-  virtual ~TriggerLimitedLifetime(){}
+  virtual ~TrikerLimitedLifetime(){}
   //children of this class should always make sure this is called from within
   //their own update method
   virtual void update()

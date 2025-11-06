@@ -97,7 +97,7 @@ public:
 	//labelע�����lbǰ׺
 	void setString(const std::string& name, const char* text);
 	bool getTouchedPad(const short&);
-	LuaIntf::LuaRef  getTouches();
+	Intful&  getTouches();
 	void setVisible(const std::string& name, const bool& flag)
 	{
 		auto pad = dynamic_cast<Sprite*>(getChildByName(name));

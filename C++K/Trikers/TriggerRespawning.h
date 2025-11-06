@@ -1,10 +1,10 @@
-#ifndef Trigger_Respawning_H
-#define Trigger_Respawning_H
+#ifndef Triker_Respawning_H
+#define Triker_Respawning_H
 
-#include "Trigger.h"
+#include "Triker.h"
 
 
-class TriggerRespawning : public Trigger
+class TrikerRespawning : public Triker
 {
 protected:
   int   numUpdatesBetweenRespawns;
@@ -20,12 +20,12 @@ protected:
 
 public:
 
-  TriggerRespawning(TriggerRegion* region):Trigger(region),
+  TrikerRespawning(TrikerRegion* region):Triker(region),
                              numUpdatesBetweenRespawns(0),
                              numUpdatesRemainingUntilRespawn(0)
   {}
 
-  virtual ~TriggerRespawning(){}
+  virtual ~TrikerRespawning(){}
 
   //to be implemented by child classes
   void  scan(Tasnal& role)  override

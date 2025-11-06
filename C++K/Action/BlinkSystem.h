@@ -14,7 +14,7 @@ enum BlinkStatus
 struct BlinkInfo
 {
 	//��¼ÿһ��Ҫ��˸��Robject tag����ÿ�������ͳһ����
-	std::vector<int>  tags;
+	vector<int>  tags;
 	short groupID;
 	bool isTriggered;
 	bool isPhaseDone;
@@ -24,7 +24,8 @@ struct BlinkInfo
 
 	}
 
-	inline void reset()
+	inline
+	void reset()
 	{
 		finishedCount = 0;
 	}
@@ -33,7 +34,7 @@ struct BlinkInfo
 class BlinkSystem
 {
 private:
-	static std::unordered_map<unsigned short, BlinkInfo> blinkGroup;
+	static unordered_map<unsigned short, BlinkInfo> blinkGroup;
 public:
 	static void registerBlinks(LuaIntf::LuaRef);
 	//robject blinkGroup����

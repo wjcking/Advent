@@ -8,7 +8,7 @@
 #include "../Map/MapTeshnal.h"
 #include "../Map/MapManager.h"
 #include "../Map/TiledMap.h"
-#include "../Triggers/TriggerSystem.h"
+#include "../Trikers/TrikerSystem.h"
 #include "WeaponSystem.h"
 #include "Weapon.h"
 #include "ui/UIScale9Sprite.h"
@@ -34,7 +34,7 @@ private:
 	Vec2 dragStart = Vec2::ZERO;
 	Vec2 dragEnd = ScreenSize;
 	DrawNode* drawCollision;
-	TriggerSystem sensorSystem;
+	TrikerSystem sensorSystem;
 	DelayPhase delayFrame;
 	DelayPhase delayRecovery;
 	vector<MovePhase> moves;
@@ -190,7 +190,7 @@ public:
 	inline short& getHPMax() { return this->hpMax; };
 	inline Vec2& getInsetObject() { return this->insetObject; }
 	inline Vec2& getInsetTile() { return this->insetTile; }
-	inline 	TriggerSystem& getSensor() { return sensorSystem; };
+	inline 	TrikerSystem& getSensor() { return sensorSystem; };
 	inline CollisionDirection& getCollidedDirection() { return this->lastCollideDirection; };
 
 	inline void setIsSolid(const bool& val) { this->isSolid = val; };

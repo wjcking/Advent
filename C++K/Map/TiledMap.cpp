@@ -3,7 +3,7 @@
 #include "../Tasnal/Tasmina.h"
 #include "../Tasnal/Tasnal.h"
 #include "../Utils/Constant.h"
-#include "../Triggers/Trigger.h"
+#include "../Trikers/Triker.h"
 #include "../Utils/Telisk.h"
 #include "../Tasnal/RObject.h"
 int TiledMap::nextTag = 1;
@@ -850,10 +850,10 @@ Vec2 TiledMap::getPositionByTileCoordinate2(const Point & tileCoord) const
 
 void TiledMap::loadScript()
 {
-	Trigger* trigger;
-	TriggerSystem::triggerNext = 1;
+	Triker* trigger;
+	TrikerSystem::triggerNext = 1;
 	unsigned short type = 0;
-	LUAH->processTable(Luat_Triggers, [&](LuaIntf::LuaRef ref) {
+	LUAH->processTable(Luat_Trikers, [&](LuaIntf::LuaRef ref) {
 
 		type = ref.get(Luaf_Type, 0);
 
@@ -864,16 +864,16 @@ void TiledMap::loadScript()
 		{
 		case 1:
 			CCASSERT(ref.has(Luaf_Ract), "������rect");
-			trigger = new TriggerRact(ref.get(Luaf_Ract, Ract(200, 200, 33, 44)));
+			trigger = new TrikerRact(ref.get(Luaf_Ract, Ract(200, 200, 33, 44)));
 			break;
 		case 2:
 			CCASSERT(ref.has(Luaf_RangeStart), "������RangeStart");
 			CCASSERT(ref.has(Luaf_RangeStart), "������RangeStart");
-			trigger = new TriggerLine(ref.get(Luaf_RangeStart, Vec2(100, 100)), ref.get(Luaf_RangeEnd, Vec2(100, 200)));
+			trigger = new TrikerLine(ref.get(Luaf_RangeStart, Vec2(100, 100)), ref.get(Luaf_RangeEnd, Vec2(100, 200)));
 			break;
 		case 3:
 			CCASSERT(ref.has(Luaf_Ract), "������rect");
-			trigger = new TriggerCircle(ref.get(Luaf_Ract, Ract(200, 200, 33, 44)));
+			trigger = new TrikerCircle(ref.get(Luaf_Ract, Ract(200, 200, 33, 44)));
 			break;
 		}
 
@@ -884,7 +884,7 @@ void TiledMap::loadScript()
 			trigger->setName(ref.get(Luaf_Name).toValue<std::string>());
 		else
 			trigger->setName("trigger");
-		triggerSystem.addTrigger(trigger);
+		triggerSystem.addTriker(trigger);
 		//��thisָ��
 		auto tag = trigger->getTag();
 		ref.set(Luaf_Tag, trigger->getTag());

@@ -8,8 +8,8 @@
 #include "Npc.h"
 #include "RObject.h"
 #include "../Utils/Constant.h"
-#include "../Triggers/Trigger.h"
-#include "../Triggers/TriggerSystem.h"
+#include "../Trikers/Triker.h"
+#include "../Trikers/TrikerSystem.h"
 Player* Tasmina::player = nullptr;
 
 /*��̬���ʼ��*/

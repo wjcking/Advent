@@ -13,9 +13,9 @@ struct Luaf
 	Luaf() {};
 	Luaf(LuaRef);
 	float delay = 0.f;
-	std::string name = "";
+	string name = "";
 	//�еļ���չ���еĲ��� .png ������
-	std::string file = "";
+	string file = "";
 	Vec2 position = Vec2::ZERO;
 	Vec2 offset = Vec2::ZERO;
 	float duration;
@@ -37,11 +37,11 @@ struct CurtainInfo : Luaf
 	CurtainInfo(LuaRef);
 	CurtainType type = CurtainType::none;
 	//��Ļ ����߻��ϱ�
-	std::string image = "background/curtain.png";
+	string image = "background/curtain.png";
 	//��Ļ ����߻��ϱ�
-	std::string image1 = "background/curtainleft.png";
+	string image1 = "background/curtainleft.png";
 	//�ұ߻��±�
-	std::string image2 = "background/curtainright.png";
+	string image2 = "background/curtainright.png";
 
 	FontInfo font;
 };

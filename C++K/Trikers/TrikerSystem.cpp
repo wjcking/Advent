@@ -1,10 +1,10 @@
 #include "../Tasnal/Tasnal.h"
-#include "Trigger.h"
-#include "TriggerSystem.h"
+#include "Triker.h"
+#include "TrikerSystem.h"
 #include "../Utils/Telisk.h"
-unsigned short TriggerSystem::triggerNext = 1;
-unsigned short TriggerSystem::sensorNext = 1;
-void TriggerSystem::updateTriggers()
+unsigned short TrikerSystem::triggerNext = 1;
+unsigned short TrikerSystem::sensorNext = 1;
+void TrikerSystem::updateTrikers()
 {
 	for (auto iter = trigerVector.begin(); iter != trigerVector.end(); ++iter)
 	{
@@ -18,20 +18,20 @@ void TriggerSystem::updateTriggers()
 	}
 }
 
-TriggerSystem::~TriggerSystem()
+TrikerSystem::~TrikerSystem()
 {
 	clear();
 }
 
-short TriggerSystem::checkTrigger(const short & tag, Tasnal & role)
+short TrikerSystem::checkTriker(const short & tag, Tasnal & role)
 {
 	//	return trigerVector[tag]->scanTouching()
 	return 0;
 }
 
-void TriggerSystem::scanTriggers(std::function<void(Trigger&)> each)
+void TrikerSystem::scanTrikers(std::function<void(Triker&)> each)
 {
-	auto triggers = LUAH->getGlobal(Luat_Triggers);
+	auto triggers = LUAH->getGlobal(Luat_Trikers);
 	LuaRef current;
 	for (auto iter = trigerVector.begin(); iter != trigerVector.end();)
 	{
@@ -53,7 +53,7 @@ void TriggerSystem::scanTriggers(std::function<void(Trigger&)> each)
 
 }
 
-void TriggerSystem::scanSensor(Tasnal & opponent, std::function<void(Trigger&)> each)
+void TrikerSystem::scanSensor(Tasnal & opponent, std::function<void(Triker&)> each)
 {
 	for (auto& iter : trigerVector)
 	{
@@ -65,7 +65,7 @@ void TriggerSystem::scanSensor(Tasnal & opponent, std::function<void(Trigger&)> 
 	}
 }
 //this deletes any current sensorSystem and empties the trigger list
-void TriggerSystem::clear()
+void TrikerSystem::clear()
 {
 	for (auto iter = trigerVector.begin(); iter != trigerVector.end(); ++iter)
 	{
@@ -75,19 +75,19 @@ void TriggerSystem::clear()
 	trigerVector.clear();
 }
 
-void TriggerSystem::addTrigger(Trigger* trigger)
+void TrikerSystem::addTriker(Triker* trigger)
 {
 	trigger->setTag(triggerNext++);
 	trigerVector.push_back(trigger);
 }
 
-void TriggerSystem::addSensor(Trigger* sensor)
+void TrikerSystem::addSensor(Triker* sensor)
 {
 	sensor->setTag(sensorNext++);
 	trigerVector.push_back(sensor);
 }
 
-void TriggerSystem::render(DrawNode* drawNode)
+void TrikerSystem::render(DrawNode* drawNode)
 {
 	for (auto iter : trigerVector)
 	{

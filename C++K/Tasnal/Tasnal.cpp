@@ -10,7 +10,7 @@
 
 #include "SimpleAudioEngine.h"
 #include "../../../Common/StateMachine/StateMachine.h"
-#include "../Triggers/Trigger.h"
+#include "../Trikers/Triker.h"
 #include "../Utils/Telisk.h"
 #include "../Utils/ResourceHelper.h"
 
@@ -45,7 +45,7 @@ void Tasnal::loadScript()
 	//���û��sensor
 	if (!roleTable.has(Luaf_Sensor))
 		return;
-	Trigger* sensor;
+	Triker* sensor;
 
 	auto sensorTable = roleTable[Luaf_Sensor].value();
 	for (auto iter = sensorTable.begin(); iter != sensorTable.end(); ++iter)
@@ -57,13 +57,13 @@ void Tasnal::loadScript()
 		switch (ref[Luaf_Type].value<unsigned short>())
 		{
 		case 1:
-			sensor = new TriggerRact(ref[Luaf_Range].value<Size>(), ref[Luaf_Direction].value<MovingDirection>());
+			sensor = new TrikerRact(ref[Luaf_Range].value<Size>(), ref[Luaf_Direction].value<MovingDirection>());
 			break;
 		case 2:
-			sensor = new TriggerLine(ref[Luaf_Range].value<Size>(), ref[Luaf_Direction].value<MovingDirection>());
+			sensor = new TrikerLine(ref[Luaf_Range].value<Size>(), ref[Luaf_Direction].value<MovingDirection>());
 			break;
 		case 3:
-			sensor = new TriggerCircle(ref[Luaf_Range].value<Size>(), ref[Luaf_Direction].value<MovingDirection>());
+			sensor = new TrikerCircle(ref[Luaf_Range].value<Size>(), ref[Luaf_Direction].value<MovingDirection>());
 			break;
 		}
 		sensorSystem.addSensor(sensor);
@@ -97,7 +97,7 @@ MovingDirection Tasnal::scanSensor(Tasnal* opponent)
 	if (sensorSystem.getCount() == 0)
 		return sensedDirection;
 	//ɨ��Ҫ��ײ�Ķ��� opponent �����Լ� 
-	sensorSystem.scanSensor(*opponent, [&](Trigger& sensor) {
+	sensorSystem.scanSensor(*opponent, [&](Triker& sensor) {
 		//���µ����Լ���λ�ã�����֪��ײλ��
 		sensor.updateRegion(*this);
 		//ֹͣ

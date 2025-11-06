@@ -18,10 +18,10 @@ float& Clock::addDeltaCount()
 	tik += 0.01f;// DtaIntvao;
 	iTick += 1;
 
-	if (tik > 2147483647 - 1)
+	if (tik > float::maxValue - 1)
 		tik = 0;
 
-	if (iTick > 2147483647 - 1)
+	if (iTick > float::maxValue - 1)
 		iTick = 0;
 
 	return tik;

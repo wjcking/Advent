@@ -36,8 +36,8 @@ public:
 	Collapse();
 	void collapse();
 	inline bool& isFinsihed() { return isDone; }
-	inline bool& isTriggered() { return triggered; }
-	inline void setTriggered() { triggered = true; }
+	inline bool& isTrikered() { return triggered; }
+	inline void setTrikered() { triggered = true; }
 };
 
 #endif

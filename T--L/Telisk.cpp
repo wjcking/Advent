@@ -14,7 +14,7 @@
 #include "../Tasnal/Npc.h"
 #include "../Hezk/StageHezk.h"
 #include "../Hezk/MainHezk.h"
-#include "../Triggers/Trigger.h"
+#include "../Trikers/Triker.h"
 #include "../Ads/Ads.h"
 
 #include "ActionExtend.h"
@@ -413,19 +413,19 @@ void Luah::registerClasses()
 		.addFunction("isDead", &Trace::isDead)
 		.endClass();
 	//������
-	LuaBinding(l).beginClass<Trigger>("Trigger")
-		.addFunction("isTouching", &Trigger::isTouching)
-		.addFunction("scan", &Trigger::scanTouching)
-		.addFunction("setActivation", &Trigger::setActivation)
+	LuaBinding(l).beginClass<Triker>("Triker")
+		.addFunction("isTouching", &Triker::isTouching)
+		.addFunction("scan", &Triker::scanTouching)
+		.addFunction("setActivation", &Triker::setActivation)
 		.endClass()
-		.beginExtendClass<TriggerLine, Trigger>("TriggerLine")
-		.addFunction("scan", &Trigger::scanTouching)
+		.beginExtendClass<TrikerLine, Triker>("TrikerLine")
+		.addFunction("scan", &Triker::scanTouching)
 		.endClass()
-		.beginExtendClass<TriggerCircle, Trigger>("TriggerCircle")
-		.addFunction("scan", &Trigger::scanTouching)
+		.beginExtendClass<TrikerCircle, Triker>("TrikerCircle")
+		.addFunction("scan", &Triker::scanTouching)
 		.endClass()
-		.beginExtendClass<TriggerRact, Trigger>("TriggerRact")
-		.addFunction("scan", &Trigger::scanTouching)
+		.beginExtendClass<TrikerRact, Triker>("TrikerRact")
+		.addFunction("scan", &Triker::scanTouching)
 
 		.endClass();
 	LuaBinding(l).beginClass<WeaponSystem>("WeaponSystem")

@@ -4,6 +4,8 @@
 #include "../../Tik/Encounter.h"
 using namespace std;
 #define TYPE_DIALOG Typewriter::getInstance()
+static Typewriter* Typewriter = new Typewriter;
+
 class Typewriter
 {
 private:
@@ -14,16 +16,11 @@ public:
 
 	//�������л���ʱ�����ִ��ֻ��ٶȲ�һ�µ�bug��������һ�������ٶ�
 	Typewriter() :delayType(0.065f) {};
-	static Typewriter* getInstance()
-	{
-		static Typewriter typewriter;
-		return &typewriter;
-	};
 	inline void setDelay(const float& delay) { delayType.delaySecond = delay; }
 	inline void setContent(const std::string& val) 
 	{
 		//�������Բ�ͬ��ʼ����ӡ�����ٶ�
-		delayType.delaySecond = UserDefault::getInstance()->getIntegerForKey(User_Language, Lang_Chinwan) == 1 ? 0.12f : 0.05f; 
+		delayType.delaySecond = Typewriter::Typewriter->getIntegerForKey(User_Language, Lang_Chinwan) == 1 ? 0.12f : 0.05f; 
 		content = val;
 	}
 	inline void reset() { pos = 0; }

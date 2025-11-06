@@ -1,14 +1,14 @@
-#include "Trigger.h"
+#include "Triker.h"
 #include "../Utils/Constant.h"
 #include "../Tasnal/Tasnal.h"
 #include "../Utils/Utils.h"
-Trigger::Trigger(const bool& bAct) :toBeRemoved(false),
+Triker::Triker(const bool& bAct) :toBeRemoved(false),
 bActive(bAct)
 //graphNodeIndex(-1)
 {
 	relatedTags.reserve(Reserve_Tasnal);
 }
-Trigger::Trigger(const Size& size, const MovingDirection& md) :sensorRange(size),
+Triker::Triker(const Size& size, const MovingDirection& md) :sensorRange(size),
 sensorDirection(md),
 toBeRemoved(false),
 bActive(true)
@@ -18,18 +18,18 @@ bActive(true)
 
 
 
-Trigger::~Trigger() {  }
+Triker::~Triker() {  }
 
 /******* �߶�********/
-TriggerLine::TriggerLine(const Vec2& start, const Vec2& end) :start(start), end(end)
+TrikerLine::TrikerLine(const Vec2& start, const Vec2& end) :start(start), end(end)
 {
 
 }
-TriggerLine::TriggerLine(const Size& range, const MovingDirection& md) : Trigger(range, md) {};
-TriggerLine::TriggerLine() {};
-TriggerLine::~TriggerLine() {}
+TrikerLine::TrikerLine(const Size& range, const MovingDirection& md) : Triker(range, md) {};
+TrikerLine::TrikerLine() {};
+TrikerLine::~TrikerLine() {}
 
-bool& TriggerLine::scanTouching(Tasnal& entityRact)
+bool& TrikerLine::scanTouching(Tasnal& entityRact)
 {
 	isTouched = false;
 	auto bound = entityRact.getCollisionBound();
@@ -41,12 +41,12 @@ bool& TriggerLine::scanTouching(Tasnal& entityRact)
 
 	return isTouched;
 }
-void TriggerLine::render(DrawNode* draw)
+void TrikerLine::render(DrawNode* draw)
 {
 	draw->drawLine(start, end, getColor());
 };
 
-void TriggerLine::updateRegion(Tasnal& role, const float& radius)
+void TrikerLine::updateRegion(Tasnal& role, const float& radius)
 {
 	switch (sensorDirection)
 	{
@@ -70,14 +70,14 @@ void TriggerLine::updateRegion(Tasnal& role, const float& radius)
 	}
 }
 //Բ��
-TriggerCircle::TriggerCircle(const Ract& rect, const float& radius) :radius(radius), circle(rect)
+TrikerCircle::TrikerCircle(const Ract& rect, const float& radius) :radius(radius), circle(rect)
 {
 }
 
-TriggerCircle::TriggerCircle(const Size& range, const MovingDirection& md) : Trigger(range, md) {};
-TriggerCircle::TriggerCircle() {};
-TriggerCircle::~TriggerCircle() {};
-bool& TriggerCircle::scanTouching(Tasnal& entityRact)
+TrikerCircle::TrikerCircle(const Size& range, const MovingDirection& md) : Triker(range, md) {};
+TrikerCircle::TrikerCircle() {};
+TrikerCircle::~TrikerCircle() {};
+bool& TrikerCircle::scanTouching(Tasnal& entityRact)
 {
 	//distance = Fand::getRange(entityRact, circle);
 	//isTouched = entityRact.intersectsCircle(Vec2(circle.getMidX(), circle.getMidY()), radius == 0 ? circle.size.width / 2 : radius);
@@ -85,11 +85,11 @@ bool& TriggerCircle::scanTouching(Tasnal& entityRact)
 	return isTouched;
 }
 
-void TriggerCircle::render(DrawNode* draw)
+void TrikerCircle::render(DrawNode* draw)
 {
 	draw->drawCircle(Vec2(circle.getMidX(), circle.getMidY()), circle.size.width / 2, 360, 12, true, getColor());
 }
-void TriggerCircle::updateRegion(Tasnal& role, const float& radius)
+void TrikerCircle::updateRegion(Tasnal& role, const float& radius)
 {
 	switch (sensorDirection)
 	{
@@ -109,16 +109,16 @@ void TriggerCircle::updateRegion(Tasnal& role, const float& radius)
 };
 //����
 
-TriggerRact::TriggerRact(const Ract& rect, const bool& isAct) :rect(rect)
+TrikerRact::TrikerRact(const Ract& rect, const bool& isAct) :rect(rect)
 {
 
 }
 
-TriggerRact::TriggerRact(const Size& range, const MovingDirection& md) : Trigger(range, md) {};
-TriggerRact::TriggerRact() {};
-TriggerRact::~TriggerRact() {}
+TrikerRact::TrikerRact(const Size& range, const MovingDirection& md) : Triker(range, md) {};
+TrikerRact::TrikerRact() {};
+TrikerRact::~TrikerRact() {}
 
-bool& TriggerRact::scanTouching(Tasnal& entityRact)
+bool& TrikerRact::scanTouching(Tasnal& entityRact)
 {
 	auto bound = entityRact.getCollisionBound();
 	distance = Fand::getRange(bound, rect);
@@ -132,12 +132,12 @@ bool& TriggerRact::scanTouching(Tasnal& entityRact)
 	return isTouched;
 }
 
-void TriggerRact::render(DrawNode* draw)
+void TrikerRact::render(DrawNode* draw)
 {
 	draw->drawRact(rect.origin, Vec2(rect.getMaxX(), rect.getMaxY()), getColor());
 }
 
-void TriggerRact::updateRegion(Tasnal& role, const float& radius)
+void TrikerRact::updateRegion(Tasnal& role, const float& radius)
 {
 	auto boundBox = role.getCollisionBound();
 
