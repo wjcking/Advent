@@ -1,19 +1,11 @@
 #include "LuaField.h"
 
-#define  LUAH Luah::getInstance() 
-#define  LUASTATE Luah::getInstance()->getState()
-
-#define LUA_ENUM(l, val) \
-	lua_pushliteral(l, #val); \
-	lua_pushnumber(l, val); \
-	lua_settable(l, -3)
 class Tasnal;
 LuaRef getTasnal(const int& tag = 0, const std::string& name = "");
 
 class Luah
 {
 private:
-	lua_State * l; 
 	Luah(const Luah&);
 	bool isPackageLoaded = false;
 	int currentLanguage = 0;
@@ -98,7 +90,7 @@ public:
 	inline LuaRef getGlobal(const char* name) { return Lua::getGlobal(l, name); };
 	template <typename T>
 	inline void setGlobal(const char* name, const T& v) { LuaIntf::Lua::setGlobal(l, name, v); }
-	static void output(const std::string& text) { CCLOG("%s", text.c_str()); }
+	static void output(const string& text) { CCLOG("%s", text.c_str()); }
 	//�ص����������� joystick joypad ����
 	void callback(const char*, const char*);
 	void callback(const char*, const char*, const LuaRef&);

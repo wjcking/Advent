@@ -1,9 +1,7 @@
 #pragma once
-#include "cocos2d.h"
 #include "Constant.h"
 #include "Fand.h"
-#include "../../Common/lua/include/lua.hpp" 
-#include "../../Common/Lua-Intf/LuaIntf.h" 
+#include "../../Common/Intful.h" 
 
 using namespace LuaIntf;
 using namespace cocos2d;

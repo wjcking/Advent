@@ -317,7 +317,6 @@ void StageHezk::update(float dt)
 }
 void StageHezk::release(const bool& isClearAll)
 {
-
 	TeliskSystem::isTeliskOn = false;
 	//�����ʱ��
 	DelayCollection::clear();
@@ -325,7 +324,6 @@ void StageHezk::release(const bool& isClearAll)
 	ROLE_MANAGER->release();
 	//�Ƴ� 
 	MAP_STAGE->removeAllChildrenWithCleanup(true);
-
 	//�ͷ�frame
 	//ѭ����ͼ
 	if (nullptr != MAP_STAGE->getRepeatedMap())
@@ -391,11 +389,11 @@ void StageHezk::loadCurtain(const LuaRef& curtainTable)
 
 		curtainBlack->setPosition(curtainBlack->getContentSize().width / 2.f, curtainBlack->getContentSize().height / 2.f - 2.f);
 		auto label = Label::createWithSystemFont("", Resh::getFontName(), 24.f);
-		label->setName(nameCurtainLabel);
+		label->setName(curtainLabel);
 		label->setColor(Color3B::WHITE);
 		label->setPosition(curtainBlack->getContentSize().width / 2.f, curtainBlack->getContentSize().height / 2.f);
 
-		curtainBlack->setName(nameCurtainBlack);
+		curtainBlack->setName(curtainBlack);
 		curtainBlack->addChild(label);
 		addChild(curtainBlack, Z_Curtain);
 		//�����Ƿ�������
@@ -406,7 +404,7 @@ void StageHezk::loadCurtain(const LuaRef& curtainTable)
 	else if (CurtainType::bilateral == curtainInfo.type)
 	{
 		auto overlay = Overlay::createByOpaque();
-		overlay->setName(nameOverlayCurtain);
+		overlay->setName(curtainOverlay);
 		overlay->setPosition(overlay->getContentSize().width / 2.f, overlay->getContentSize().height / 2.f);
 		addChild(overlay, Z_Curtain - 1);
 		//��������
@@ -446,7 +444,7 @@ void StageHezk::loadCurtain(const LuaRef& curtainTable)
 	else if (CurtainType::updown == curtainInfo.type)
 	{
 		auto overlay = Overlay::createByOpaque();
-		overlay->setName(nameOverlayCurtain);
+		overlay->setName(curtainOverlay);
 		overlay->setPosition(overlay->getContentSize().width / 2.f, overlay->getContentSize().height / 2.f);
 		addChild(overlay, Z_Curtain - 1);
 		//��������
@@ -487,7 +485,7 @@ void StageHezk::dropCurtain(const LuaRef& curtainTable)
 
 	auto curtainX = curtainTop->getContentSize().width / 2.f;
 	curtainTop->setPosition(curtainX, ScreenSize.height + curtainTop->getContentSize().height);
-	curtainTop->setName(nameOfCurtianTop);
+	curtainTop->setName(curtianTop);
 	auto curtainBottom = Sprite::create(curtainInfo.image2);
 	if (curtainBottom == nullptr)
 		return;
@@ -510,13 +508,13 @@ void StageHezk::shutCurtain()
 	if (isCurtainDrawn)
 		return;
 
-	auto curtainTop = getChildByName(nameOfCurtianTop);
+	auto curtainTop = getChildByName(curtianTop);
 
 	if (nullptr == curtainTop)
 		return;
 	isCurtainDrawn = true;
 	auto curtainX = curtainTop->getPositionX();
-	auto curtainBottom = getChildByName(nameOfCurtianBottom);
+	auto curtainBottom = getChildByName(curtianBottom);
 	auto moveTop = MoveTo::create(curtainInfo.delay, Vec2(curtainX, ScreenSize.height + curtainTop->getContentSize().height));
 	auto moveBottom = MoveTo::create(curtainInfo.delay, Vec2(curtainX, -curtainTop->getContentSize().height));
 	auto seqTop = Sequence::create(moveTop,
@@ -537,10 +535,10 @@ void StageHezk::updateCurtainText()
 	if (isTypeCurtainDone || curtainInfo.type != CurtainType::black)
 		return;
 
-	auto curtainBlack = getChildByName(nameCurtainBlack);
+	auto curtainBlack = getChildByName(curtainBlack);
 	if (nullptr == curtainBlack)
 		return;
-	auto lbCurtainText = dynamic_cast<Label*>(curtainBlack->getChildByName(nameCurtainLabel));
+	auto lbCurtainText = dynamic_cast<Label*>(curtainBlack->getChildByName(curtainLabel));
 	if (nullptr == lbCurtainText)
 		return;
 	auto thread = dialogCurtain.getCurrentDialog();

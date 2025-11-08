@@ -1,7 +1,4 @@
 //MOB^ON 2016/12/15
-#ifndef TGSDKCocos2dxHelper_h
-#define TGSDKCocos2dxHelper_h
-
 //Custom Event
 #define TGSDK_EVENT_INIT_SUCCESS "TGSDK_onInitSuccess"
 #define TGSDK_EVENT_INIT_FAILED  "TGSDK_onInitFailed"
@@ -146,4 +143,17 @@ namespace yomob {
 };
 
 
-#endif /* TGSDKCocos2dxHelper_h */
+void yomob::setRequirePath(const char* path)
+{
+    luaL_openlibs(l);
+    lua_getglobal(l, "package");
+    lua_getfield(l, -1, "path"); // get field "path" from table at top of stack (-1)
+    std::string cur_path = lua_tostring(l, -1); // grab path string from top of stack
+    cur_path.append(";"); //your path here
+    cur_path.append(path);
+    cur_path.append("?.lua");//�����������lua�ű����������
+    lua_pop(l, 1); // get rid of the string on the stack we just pushed on line 5
+    lua_pushstring(l, cur_path.c_str()); // push the new one
+    lua_setfield(l, -2, "path"); // set the field "path" in table at -2 with value at top of stack
+    lua_pop(l, 1); // get rid of package table from top of stack
+}

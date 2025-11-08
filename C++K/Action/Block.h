@@ -31,7 +31,7 @@ struct BlinkInfo
 	}
 };
 
-class BlinkSystem
+class BlockTesh
 {
 private:
 	static unordered_map<unsigned short, BlinkInfo> blinkGroup;

@@ -11,6 +11,14 @@ else \
     return nullptr; \
 } 
 
+#define  LUAH Luah::getInstance() 
+#define  LUASTATE Luah::getInstance()->getState()
+#define
+LUA_ENUM(l, val) \
+lua_pushliteral(l, #val); \
+lua_pushnumber(l, val); \
+lua_settable(l, -3)
+
 #define
 CREATE_WITH_FILE(__TYPE__,NAME) \
     auto *sprite = new(std::nothrow) __TYPE__(); \

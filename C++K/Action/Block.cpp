@@ -1,9 +1,9 @@
-#include "BlinkSystem.h"
+#include "BlockTesh.h"
 #include "RObject.h"
 #include "Tasmina.h"
 
-unordered_map<unsigned short, BlinkInfo> BlinkSystem::blinkGroup = std::unordered_map<unsigned short, BlinkInfo>();
-void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
+unordered_map<unsigned short, BlinkInfo> BlockTesh::blinkGroup = std::unordered_map<unsigned short, BlinkInfo>();
+void BlockTesh::registerBlinks(LuaIntf::LuaRef table)
 {
 
 	blinkGroup.clear();
@@ -36,7 +36,7 @@ void BlinkSystem::registerBlinks(LuaIntf::LuaRef table)
 	}
 }
 
-void BlinkSystem::resetGroup(const unsigned short& gid)
+void BlockTesh::resetGroup(const unsigned short& gid)
 {
 	for (auto tag : blinkGroup[gid].tags)
 	{

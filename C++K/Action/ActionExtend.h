@@ -16,7 +16,6 @@ class ActionExtend
 
 	ActionExtend() :frame(nullptr)
 	{
-
 	}
 	~ActionExtend()
 	{

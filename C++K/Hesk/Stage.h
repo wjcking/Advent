@@ -37,12 +37,12 @@ private:
 	void menuCallback(Ref*);
 	void joystickCallback(Node*);
 	void updateCurtainText();
-	std::string doLuaFunction(const std::string&, const int& = 0);
-	const std::string nameCurtainBlack = "curtainBlack";
-	const std::string nameOfCurtianTop = "curtianTop";
-	const std::string nameOfCurtianBottom = "curtianBottom";
-	const std::string nameCurtainLabel = "lbCurtainText";
-	const std::string nameOverlayCurtain = "overlayCurtain";
+	string doLuaFunction(const string&, const int& = 0);
+	const string curtainBlack const = "curtainBlack";
+	const string curtianTop const = "curtianTop";
+	const string curtianBottom const = "curtianBottom";
+	const string curtainLabel const = "lbCurtainText";
+	const string curtainOverlay const = "CurtainOverlay";
 
 	Vec2 beginDelta;
 	Vec2 endDelta;

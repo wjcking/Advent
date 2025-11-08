@@ -359,20 +359,20 @@ void RObject::blinkSelf()
 void RObject::blinkGroup()
 {
 	//���û������ִ��
-	auto blinkInfo = BlinkSystem::getBlinkInfo(blink.groupID);
+	auto blinkInfo = BlockTesh::getBlinkInfo(blink.groupID);
 	if (!blinkInfo.isTrikered)
 		return;
 
-	bool isGroupDone = BlinkSystem::isGroupDone(blink.groupID);
+	bool isGroupDone = BlockTesh::isGroupDone(blink.groupID);
 
 	if (isGroupDone)
-		BlinkSystem::resetGroup(blink.groupID);
+		BlockTesh::resetGroup(blink.groupID);
 	//����ʱ��������
 	BlinkStatus bs = blinkObject();
 	switch (bs)
 	{
 	case blinkDoneHidden:
-		BlinkSystem::addFinished(blink.groupID);
+		BlockTesh::addFinished(blink.groupID);
 		break;
 	case blinkShown:
 		//	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/blink.wav");

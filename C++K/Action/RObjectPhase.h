@@ -2,7 +2,7 @@
 #include "../Utils/Fand.h"
 #include "../Utils/Constant.h"
 #include "../../Tik/Encounter.h"
-#include "BlinkSystem.h"
+#include "BlockTesh.h"
 
 enum class KnockAction
 {
@@ -168,8 +168,11 @@ struct FrameSwitch : FrameIndexes
 	//-1=������
 	short limitedTimes = -1;
 	//һ��ˢ֡���Ƿ�������һ��
-	inline bool isUnlimited() { return limitedTimes == -1; };
-	inline bool allowNext() { return limitedTimes == -1 || touchedTimes < limitedTimes; };
+	inline
+	bool isUnlimited() { return limitedTimes == -1; };
+
+	inline
+	bool allowNext() { return limitedTimes == -1 || touchedTimes < limitedTimes; };
 };
 
 //����
