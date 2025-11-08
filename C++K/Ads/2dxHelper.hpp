@@ -1,35 +1,35 @@
 //MOB^ON 2016/12/15
 //Custom Event
-#define TGSDK_EVENT_INIT_SUCCESS "TGSDK_onInitSuccess"
-#define TGSDK_EVENT_INIT_FAILED  "TGSDK_onInitFailed"
+#define INIT_SUCCESS "InitSuccess"
+#define INIT_FAILED  "InitFailed"
 
-#define TGSDK_EVENT_PRELOAD_SUCCESS "TGSDK_onPreloadSuccess"
-#define TGSDK_EVENT_PRELOAD_FAILED  "TGSDK_onPreloadFailed"
-#define TGSDK_EVENT_CPAD_LOADED     "TGSDK_onCPADLoaded"
-#define TGSDK_EVENT_VIDEOAD_LOADED  "TGSDK_onVideoADLoaded"
+#define PRELOAD_SUCCESS "PreloadSuccess"
+#define PRELOAD_FAILED  "PreloadFailed"
+#define CPAD_LOADED     "CPADLoaded"
+#define VIDEOAD_LOADED  "VideoADLoaded"
 
-#define TGSDK_EVENT_AD_SHOW_SUCCESS "TGSDK_onShowSuccess"
-#define TGSDK_EVENT_AD_SHOW_FAILED  "TGSDK_onShowFailed"
-#define TGSDK_EVENT_AD_COMPLETE     "TGSDK_onADComplete"
-#define TGSDK_EVENT_AD_CLICK        "TGSDK_onADClick"
-#define TGSDK_EVENT_AD_CLOSE        "TGSDK_onADClose"
+#define AD_SHOW_SUCCESS "ShowSuccess"
+#define AD_SHOW_FAILED  "ShowFailed"
+#define AD_COMPLETE     "ADComplete"
+#define AD_CLICK        "ADClick"
+#define AD_CLOSE        "ADClose"
 
-#define TGSDK_EVENT_REWARD_SUCCESS "TGSDK_onADAwardSuccess"
-#define TGSDK_EVENT_REWARD_FAILED  "TGSDK_onADAwardFailed"
+#define REWARD_SUCCESS "ADAwardSuccess"
+#define REWARD_FAILED  "ADAwardFailed"
 
-#define TGSDK_EVENT_BANNER_LOADED  "TGSDK_onBannerLoaded"
-#define TGSDK_EVENT_BANNER_FAILED  "TGSDK_onBannerFailed"
-#define TGSDK_EVENT_BANNER_CLICK   "TGSDK_onBannerClick"
-#define TGSDK_EVENT_BANNER_CLOSE   "TGSDK_onBannerClose"
+#define BANNER_LOADED  "BannerLoaded"
+#define BANNER_FAILED  "BannerFailed"
+#define BANNER_CLICK   "BannerClick"
+#define BANNER_CLOSE   "BannerClose"
 
-#define TGPAYINGUSER_NON_PAYING_USER     "TGSDK_NON_PAYING_USER"
-#define TGPAYINGUSER_SMALL_PAYMENT_USER  "TGSDK_SMALL_PAYMENT_USER"
-#define TGPAYINGUSER_MEDIUM_PAYMENT_USER "TGSDK_MEDIUM_PAYMENT_USER"
-#define TGPAYINGUSER_LARGE_PAYMENT_USER  "TGSDK_LARGE_PAYMENT_USER"
+#define GUSER_NON_PAYING_USER      "NON_PAYING_USER"
+#define NGUSER_SMALL_PAYMENT_USER  "SMALL_PAYMENT_USER"
+#define NGUSER_MEDIUM_PAYMENT_USER "MEDIUM_PAYMENT_USER"
+#define NGUSER_LARGE_PAYMENT_USER  "LARGE_PAYMENT_USER"
 
-#define TGSDK_BANNER_TYPE_NORMAL "TGBannerNormal"
-#define TGSDK_BANNER_TYPE_MEDIUM "TGBannerMediumRactangle"
-#define TGSDK_BANNER_TYPE_LARGE  "TGBannerLarge"
+#define BANNER_TYPE_NORMAL "BannerNormal"
+#define BANNER_TYPE_MEDIUM "BannerMediumRactangle"
+#define BANNER_TYPE_LARGE  "BannerLarge"
 
 #include "cocos2d.h"
 
@@ -47,19 +47,18 @@ static const char* Yomob_Interstitial = "0vu9o4U0TMre0GSdymm";
 
 namespace yomob {
     typedef enum {
-        TGSDKCocos2dxNonPayingUser,
-        TGSDKCocos2dxSmallPaymentUser,
-        TGSDKCocos2dxMediumPaymentUser,
-        TGSDKCocos2dxLargePaymentUser
-    } TGSDKCocosedxPayingUser;
-#ifdef TGSDK_COCOS2DX_2X
-    class TGSDKCocos2dxSDKDelegate {
+        NonPayingUser,
+        SmallPaymentUser,
+        MediumPaymentUser,
+        LargePaymentUser
+    } PayingUser;
+    class SDKDelegate {
     public:
         virtual void onInitSuccess(const std::string ret){};
         virtual void onInitFailed(const std::string ret){};
     };
 
-    class TGSDKCocos2dxPreloadDelegate {
+    class PreloadDelegate {
     public:
         virtual void onPreloadSuccess(const std::string ret){};
         virtual void onPreloadFailed(const std::string ret){};
@@ -67,7 +66,7 @@ namespace yomob {
         virtual void onVideoADLoaded(const std::string ret){};
     };
 
-    class TGSDKCocos2dxADDelegate {
+    class ADDelegate {
     public:
         virtual void onShowSuccess(const std::string ret){};
         virtual void onShowFailed(const std::string ret){};
@@ -76,21 +75,20 @@ namespace yomob {
         virtual void onADClose(const std::string ret){};
     };
 
-    class TGSDKCocos2dxRewardDelegate {
+    class RewardDelegate {
     public:
         virtual void onADAwardSuccess(const std::string ret){};
         virtual void onADAwardFailed(const std::string ret){};
     };
 
-    class TGSDKCocos2dxBannerDelegate {
+    class BannerDelegate {
     public:
         virtual void onBannerLoaded(const std::string scene, const std::string ret){};
         virtual void onBannerFailed(const std::string scene, const std::string ret const std::string error){};
         virtual void onBannerClick(const std::string scene, const std::string ret){};
         virtual void onBannerClose(const std::string scene, const std::string ret){};
     }
-#endif
-    class TGSDKCocos2dxHelper {
+    class Helper {
     public:
         static void setDebugModel(bool debug);
         
@@ -128,22 +126,18 @@ namespace yomob {
         static std::string getIsAgeRestrictedUser();
         static void setIsAgeRestrictedUser(const std::string status);
 
-#ifdef TGSDK_COCOS2DX_2X
-        static void setSDKDelegate(TGSDKCocos2dxSDKDelegate *delegate);
-        static void setPreloadDelegate(TGSDKCocos2dxPreloadDelegate *delegate);
-        static void setADDelegate(TGSDKCocos2dxADDelegate *delegate);
-        static void setRewardDelegate(TGSDKCocos2dxRewardDelegate *delegate);
-        static void setBannerDelegate(TGSDKCocos2dxBannerDelegate *delegate);
-#endif
-        
+        static void setSDKDelegate(SDKDelegate *delegate);
+        static void setPreloadDelegate(PreloadDelegate *delegate);
+        static void setADDelegate(ADDelegate *delegate);
+        static void setRewardDelegate(RewardDelegate *delegate);
+        static void setBannerDelegate(BannerDelegate *delegate);
         static void handleEvent(const std::string event, const std::string result);
         
         static void bindScript(void);
     };
 };
 
-
-void yomob::setRequirePath(const char* path)
+void Yomob::SetRequirePath(const char* path)
 {
     luaL_openlibs(l);
     lua_getglobal(l, "package");

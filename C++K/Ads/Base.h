@@ -13,7 +13,6 @@
 #binnary include(lib, "base_admob.lib")
 #endif
 
-
 using namespace base::admob;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 using namespace google_play_services;

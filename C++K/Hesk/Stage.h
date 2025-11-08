@@ -38,10 +38,10 @@ private:
 	void joystickCallback(Node*);
 	void updateCurtainText();
 	string doLuaFunction(const string&, const int& = 0);
-	const string curtainBlack const = "curtainBlack";
-	const string curtianTop const = "curtianTop";
-	const string curtianBottom const = "curtianBottom";
-	const string curtainLabel const = "lbCurtainText";
+	const string curtainBlack const = "CurtainBlack";
+	const string curtianTop const = "CurtianTop";
+	const string curtianBottom const = "CurtianBottom";
+	const string curtainLabel const = "CurtainText";
 	const string curtainOverlay const = "CurtainOverlay";
 
 	Vec2 beginDelta;
