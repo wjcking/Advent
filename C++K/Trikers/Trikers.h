@@ -44,7 +44,7 @@ public:
 
 	inline bool isRemoved()const { return toBeRemoved; }
 	inline bool isActive() { return bActive; }
-	//trigger=7 len
+	//triker=7 len
 	virtual std::string getType() { return getTypeName(*this).erase(0, 7); }
 	//inline int  getNodeIndex()const { return graphNodeIndex; }
 	inline MovingDirection& getSensorDirection() { return sensorDirection; }

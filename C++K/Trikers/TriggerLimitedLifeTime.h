@@ -7,7 +7,7 @@ class TrikerLimitedLifetime : public Triker<entity_type>
 {
 protected:
 
-  //the lifetime of this trigger in update-steps
+  //the lifetime of this triker in update-steps
   int lifeTime;
 
 public:
@@ -21,7 +21,7 @@ public:
   //their own update method
   virtual void update()
   {
-    //if the lifetime counter expires set this trigger to be removed from
+    //if the lifetime counter expires set this triker to be removed from
     if (--lifeTime <= 0)
     {
       remove();

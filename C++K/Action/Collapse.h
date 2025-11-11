@@ -19,7 +19,7 @@ private:
 	std::vector<std::string> colNames;
  
 	bool isDone = false;
-	bool triggered = false;
+	bool trikered = false;
 	Vec2 startPosition = Vec2::ZERO;
 	Vec2 range;
 public:
@@ -36,8 +36,8 @@ public:
 	Collapse();
 	void collapse();
 	inline bool& isFinsihed() { return isDone; }
-	inline bool& isTrikered() { return triggered; }
-	inline void setTrikered() { triggered = true; }
+	inline bool& isTrikered() { return trikered; }
+	inline void setTrikered() { trikered = true; }
 };
 
 #endif

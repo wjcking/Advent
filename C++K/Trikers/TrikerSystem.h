@@ -12,7 +12,7 @@ private:
 	vector<Triker*> trigerVector; 
 	void updateTrikers();
 public:
-	static unsigned short triggerNext;
+	static unsigned short trikerNext;
 	static unsigned short sensorNext ;
 	~TrikerSystem();
 

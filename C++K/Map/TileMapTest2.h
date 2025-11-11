@@ -56,6 +56,6 @@ b
   }
  }
 
- triggerSystem.render(drawCollision);
+ trikerSystem.render(drawCollision);
 d
 #endif

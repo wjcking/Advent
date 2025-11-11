@@ -2,13 +2,13 @@
 #include "Triker.h"
 #include "TrikerSystem.h"
 #include "../Utils/Telisk.h"
-unsigned short TrikerSystem::triggerNext = 1;
+unsigned short TrikerSystem::trikerNext = 1;
 unsigned short TrikerSystem::sensorNext = 1;
 void TrikerSystem::updateTrikers()
 {
 	for (auto iter = trigerVector.begin(); iter != trigerVector.end(); ++iter)
 	{
-		//remove trigger if dead
+		//remove triker if dead
 		if ((*iter)->isRemoved())
 		{
 			delete *iter;
@@ -31,16 +31,16 @@ short TrikerSystem::checkTriker(const short & tag, Tasnal & role)
 
 void TrikerSystem::scanTrikers(std::function<void(Triker&)> each)
 {
-	auto triggers = LUAH->getGlobal(Luat_Trikers);
+	auto trikers = LUAH->getGlobal(Luat_Trikers);
 	LuaRef current;
 	for (auto iter = trigerVector.begin(); iter != trigerVector.end();)
 	{
-		current = triggers[(*iter)->getTag()].value();
+		current = trikers[(*iter)->getTag()].value();
 
 		if (current.has(Luaf_IsActive))
 			(*iter)->setActivation(current.get(Luaf_IsActive, true));
 
-		//remove trigger if dead
+		//remove triker if dead
 		if ((*iter)->isRemoved())
 		{
 			delete *iter;
@@ -64,7 +64,7 @@ void TrikerSystem::scanSensor(Tasnal & opponent, std::function<void(Triker&)> ea
 		}
 	}
 }
-//this deletes any current sensorSystem and empties the trigger list
+//this deletes any current sensorSystem and empties the triker list
 void TrikerSystem::clear()
 {
 	for (auto iter = trigerVector.begin(); iter != trigerVector.end(); ++iter)
@@ -75,10 +75,10 @@ void TrikerSystem::clear()
 	trigerVector.clear();
 }
 
-void TrikerSystem::addTriker(Triker* trigger)
+void TrikerSystem::addTriker(Triker* triker)
 {
-	trigger->setTag(triggerNext++);
-	trigerVector.push_back(trigger);
+	triker->setTag(trikerNext++);
+	trigerVector.push_back(triker);
 }
 
 void TrikerSystem::addSensor(Triker* sensor)

@@ -55,6 +55,25 @@ void RObject::loadScript()
 	Tasnal::loadScript();
 }
 
+RangeType TiledMap::getRange(const Vec2 & a, const Vec2 & b)
+{
+	auto self = getCenterTile(a).tilePosition;
+	auto opponent = getCenterTile(b).tilePosition;
+
+	auto x = self.x - opponent.x;
+	auto y = self.y - opponent.y;
+	const auto range = 3;
+	if (x <= range && y <= range)
+		return RangeType::rangeEndangered;
+	else if (x <= range * 2 && y <= range*2)
+		return RangeType::rangeThreatened;
+	else if (x <= range * 3 && y <= range*3)
+		return RangeType::rangeSensed;
+	else if (x <= range*4 && y <= range*4)
+		return RangeType::rangeOutOfSight;
+
+	return RangeType::rangeOut;
+}
 KnockPhase RObject::gotKnocked(Tasnal& collider)
 {
 	auto currentKnock = KnockPhase();

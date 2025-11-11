@@ -16,6 +16,7 @@ void BlockTesh::registerBlinks(LuaIntf::LuaRef table)
 		//1.���
 		if (!ref.has(Luaf_Gid))
 			return;
+
 		if (!ref.has(Luaf_Tag))
 			return;
 		//2.info

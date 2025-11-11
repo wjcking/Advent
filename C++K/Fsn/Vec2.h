@@ -1,5 +1,3 @@
-NS_CC_MATH_BEGIN
-
 inline float clampf(float value, float min_inclusive, float max_inclusive)
 {
     if (min_inclusive > max_inclusive) {
@@ -12,66 +10,32 @@ class Mat4;
 
 class cc_dll Vec2
 {
-
     float x = 0.f;
     float y = 0.f;
 
-    /**
-     * Constructs a new vector initialized to all zeros.
-     */
     Vec2();
 
     Vec2(float xx, float yy);
 
-    /*
-    *
-    */
+
     Vec2(const float* array);
 
-    /**
-     * Constructs a vector that describes the direction between the specified points.
-     *
-    */
+
     Vec2(const Vec2& p1, const Vec2& p2);
 
-    /**
-     * Indicates whether this vector contains all zeros.
-     *
-     * return true if this vector contains all zeros, false otherwise.
-     */
+
     inline bool isZero() const;
 
-    /**
-     * Indicates whether this vector contains all ones.
-     *
-     * return true if this vector contains all ones, false otherwise.
-     */
+
     inline bool isOne() const;
 
-    /**
-     * Returns the angle (in radians) between the specified vectors.
-     *
-     * @param v1 The first vector.
-     * @param v2 The second vector.
-     * 
-     * @return The angle between the two vectors (in radians).
-     */
+
     static float angle(const Vec2& v1, const Vec2& v2);
 
-    /**
-     * Adds the elements of the specified vector to this one.
-     *
-     * @param v The vector to add.
-     */
+
     inline void add(const Vec2& v);
 
-    /**
-     * Adds the specified vectors and stores the result in dst.
-     *
-     * @param v1 The first vector.
-     * @param v2 The second vector.
-     * @param dst A vector to store the result in.
-     */
+   
     static void add(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
     /**

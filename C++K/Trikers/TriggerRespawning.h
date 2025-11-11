@@ -10,7 +10,7 @@ protected:
   int   numUpdatesBetweenRespawns;
   int   numUpdatesRemainingUntilRespawn;
 
-  //sets the trigger to be inactive for numUpdatesBetweenRespawns 
+  //sets the triker to be inactive for numUpdatesBetweenRespawns 
   //update-steps
   void deactivate()
   {
@@ -31,7 +31,7 @@ public:
   void  scan(Tasnal& role)  override
   {
   };
-  //this is called each game-tick to update the trigger's internal state
+  //this is called each game-tick to update the triker's internal state
   virtual void update()
   {
     if ( (--numUpdatesRemainingUntilRespawn <= 0) && !isActive())

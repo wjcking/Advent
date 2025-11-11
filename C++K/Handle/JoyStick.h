@@ -15,13 +15,15 @@ enum class JoystickStyle
 	arrowBackward = 4 //ֻ������ʾ����
 };
 
-class Joystick : public cocos2d::Layer
+//dectype Joystick sealed
+//cpp implimented
+class Joystick
 {
 private:
-	cocos2d::EventListenerTouchAllAtOnce* listener;  /*����Ϊ��Ա�����������Ƴ�����*/
-	cocos2d::Sprite* rocker;  /*�����ȡ*/
-	cocos2d::Sprite* rockerBackground;  /*�����ȡ*/
 	const unsigned short NoControllerTouched = 0;
+	EventListenerTouchAllAtOnce* listener;  /*����Ϊ��Ա�����������Ƴ�����*/
+	Sprite* rocker;  /*�����ȡ*/
+	Sprite* rockerBackground;  /*�����ȡ*/
 	Sprite* padBackward;
 	Sprite* padForward;
 	//����
@@ -37,39 +39,11 @@ private:
 	Ref* callbackListener;
 	SEL_CallFuncN callback;
 public:
-	CREATE_FUNC(Joystick);
-
-	std::unordered_map<int, std::string> joypadNames;
+	int touchTimes = 0;
+	unordered_map<int, std::string> joypadNames;
 	void loadScript(const char* padTable = Luat_Joypad);
 	virtual bool init() override;
-	int touchTimes = 0;
 
-	void hideRocker()
-	{
-		if (joyStyle == JoystickStyle::rocker)
-		{
-			rocker->setVisible(false);
-			rockerBackground->setVisible(false);
-		}
-		else
-		{
-			padBackward->setVisible(false);
-			padForward->setVisible(false);
-		}
-	}
-	void showRocker()
-	{
-		if (joyStyle == JoystickStyle::rocker)
-		{
-			rocker->setVisible(true);
-			rockerBackground->setVisible(true);
-		}
-		else
-		{
-			padBackward->setVisible(true);
-			padForward->setVisible(true);
-		}
-	}
 	void setAllVisible(const bool&);
 	virtual void onEnter() override;
 	virtual void onExit() override;
@@ -80,6 +54,7 @@ public:
 	inline void setJoypadF() { joyStyle = JoystickStyle::arrowForward; };
 	inline void setJoypad() { joyStyle = JoystickStyle::arrow; };
 	inline void setRocker() { joyStyle = JoystickStyle::rocker; };
+
 	void setJoystickStyle();
 	void onButtonClicked(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type);
 	void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
@@ -88,8 +63,7 @@ public:
 
 	/*��鵱ǰ�ǶȲ����÷���*/
 	void checkDirection(float angle);
-	cocos2d::Sprite* getRocker();
-	cocos2d::Sprite* getRockerBg();
+
 	float getAngle();
 	MovingDirection& getDirection();
 	void roll(const Vec2&);
@@ -106,5 +80,4 @@ public:
 		auto isVisible = pad->isVisible();
 		pad->setVisible(flag);
 	};
-
 };

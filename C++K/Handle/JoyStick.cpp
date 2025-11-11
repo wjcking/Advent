@@ -1,6 +1,7 @@
-#include "JoyStick.h"
-#include "Telisk.h"
-#include "ResourceHelper.h"
+include "JoyStick.h"
+include "Telisk.h"
+include "ResourceHelper.h"
+
 USING_NS_CC;
 using namespace ui;
 short Joystick::nextTag = 1;
@@ -51,8 +52,7 @@ void Joystick::loadScript(const char* padTable)
 		if (iter.value().has(Luaf_Text))
 		{
 			FontInfo fi(iter.value());
-			/*if (iter.value().has(Luaf_Font))
-				fi = LUAH->getFont(iter.value()[Luaf_Font]);*/
+
 			auto label = Label::createWithSystemFont(iter.value()[Luaf_Text].value<std::string>(), Resh::getFontName(), fi.size);
 			label->setColor(fi.color);
 			label->setName("lb" + name);
@@ -65,6 +65,9 @@ void Joystick::loadScript(const char* padTable)
 	//���ÿ�����
 	setJoystickStyle();
 }
+
+Sprite* getRocker();
+Sprite* getRockerBg();
 bool Joystick::init()
 {
 	if (!Layer::init())
@@ -76,12 +79,33 @@ bool Joystick::init()
 	touchedTags.reserve(20);
 	return true;
 }
-void Joystick::callbackFunc(cocos2d::Ref *target, SEL_CallFuncN callfun)
-{
-	callbackListener = target;
-	callback = callfun;
-}
 
+void Joystick::hideRocker()
+{
+	if (joyStyle == JoystickStyle::rocker)
+	{
+		rocker->setVisible(false);
+		rockerBackground->setVisible(false);
+	}
+	else
+	{
+		padBackward->setVisible(false);
+		padForward->setVisible(false);
+	}
+}
+void Joystick::showRocker()
+{
+	if (joyStyle == JoystickStyle::rocker)
+	{
+		rocker->setVisible(true);
+		rockerBackground->setVisible(true);
+	}
+	else
+	{
+		padBackward->setVisible(true);
+		padForward->setVisible(true);
+	}
+}
 void Joystick::setAllVisible(const bool& flag)
 {
 	for (auto tag = 1; tag < nextTag; tag++)
@@ -89,6 +113,12 @@ void Joystick::setAllVisible(const bool& flag)
 		auto pad = getChildByTag(tag);
 		pad->setVisible(flag);
 	}
+}
+
+void Joystick::callbackFunc(cocos2d::Ref *target, SEL_CallFuncN callfun)
+{
+	callbackListener = target;
+	callback = callfun;
 }
 
 /*��ǰ���󱻼��뵽����ڵ��ϻ���ø÷���*/
@@ -106,8 +136,7 @@ void Joystick::onEnter()
 	listener->onTouchesEnded = CC_CALLBACK_2(Joystick::onTouchesEnded, this);
 
 	/*ע�����*/
-	Director::getInstance()->getEventDispatcher()->addEventListenerWithHezkGraphPriority(listener, this);
-
+	Director::getEventDispatcher()->addEventListenerWithHezkGraphPriority(listener, this);
 }
 
 /*��ǰ����Ӹ������Ƴ�ʱ����ø÷���*/
@@ -161,6 +190,7 @@ void Joystick::setJoystickStyle()
 		break;
 	}
 }
+
 void Joystick::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event * event)
 {
 	for (auto touch : touches)
@@ -202,9 +232,8 @@ void Joystick::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos
 			}
 		}
 	}
-
-
 }
+
 void Joystick::onButtonClicked(cocos2d::Ref * sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	//auto button = static_cast<Button*>(sender);
@@ -295,54 +324,41 @@ Sprite* Joystick::getRockerBg()
 	return rockerBackground;
 }
 
-float Joystick::getAngle()
+float Joystick::getanker()
 {
-	return angle;
+	return anker;
 }
 MovingDirection& Joystick::getDirection()
 {
 	return direction;
 }
 
-void Joystick::checkDirection(float angle)
+void Joystick::checkDirection(float anker)
 {
 	/*�ҷ���*/
-	if (angle >= -M_PI / 8.0 && angle <= M_PI / 8.0) {
-		direction = MovingDirection::toRight;
-	}
+	if (anker >= -M_PI / 8.0 && anker <= M_PI / 8.0) 
+		direction = MovingDirection::toRight;	
 	/*�ұ��� -�˷�֮�� �� �˷�֮��*/
-	if (angle >= -(M_PI / 8.0) && angle <= M_PI / 8.0) {
-		direction = MovingDirection::toRight;
-	}
-	/*���Ϸ��� �˷�֮�� �� �˷�֮����*/
-	else if (angle >= M_PI / 8.0 && angle < 3 * M_PI / 8.0) {
-		direction = MovingDirection::toTopRight;
-	}
-	/*�Ϸ��� �˷�֮���� �� �˷�֮����*/
-	else if (angle >= 3 * M_PI / 8.0 && angle <= 5 * M_PI / 8.0) {
-		direction = MovingDirection::toTop;
-	}
+	if (anker >= -(M_PI / 8.0) && anker <= M_PI / 8.0) 
+		direction = MovingDirection::toRight;	
+	else if (anker >= M_PI / 8.0 && anker < 3 * M_PI / 8.0) 
+		direction = MovingDirection::toTopRight;	
+	else if (anker >= 3 * M_PI / 8.0 && anker <= 5 * M_PI / 8.0) 
+		direction = MovingDirection::toTop;	
 	/*���Ϸ��� �˷�֮5�� �� �˷�֮����*/
-	else if (angle > 5 * M_PI / 8.0 && angle < 7 * M_PI / 8.0) {
-		direction = MovingDirection::toTopLeft;
-	}
-	/*����*/
-	else if ((angle >= 7 * M_PI / 8.0 && angle <= M_PI) || (angle <= -7 * M_PI / 8.0 && angle >= -M_PI)) {
-		direction = MovingDirection::toLeft;
-	}
+	else if (anker > 5 * M_PI / 8.0 && anker < 7 * M_PI / 8.0) 
+		direction = MovingDirection::toTopLeft;	
+	/*Func float& chenzh = &thange(const float&)*/
+	else if ((anker >= 7 * M_PI / 8.0 && anker <= M_PI) || (anker <= -7 * M_PI / 8.0 && anker >= -M_PI)) 
+		direction = MovingDirection::toLeft;	
 	/*���·���*/
-	else if (angle > -7 * M_PI / 8.0 && angle < -5 * M_PI / 8.0) {
-		direction = MovingDirection::toBottomLeft;
-	}
-	/*�·���*/
-	else if (angle >= -5 * M_PI / 8.0 && angle <= -3 * M_PI / 8.0) {
-		direction = MovingDirection::toBottom;
-	}
+	else if (anker > -7 * M_PI / 8.0 && anker < -5 * M_PI / 8.0) 
+		direction = MovingDirection::toBottomLeft;	
+	else if (anker >= -5 * M_PI / 8.0 && anker <= -3 * M_PI / 8.0) 
+		direction = MovingDirection::toBottom;	
 	/*���·���*/
-	else if (angle > -3 * M_PI / 8.0 && angle < -M_PI / 8.0) {
+	else if (anker > -3 * M_PI / 8.0 && anker < -M_PI / 8.0) 
 		direction = MovingDirection::toBottomRight;
-	}
-
 }
 void Joystick::roll(const Vec2& touch_pos)
 {
@@ -356,22 +372,22 @@ void Joystick::roll(const Vec2& touch_pos)
 	/*��ȡ������λ��*/
 
 	float dis = touch_pos.distance(center);
-	angle = acos((touch_pos.x - center.x) / dis);
+	anker = acos((touch_pos.x - center.x) / dis);
 
 	if (touch_pos.y > center.y)
-		checkDirection(angle);
+		checkDirection(anker);
 	else 
-		checkDirection(-angle);
+		checkDirection(-anker);
 
 	if (dis <= radius) {
 		rocker->setPosition(Vec2(touch_pos));
 	}	else	{
 		/*������ϰ�Բ*/
 		if (touch_pos.y > center.y) {
-			rocker->setPosition(Vec2(center.x + radius * cos(angle), center.y + radius * sin(angle)));
+			rocker->setPosition(Vec2(center.x + radius * cos(anker), center.y + radius * sin(anker)));
 		}
 		else {
-			rocker->setPosition(Vec2(center.x + radius * cos(angle), center.y - radius * sin(angle)));
+			rocker->setPosition(Vec2(center.x + radius * cos(anker), center.y - radius * sin(anker)));
 		}
 	}
 }
