@@ -20,7 +20,6 @@ class ActionExtend
 	~ActionExtend()
 	{
 	}
-
 	/*����һ�������߶���
 	������
 	t ʱ��

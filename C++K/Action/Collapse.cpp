@@ -9,7 +9,7 @@ using namespace std;
 
 Collapse::Collapse()
 {
-	colNames.reserve(Reserve_65534);
+	colNames.reserve(Reserve::Maxkes);
 }
 
 void Collapse::collapse()
